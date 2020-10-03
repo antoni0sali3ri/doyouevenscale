@@ -4,6 +4,10 @@ class Instrument(val numStrings: Int,
                  val numFrets: Int,
                  val tuning: Tuning
 ) {
+    companion object {
+        val MaxFrets = 30 // Any more than that and it's gonna look messy af
+    }
+
     fun getFretsForScale(scale: Scale) : List<List<Int>> = (1..numStrings).map {
         getFretsForScale(it, scale)
     }

@@ -1,10 +1,11 @@
 package de.theopensourceguy.doyouevenscale.core.model
 
+//TODO: Move these to resources
 object Predef {
 
     object Instruments {
-        val Guitar = Instrument(6, 24, Tunings.GuitarStandard)
-        val Mandolin = Instrument(4, 24, Tunings.Violin)
+        val Guitar = Instrument(6, 14, Tunings.GuitarStandard)
+        val Mandolin = Instrument(4, 14, Tunings.Violin)
     }
 
     object Tunings {

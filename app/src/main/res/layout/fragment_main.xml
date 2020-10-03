@@ -7,6 +7,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.PlaceholderFragment">
 
+    <de.theopensourceguy.doyouevenscale.ui.main.FretboardView
+        android:id="@+id/fretboardView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        app:exampleColor="#000000"
+        app:fretColor="#eee"
+        app:fretboardFillColor="#abab00"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.56"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:noteColor="#222"
+        app:stringColor="#ccc" />
+
     <TextView
         android:id="@+id/section_label"
         android:layout_width="wrap_content"

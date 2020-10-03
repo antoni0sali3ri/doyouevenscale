@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Do you even scale</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="intervalPrime">Prime</string>
+    <string name="intervalMinSecond">Minor Second</string>
+    <string name="intervalMajSecond">Major Second</string>
+    <string name="intervalMinThird">Minor Thirds</string>
+    <string name="intervalMajThird">Major Third</string>
+    <string name="intervalFourth">Fourth</string>
+    <string name="intervalTritone">Tritone</string>
+    <string name="intervalFifth">Fifth</string>
+    <string name="intervalMinSixth">Minor Sixth</string>
+    <string name="intervalMajSixth">Major Sixth</string>
+    <string name="intervalMinSeventh">Minor Seventh</string>
+    <string name="intervalMajSeventh">Major Seventh</string>
+</resources>

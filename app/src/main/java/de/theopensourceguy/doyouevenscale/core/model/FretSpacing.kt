@@ -13,10 +13,14 @@ interface FretSpacing {
     /**
      * Return the relative position for a given fret on an instrument.
      */
-    fun getFretPosition(fretNum: Int, instrument: Instrument) : Double
+    fun getFretPosition(fretNum: Int, instrument: Instrument) : Double = getFretPosition(fretNum, instrument.numFrets)
 
-    fun getFretPositions(instrument: Instrument) : List<Double> = (0..instrument.numFrets).map {
-        getFretPosition(it, instrument)
+    fun getFretPosition(fretNum: Int, fretCount: Int) : Double
+
+    fun getFretPositions(instrument: Instrument) : List<Double> = getFretPositions(instrument.numFrets)
+
+    fun getFretPositions(fretCount: Int) = (0..fretCount).map {
+        getFretPosition(it, fretCount)
     }
 }
 
@@ -24,8 +28,8 @@ interface FretSpacing {
  * Constant fret spacing, all frets are the same distance apart.
  */
 object ConstantFretSpacing : FretSpacing {
-    override fun getFretPosition(fretNum: Int, instrument: Instrument): Double {
-        return fretNum.toDouble() / instrument.numFrets
+    override fun getFretPosition(fretNum: Int, fretCount: Int): Double {
+        return fretNum.toDouble() / fretCount
     }
 }
 
@@ -36,13 +40,13 @@ object ConstantFretSpacing : FretSpacing {
  */
 object EqualTemperamentFretSpacing : FretSpacing {
 
-    override fun getFretPosition(fretNum: Int, instrument: Instrument): Double {
-        val lastFretPosition = spacings[instrument.numFrets - 1]
+    override fun getFretPosition(fretNum: Int, fretCount: Int): Double {
+        val lastFretPosition = spacings[fretCount - 1]
         return spacings[fretNum - 1] / lastFretPosition
     }
 
-    override fun getFretPositions(instrument: Instrument): List<Double> {
-        val spacingsForInstrument = spacings.subList(0, instrument.numFrets + 1)
+    override fun getFretPositions(fretCount: Int): List<Double> {
+        val spacingsForInstrument = spacings.subList(0, fretCount + 1)
         val lastFretPosition = spacingsForInstrument.last()
         return spacingsForInstrument.map {
             it / lastFretPosition
@@ -51,5 +55,7 @@ object EqualTemperamentFretSpacing : FretSpacing {
 
     private fun fretSpacing(n: Int) = 1.0 - (1.0 / 2.0.pow(n / 12.0))
 
-    private val spacings = (0..Instrument.MaxFrets).map { fretSpacing(it) }
+    private val spacings by lazy {
+        (0..Instrument.MaxFrets).map { fretSpacing(it) }
+    }
 }

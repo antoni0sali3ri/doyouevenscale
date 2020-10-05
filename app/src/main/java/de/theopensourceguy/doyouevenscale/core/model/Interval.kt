@@ -5,6 +5,9 @@ import de.theopensourceguy.doyouevenscale.R
 data class Interval(
     val halfSteps: Int
 ) {
+    init {
+        require(halfSteps >= 0)
+    }
     val nameRes = nameResFor(halfSteps)
 
     fun shift(note: Note, shiftUp: Boolean = true) : Note = note.shift(if (shiftUp) halfSteps else -halfSteps)
@@ -27,4 +30,8 @@ data class Interval(
 
         fun nameResFor(halfSteps: Int) = NAME_RES[halfSteps % 12]
     }
+}
+
+fun Int.toInterval() : Interval {
+    return Interval(this)
 }

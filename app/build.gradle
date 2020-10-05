@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -36,6 +37,19 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation "ca.allanwang.kau:core:$KAU"
-    implementation "ca.allanwang.kau:core-ui:$KAU"
+    implementation "ca.allanwang.kau:core:$kau_version"
+    implementation "ca.allanwang.kau:core-ui:$kau_version"
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+
 }

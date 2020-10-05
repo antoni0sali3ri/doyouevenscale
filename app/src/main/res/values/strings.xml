@@ -5,7 +5,7 @@
     <string name="intervalPrime">Prime</string>
     <string name="intervalMinSecond">Minor Second</string>
     <string name="intervalMajSecond">Major Second</string>
-    <string name="intervalMinThird">Minor Thirds</string>
+    <string name="intervalMinThird">Minor Third</string>
     <string name="intervalMajThird">Major Third</string>
     <string name="intervalFourth">Fourth</string>
     <string name="intervalTritone">Tritone</string>
@@ -14,4 +14,36 @@
     <string name="intervalMajSixth">Major Sixth</string>
     <string name="intervalMinSeventh">Minor Seventh</string>
     <string name="intervalMajSeventh">Major Seventh</string>
+
+    <string name="scale_ionian_name">Ionian major</string>
+    <string name="scale_dorian_name">Dorian minor</string>
+    <string name="scale_phrygian_name">Phrygian minor</string>
+    <string name="scale_lydian_name">Lydian major</string>
+    <string name="scale_mixolydian_name">Mixolydian major</string>
+    <string name="scale_aeolian_name">Aeolian minor</string>
+    <string name="scale_locrian_name">Locrian minor</string>
+    <string name="scale_harmonic_name">Harmonic minor</string>
+    <string name="scale_melodic_name">Melodic minor</string>
+
+    <string name="tuning_guitar_standard_name">Guitar (Standard)</string>
+    <string name="tuning_guitar_opend_name">Guitar (Open D)</string>
+    <string name="tuning_guitar_dropd_name">Guitar (Drop D)</string>
+    <string name="tuning_guitar_dadgad_name">Guitar (DADGAD)</string>
+    <string name="tuning_violin_name">Violin (Standard)</string>
+    <string name="tuning_viola_name">Viola (Standard)</string>
+    <string name="tuning_bass_name">Bass (Standard)</string>
+    <string name="tuning_bass_5str_name">Bass (5-string)</string>
+    <string name="tuning_bass_6str_name">Bass (6-string)</string>
+    <string name="tuning_banjo_openg_name">Banjo (Open G)</string>
+    <string name="tuning_banjo_doublec_name">Banjo (Double C)</string>
+
+    <string name="instrument_guitar_name">Guitar</string>
+    <string name="instrument_banjo_name">Banjo</string>
+    <string name="instrument_mandolin_name">Mandolin</string>
+    <string name="instrument_bass_name">Bass</string>
+    <string name="scale_pentatonic_major_name">Major Pentatonic</string>
+    <string name="scale_pentatonic_minor_name">Minor pentatonic</string>
+    <string name="scale_pentatonic_blues_name">Blues Pentatonic</string>
+    <string name="lblTuningText">Tuning</string>
+    <string name="lblFretsShownText">Show frets</string>
 </resources>

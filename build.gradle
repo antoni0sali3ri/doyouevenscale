@@ -1,7 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.4.10"
-    ext.KAU = "6.0.0"
     repositories {
         google()
         jcenter()
@@ -16,6 +15,9 @@ buildscript {
 }
 
 allprojects {
+    ext.kau_version = "6.0.0"
+    ext.room_version = "2.2.5"
+    ext.coroutines_version = "1.3.4"
     repositories {
         google()
         maven { url "https://jitpack.io" }

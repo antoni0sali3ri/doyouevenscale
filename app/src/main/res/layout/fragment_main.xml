@@ -17,23 +17,102 @@
         app:fretboardFillColor="#abab00"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:noteColor="#222"
         app:stringColor="#ccc" />
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/layFretboardControls"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btnSharpFlat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBaseline_toBaselineOf="@id/spinnerScaleType"
+                app:layout_constraintEnd_toStartOf="@id/spinnerRootNote"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Spinner
+                android:id="@+id/spinnerRootNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"
+                app:layout_constraintBaseline_toBaselineOf="@id/spinnerScaleType"
+                app:layout_constraintEnd_toStartOf="@id/spinnerScaleType"
+                app:layout_constraintStart_toEndOf="@id/btnSharpFlat" />
+
+            <Spinner
+                android:id="@+id/spinnerScaleType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"
+                app:layout_constraintBottom_toTopOf="@id/spinnerTuning"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/spinnerRootNote"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/lblTuning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lblTuningText"
+                app:layout_constraintBaseline_toBaselineOf="@id/spinnerTuning"
+                app:layout_constraintEnd_toStartOf="@id/spinnerTuning"
+                app:layout_constraintStart_toStartOf="parent"
+
+                />
+
+            <Spinner
+                android:id="@+id/spinnerTuning"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"
+                app:layout_constraintBottom_toTopOf="@id/spinnerMaxFret"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/lblTuning"
+                app:layout_constraintTop_toTopOf="@id/lblTuning" />
+
+            <TextView
+                android:id="@+id/lblFretsShown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lblFretsShownText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/spinnerMinFret"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinnerTuning" />
+
+            <NumberPicker
+                android:id="@+id/spinnerMinFret"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/spinnerMaxFret"
+                app:layout_constraintStart_toEndOf="@id/lblFretsShown"
+                app:layout_constraintTop_toBottomOf="@id/spinnerTuning" />
+
+            <NumberPicker
+                android:id="@+id/spinnerMaxFret"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/spinnerMinFret"
+                app:layout_constraintTop_toBottomOf="@id/spinnerTuning" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

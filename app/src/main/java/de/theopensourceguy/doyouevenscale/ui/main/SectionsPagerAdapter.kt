@@ -1,14 +1,18 @@
 package de.theopensourceguy.doyouevenscale.ui.main
 
 import android.content.Context
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import de.theopensourceguy.doyouevenscale.R
+import de.theopensourceguy.doyouevenscale.ScaleViewerApplication
 
 private val TAB_TITLES = arrayOf(
-        R.string.tab_text_1,
-        R.string.tab_text_2
+        R.string.instrument_guitar_name,
+        R.string.instrument_mandolin_name,
+        R.string.instrument_banjo_name,
+        R.string.instrument_bass_name
 )
 
 /**
@@ -18,18 +22,20 @@ private val TAB_TITLES = arrayOf(
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager)
     : FragmentPagerAdapter(fm) {
 
+    val prefs = ScaleViewerApplication.prefs
+
     override fun getItem(position: Int): Fragment {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1)
+        val instrumentId = prefs.core.getInstrumentIdList()[position]
+        return PlaceholderFragment.newInstance(instrumentId)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return context.resources.getString(TAB_TITLES[position])
+        return "TEST"
     }
 
     override fun getCount(): Int {
-        // Show 2 total pages.
-        return 1
+        val count = prefs.core.getInstrumentIdList().size
+        Log.d("Adapter", "$count")
+        return count
     }
 }

@@ -2,27 +2,31 @@ package de.theopensourceguy.doyouevenscale.core.model
 
 enum class Note(val nameSharp: String, val nameFlat: String) {
     C("C", "C"),
-    Cis("C#", "Db"),
+    Cis("C♯", "D♭"),
     D("D", "D"),
-    Dis("D#", "Eb"),
+    Dis("D♯", "E♭"),
     E("E", "E"),
-    F("F","F"),
-    Fis("F#", "Gb"),
+    F("F", "F"),
+    Fis("F♯", "G♭"),
     G("G", "G"),
-    Gis("G#", "Ab"),
+    Gis("G♯", "A♭"),
     A("A", "A"),
-    Ais("A#", "Bb"),
+    Ais("A♯", "B♭"),
     B("B", "B");
 
     fun shift(halfSteps: Int) = shift(this, halfSteps)
 
     companion object {
-        fun shift(note: Note, halfSteps: Int) : Note {
+        fun shift(note: Note, halfSteps: Int): Note {
             val notes = values()
             val index = notes.indexOf(note)
             val newIndex = (index + halfSteps) % 12
             return notes[newIndex]
         }
+
+        val CircleOfFifths: List<Note> = listOf(
+            C, G, D, A, E, B, Fis, Cis, Gis, Dis, Ais, F
+        )
     }
 }
 

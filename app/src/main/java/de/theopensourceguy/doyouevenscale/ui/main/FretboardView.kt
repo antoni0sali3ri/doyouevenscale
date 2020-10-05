@@ -219,7 +219,7 @@ class FretboardView : View {
         fun scaleToSize() {
             if (!readyToDraw()) return
 
-            fretPosScaled = fretPos.map { if (it > 0) it * h else yofs.toFloat() }.toTypedArray()
+            fretPosScaled = fretPos.map { yofs + it * h }.toTypedArray()
 
             val stringSpacing = .7f * (fretPosScaled[1] - fretPosScaled[0])
             val fretboardWidth = stringSpacing * (stringCount - 1)

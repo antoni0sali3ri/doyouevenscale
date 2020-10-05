@@ -7,7 +7,7 @@ import ca.allanwang.kau.kpref.KPrefFactoryInMemory
 import de.theopensourceguy.doyouevenscale.core.db.ApplicationDatabase
 import de.theopensourceguy.doyouevenscale.core.model.Predef
 
-object ScaleViewerApplication : Application() {
+object MyApp : Application() {
     val APP_ID = "de.theopensourceguy.ScaleViewer"
     val DB_ID = "$APP_ID.db"
 

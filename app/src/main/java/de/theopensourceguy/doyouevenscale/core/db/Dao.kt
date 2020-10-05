@@ -14,6 +14,9 @@ interface InstrumentConfigurationDao {
     @Query("SELECT * FROM instrument_configurations WHERE id = :id")
     fun getInstrumentConfigById(id: Long) : InstrumentConfiguration
 
+    @Query("SELECT * FROM instrument_configurations WHERE id IN(:ids)")
+    fun getInstrumentConfigsByIds(ids: List<Long>) : LiveData<List<InstrumentConfiguration>>
+
     @Insert
     fun insertInstrumentConfigs(instrumentConfigurations: List<InstrumentConfiguration>): List<Long>
 
@@ -52,6 +55,9 @@ interface TuningDao {
 interface InstrumentDao {
     @Query("SELECT * FROM instruments WHERE instrumentId = :id")
     fun getInstrumentById(id: Long) : Instrument
+
+    @Query("SELECT * FROM instruments WHERE instrumentId IN(:ids)")
+    fun getInstrumentsByIds(ids: List<Long>): LiveData<List<Instrument>>
 
     @Query("SELECT * FROM instruments")
     fun getAllInstruments() : LiveData<List<Instrument>>

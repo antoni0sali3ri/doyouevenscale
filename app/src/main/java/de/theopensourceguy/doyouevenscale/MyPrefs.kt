@@ -4,7 +4,7 @@ import android.util.Log
 import ca.allanwang.kau.kpref.KPref
 import ca.allanwang.kau.kpref.KPrefFactory
 
-internal val appId = ScaleViewerApplication.APP_ID
+internal val appId = MyApp.APP_ID
 
 const val LIST_SEP = ";;"
 

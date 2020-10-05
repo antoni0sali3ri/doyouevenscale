@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import de.theopensourceguy.doyouevenscale.MyApp
 import de.theopensourceguy.doyouevenscale.R
-import de.theopensourceguy.doyouevenscale.ScaleViewerApplication
 import de.theopensourceguy.doyouevenscale.core.db.ApplicationDatabase
 import de.theopensourceguy.doyouevenscale.core.model.*
 
@@ -20,7 +20,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     ObservableInstrumentConfiguration.OnChangeListener {
 
     private val TAG: String = "FretboardFragment"
-    private val spinnerItemLayout = android.R.layout.simple_spinner_item
+    private val spinnerItemLayout = R.layout.layout_spinner_item
 
     private lateinit var db: ApplicationDatabase
 
@@ -37,7 +37,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        db = ScaleViewerApplication.database
+        db = MyApp.database
         with(db) {
             val configId = arguments!!.getLong(ARG_INSTRUMENT_CONFIG_ID)
             val cfg = instrumentConfigDao().getInstrumentConfigById(configId)

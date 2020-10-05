@@ -29,6 +29,10 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     private lateinit var scaleTypes: LiveData<List<Scale.Type>>
     private lateinit var tunings: LiveData<List<Instrument.Tuning>>
 
+    private lateinit var layControlsAdvanced: ViewGroup
+    private lateinit var btnExpandControls: ImageView
+    private var controlsExpanded: Boolean = false
+
     private lateinit var spinnerNote: Spinner
     private lateinit var spinnerScale: Spinner
     private lateinit var spinnerTuning: Spinner
@@ -65,6 +69,17 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_main, container, false)
+
+        layControlsAdvanced = root.findViewById(R.id.layFretboardControlsAdvanced)
+
+        btnExpandControls = root.findViewById(R.id.btnExpandControls)
+        btnExpandControls.setOnClickListener {
+            layControlsAdvanced.visibility = if (controlsExpanded) View.GONE else View.VISIBLE
+            btnExpandControls.setImageResource(
+                if (controlsExpanded) R.drawable.ic_expand_less else R.drawable.ic_expand_more
+            )
+            controlsExpanded = !controlsExpanded
+        }
 
         spinnerNote = root.findViewById(R.id.spinnerRootNote)
         spinnerNote.adapter = NoteSpinnerAdapter()

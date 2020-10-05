@@ -31,6 +31,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -49,9 +50,20 @@
                 android:layout_height="wrap_content"
                 android:spinnerMode="dialog"
                 app:layout_constraintBottom_toTopOf="@id/layFretboardControlsAdvanced"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btnExpandControls"
                 app:layout_constraintStart_toEndOf="@id/spinnerRootNote"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/btnExpandControls"
+                android:layout_width="@dimen/button_expand_size"
+                android:layout_height="@dimen/button_expand_size"
+                android:src="@drawable/ic_expand_less"
+                app:layout_constraintStart_toEndOf="@id/spinnerScaleType"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/layFretboardControlsAdvanced"
+                app:layout_constraintTop_toTopOf="parent"
+                />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layFretboardControlsAdvanced"
@@ -69,6 +81,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lblTuningText"
+                    android:textSize="@dimen/spinner_item_text_size"
+                    android:layout_marginEnd="@dimen/spinner_item_margin_horizontal"
                     app:layout_constraintBaseline_toBaselineOf="@id/spinnerTuning"
                     app:layout_constraintEnd_toStartOf="@id/spinnerTuning"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -88,23 +102,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lblFretsShownText"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textSize="@dimen/spinner_item_text_size"
+                    android:layout_marginEnd="@dimen/spinner_item_margin_horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/spinnerMinFret"
-                    app:layout_constraintBaseline_toBaselineOf="@id/spinnerMaxFret" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/spinnerMaxFret"
+                    />
 
-                <NumberPicker
+                <Spinner
                     android:id="@+id/spinnerMinFret"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:spinnerMode="dialog"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/spinnerMaxFret"
                     app:layout_constraintStart_toEndOf="@id/lblFretsShown"
                     app:layout_constraintTop_toBottomOf="@id/spinnerTuning" />
 
-                <NumberPicker
+                <Spinner
                     android:id="@+id/spinnerMaxFret"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:spinnerMode="dialog"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/spinnerMinFret"

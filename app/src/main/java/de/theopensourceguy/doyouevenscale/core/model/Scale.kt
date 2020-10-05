@@ -22,7 +22,7 @@ data class Scale(
         var name: String
     ) {
         @PrimaryKey(autoGenerate = true)
-        var id: Int = 0
+        var id: Long = 0
 
         constructor(
             name: String,

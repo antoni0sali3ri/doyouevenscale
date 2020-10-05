@@ -9,6 +9,12 @@ const val LIST_SEP = ";;"
 
 class NoteConverters {
     @TypeConverter
+    fun noteToString(note: Note) = note.toString()
+
+    @TypeConverter
+    fun stringToNote(string: String) = Note.valueOf(string)
+
+    @TypeConverter
     fun noteListToString(notes: List<Note>) = notes.joinToString(LIST_SEP)
 
     @TypeConverter

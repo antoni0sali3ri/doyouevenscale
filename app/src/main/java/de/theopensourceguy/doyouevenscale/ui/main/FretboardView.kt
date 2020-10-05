@@ -6,10 +6,8 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import de.theopensourceguy.doyouevenscale.R
-import de.theopensourceguy.doyouevenscale.core.model.EqualTemperamentFretSpacing
 import de.theopensourceguy.doyouevenscale.core.model.FretSpacing
-import de.theopensourceguy.doyouevenscale.core.model.Scale
-import de.theopensourceguy.doyouevenscale.core.model.TunedInstrument
+import de.theopensourceguy.doyouevenscale.core.model.Instrument
 
 /**
  * TODO: document your custom view class.
@@ -21,36 +19,8 @@ class FretboardView : View {
     private var _stringColor: Int = Color.rgb(0xaa, 0xaa, 0xaa)
     private var _noteColor: Int = Color.rgb(0x22, 0x22, 0x22)
 
-    private val crs : Coordinates = Coordinates()
-    private val pnt : Paint = Paint()
-
-    private val fretSpacing = EqualTemperamentFretSpacing
-    var instrument: TunedInstrument? = null
-        set(value) {
-            Log.d(TAG, "instrument.set($value)")
-            if (value == null) {
-                crs.reset()
-                scale = null
-            } else {
-                crs.updateInstrument(value.instrument.numStrings, value.instrument.numFrets, fretSpacing)
-            }
-            field = value
-            postInvalidate()
-        }
-
-    var scale: Scale? = null
-        set(value) {
-            instrument?.let {
-                Log.d(TAG, "scale.set($value)")
-                if (value == null)
-                    crs.resetScale()
-                else
-                    crs.updateScale(it, value)
-                field = value
-                postInvalidate()
-            }
-        }
-
+    private val crs: Coordinates = Coordinates()
+    private val pnt: Paint = Paint()
 
     constructor(context: Context) : super(context) {
         init(null, 0)
@@ -79,14 +49,17 @@ class FretboardView : View {
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         Log.d(TAG, "onSizeChanged($w, $h, $oldw, $oldh")
-        if (instrument != null && w > 0 && h > 0) {
-            crs.scaleToSize(
+            crs.setSize(
                 w - paddingLeft - paddingRight,
                 h - paddingTop - paddingBottom,
                 paddingLeft,
                 paddingTop
             )
-        }
+            crs.scaleToSize()
+    }
+
+    fun scaleToSize() {
+        crs.scaleToSize()
     }
 
     val TAG = this.javaClass.simpleName
@@ -94,34 +67,40 @@ class FretboardView : View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        if (instrument == null) return
-
-        // TODO: consider storing these as member variables to reduce
-        // allocations per draw cycle.
-        /*
-        val paddingLeft = paddingLeft
-        val paddingTop = paddingTop
-        val paddingRight = paddingRight
-        val paddingBottom = paddingBottom
-        */
-
         val noteRadius = 20f
 
         canvas.apply {
+            // Draw the fretboard background
             drawRect(crs.fretboardRect, pnt.fretboard)
+
+            // Draw the frets
             crs.fretPosScaled.forEach {
                 drawLine(crs.fretboardRect.left, it, crs.fretboardRect.right, it, pnt.frets)
             }
+
+            // Draw the strings
             crs.stringPosScaled.forEach {
                 drawLine(it, crs.fretboardRect.top, it, crs.fretboardRect.bottom, pnt.strings)
             }
-            scale?.let {
-                crs.notesInScale.forEach {
-                    drawCircle(crs.stringPosScaled[it.x - 1], crs.fretPosScaled[it.y], noteRadius, pnt.notes)
-                }
-                crs.rootNotes.forEach {
-                    drawCircle(crs.stringPosScaled[it.x - 1], crs.fretPosScaled[it.y], noteRadius, pnt.roots)
-                }
+
+            // Draw the fingerings for the current scale
+            crs.notesInScale.forEach {
+                drawCircle(
+                    crs.stringPosScaled[it.x - 1],
+                    crs.fretPosScaled[it.y],
+                    noteRadius,
+                    pnt.notes
+                )
+            }
+
+            // Fill in the root positions of the current scale
+            crs.rootNotes.forEach {
+                drawCircle(
+                    crs.stringPosScaled[it.x - 1],
+                    crs.fretPosScaled[it.y],
+                    noteRadius,
+                    pnt.roots
+                )
             }
         }
     }
@@ -155,28 +134,57 @@ class FretboardView : View {
         }
     }
 
+    fun setStringCount(stringCount: Int) {
+        require(stringCount > 0 && stringCount < Instrument.MaxStrings)
+        crs.stringCount = stringCount
+    }
+
+    fun updateFretboard(fretRange: IntRange, fretSpacing: FretSpacing) {
+        updateFretboard(fretRange.last - fretRange.first, fretSpacing)
+    }
+
+    fun updateFretboard(fretCount: Int, fretSpacing: FretSpacing) {
+        crs.apply {
+            fretPos = fretSpacing.getFretPositions(fretCount).map { it.toFloat() }.toTypedArray()
+        }
+    }
+
+    fun updateScale(fingerings: List<Point>, roots: List<Point>) {
+        crs.apply {
+            notesInScale = fingerings
+            rootNotes = roots
+        }
+    }
+
+    fun updateStringLabels(tuning: Instrument.Tuning, displayModeSharp: Boolean = true) {
+
+    }
+
+    fun updateFretLabels(fretRange: IntRange) {
+
+    }
+
     inner class Coordinates {
         lateinit var fretPos: Array<Float>
         var stringCount: Int = 0
+        lateinit var notesInScale: List<Point>
+        lateinit var rootNotes: List<Point>
 
         lateinit var stringPosScaled: Array<Float>
         lateinit var fretPosScaled: Array<Float>
         lateinit var notePosScaled: Array<Array<PointF>>
         lateinit var fretboardRect: RectF
-        lateinit var notesInScale: List<Point>
-        lateinit var rootNotes: List<Point>
+
+        var w : Int = 0
+        var h : Int = 0
+        var xofs : Int = 0
+        var yofs : Int = 0
 
         init {
             reset()
         }
 
-        fun getNotePosition(stringNo: Int, fretNo: Int) =
-            PointF(stringPosScaled[stringNo - 1], fretPosScaled[fretNo])
-
-        fun updateInstrument(numStrings: Int, numFrets: Int, fretSpacing: FretSpacing) {
-            fretPos = fretSpacing.getFretPositions(numFrets).map { it.toFloat() }.toTypedArray()
-            stringCount = numStrings
-        }
+        fun readyToDraw() = (w > 0 && h > 0) && (stringCount > 0 && fretPos.isNotEmpty())
 
         fun reset() {
             fretPos = emptyArray()
@@ -185,21 +193,32 @@ class FretboardView : View {
             fretPosScaled = emptyArray()
             notePosScaled = emptyArray()
             fretboardRect = RectF()
+            resetSize()
             resetScale()
+        }
+
+        fun resetSize() {
+            w = 0
+            h = 0
+            xofs = 0
+            yofs = 0
         }
 
         fun resetScale() {
             notesInScale = emptyList()
             rootNotes = emptyList()
-
         }
 
-        fun updateScale(instrument: TunedInstrument, scale: Scale) {
-            notesInScale = instrument.getFretsForScale(scale)
-            rootNotes = instrument.getRoots(scale)
+        fun setSize(w: Int, h: Int, xofs: Int, yofs: Int) {
+            this.w = w
+            this.h = h
+            this.xofs = xofs
+            this.yofs = yofs
         }
 
-        fun scaleToSize(w: Int, h: Int, xofs: Int, yofs: Int) {
+        fun scaleToSize() {
+            if (!readyToDraw()) return
+
             fretPosScaled = fretPos.map { if (it > 0) it * h else yofs.toFloat() }.toTypedArray()
 
             val stringSpacing = .7f * (fretPosScaled[1] - fretPosScaled[0])

@@ -18,13 +18,13 @@ class CorePrefs(factory: KPrefFactory) : KPref("$appId.core.prefs", factory) {
 
     var instrumentIdsForTabs: String by kpref("INSTRUMENT_IDS", "0")
 
-    fun getInstrumentIdList() : List<Int> {
-        val res = instrumentIdsForTabs.decodeIntList()
+    fun getInstrumentIdList() : List<Long> {
+        val res = instrumentIdsForTabs.decodeLongList()
         Log.d("Prefs", "getInstrumentIdList() = $res")
         return res
     }
 
-    fun setInstrumentIdList(ids: List<Int>) {
+    fun setInstrumentIdList(ids: List<Long>) {
         Log.d("Prefs", "setInstrumentList($ids)")
         instrumentIdsForTabs = ids.encodeAsString()
         Log.d("Prefs", "instrumentIdsForTabs = $instrumentIdsForTabs")
@@ -39,7 +39,7 @@ class AppearancePrefs(factory: KPrefFactory) : KPref("$appId.appearance.prefs", 
     var tabs: Set<String> by kpref("DISPLAYED_TABS", emptySet())
 }
 
-fun List<Int>.encodeAsString() = joinToString(LIST_SEP)
+fun List<Long>.encodeAsString() = joinToString(LIST_SEP)
 
-fun String.decodeIntList() : List<Int> = split(LIST_SEP).filter {!it.isBlank()}.map { it.toInt() }
+fun String.decodeLongList() : List<Long> = split(LIST_SEP).filter {!it.isBlank()}.map { it.toLong() }
 

@@ -13,11 +13,7 @@ interface FretSpacing {
     /**
      * Return the relative position for a given fret on an instrument.
      */
-    fun getFretPosition(fretNum: Int, instrument: Instrument) : Double = getFretPosition(fretNum, instrument.numFrets)
-
     fun getFretPosition(fretNum: Int, fretCount: Int) : Double
-
-    fun getFretPositions(instrument: Instrument) : List<Double> = getFretPositions(instrument.numFrets)
 
     fun getFretPositions(fretCount: Int) = (0..fretCount).map {
         getFretPosition(it, fretCount)

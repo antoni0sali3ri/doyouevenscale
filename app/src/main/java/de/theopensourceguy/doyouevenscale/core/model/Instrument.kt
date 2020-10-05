@@ -1,17 +1,49 @@
 package de.theopensourceguy.doyouevenscale.core.model
 
 import android.graphics.Point
-import androidx.room.*
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import de.theopensourceguy.doyouevenscale.core.db.NoteConverters
 
+@Entity(
+    tableName = "instrument_configurations",
+    foreignKeys = arrayOf(
+        ForeignKey(
+            entity = Instrument::class,
+            parentColumns = arrayOf("instrumentId"),
+            childColumns = arrayOf("instrumentId")
+        ),
+        ForeignKey(
+            entity = Instrument.Tuning::class,
+            parentColumns = arrayOf("tuningId"),
+            childColumns = arrayOf("tuningId")
+        ),
+        ForeignKey(
+            entity = Scale.Type::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("scaleTypeId")
+        )
+    )
+)
+@TypeConverters(NoteConverters::class)
+data class InstrumentConfiguration(
+
+    var instrumentId: Long,
+    var tuningId: Long,
+    var scaleTypeId: Long,
+    var rootNote: Note,
+    var fromFret: Int,
+    var toFret: Int
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0L
+}
 
 data class TunedInstrument(
-    @Relation(
-        parentColumn = "tuningId",
-        entityColumn = "default_tuning_id"
-    )
     val instrument: Instrument,
-    @Embedded val tuning: Instrument.Tuning
+    val tuning: Instrument.Tuning
 ) {
     init {
         require(instrument.numStrings == tuning.numStrings)
@@ -19,52 +51,62 @@ data class TunedInstrument(
 
     fun getNoteAt(stringNo: Int, fretNo: Int): Note {
         require(stringNo > 0 && stringNo <= instrument.numStrings)
-        require(fretNo >= 0 && fretNo <= instrument.numFrets)
+        require(fretNo >= 0 && fretNo <= Instrument.MaxFrets)
         return tuning.stringPitches[stringNo - 1].shift(fretNo)
     }
 
-    fun getFretsForScale(scale: Scale): List<Point> = (1..instrument.numStrings).fold(emptyList()) { l, s ->
-        l + getFretsForScale(s, scale).map { Point(s, it) }
-    }
+    fun getFretsForScale(scale: Scale, fretsShown: IntRange = 0..Instrument.MaxFrets): List<Point> =
+        (1..instrument.numStrings).fold(emptyList()) { l, s ->
+            l + getFretsForScale(s, scale, fretsShown).map { Point(s, it - fretsShown.first) }
+        }
 
-    fun getFretsForScale(stringNo: Int, scale: Scale): List<Int> {
+    fun getFretsForScale(
+        stringNo: Int,
+        scale: Scale,
+        fretsShown: IntRange = 0..Instrument.MaxFrets
+    ): List<Int> {
         val openString = tuning.pitchOf(stringNo)
-        return (0..instrument.numFrets).filter {
+        return fretsShown.filter {
             scale.contains(openString.shift(it))
         }
     }
 
-    fun getRootsForString(stringNo: Int, root: Note): List<Int> {
+    fun getRootsForString(
+        stringNo: Int,
+        root: Note,
+        fretsShown: IntRange = 0..Instrument.MaxFrets
+    ): List<Int> {
         val openString = tuning.pitchOf(stringNo)
-        return (0..instrument.numFrets).filter {
+        return fretsShown.filter {
             openString.shift(it) == root
         }
     }
 
-    fun getRootsForString(stringNo: Int, scale: Scale): List<Int> =
-        getRootsForString(stringNo, scale.root)
+    fun getRootsForString(
+        stringNo: Int,
+        scale: Scale,
+        fretsShown: IntRange = 0..Instrument.MaxFrets
+    ): List<Int> =
+        getRootsForString(stringNo, scale.root, fretsShown)
 
-    fun getRoots(root: Note): List<Point> =
+    fun getRoots(root: Note, fretsShown: IntRange = 0..Instrument.MaxFrets): List<Point> =
         (1..instrument.numStrings).fold(emptyList()) { l, s ->
-            l + getRootsForString(s, root).map { Point(s, it) }
+            l + getRootsForString(s, root, fretsShown).map { Point(s, it - fretsShown.first) }
         }
 
-    fun getRoots(scale: Scale): List<Point> = getRoots(scale.root)
+    fun getRoots(scale: Scale, fretsShown: IntRange = 0..Instrument.MaxFrets): List<Point> =
+        getRoots(scale.root, fretsShown)
 }
 
 @Entity(tableName = "instruments")
 data class Instrument(
     var numStrings: Int,
-    var numFrets: Int,
     var name: String,
-    @ColumnInfo(name = "default_tuning_id")
-    var defaultTuningId: Int
 ) {
     @PrimaryKey(autoGenerate = true)
-    var instrumentId: Int = 0
+    var instrumentId: Long = 0
 
     init {
-        require(numFrets > 0 && numFrets <= MaxFrets)
         require(numStrings >= 0 && numStrings <= MaxStrings)
     }
 
@@ -84,7 +126,7 @@ data class Instrument(
         }
 
         @PrimaryKey(autoGenerate = true)
-        var tuningId: Int = 0
+        var tuningId: Long = 0
 
         var numStrings: Int = stringPitches.size
 

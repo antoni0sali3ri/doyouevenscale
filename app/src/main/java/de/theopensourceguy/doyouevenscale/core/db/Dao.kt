@@ -3,16 +3,37 @@ package de.theopensourceguy.doyouevenscale.core.db
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.theopensourceguy.doyouevenscale.core.model.Instrument
+import de.theopensourceguy.doyouevenscale.core.model.InstrumentConfiguration
 import de.theopensourceguy.doyouevenscale.core.model.Scale
-import de.theopensourceguy.doyouevenscale.core.model.TunedInstrument
+
+@Dao
+interface InstrumentConfigurationDao {
+    @Query("SELECT * FROM instrument_configurations")
+    fun getAllInstrumentConfigs() : LiveData<List<InstrumentConfiguration>>
+
+    @Query("SELECT * FROM instrument_configurations WHERE id = :id")
+    fun getInstrumentConfigById(id: Long) : InstrumentConfiguration
+
+    @Insert
+    fun insertInstrumentConfigs(instrumentConfigurations: List<InstrumentConfiguration>): List<Long>
+
+    @Insert
+    fun insertInstrumentConfig(instrumentConfiguration: InstrumentConfiguration) : Long
+
+    @Update
+    fun updateInstrumentConfig(instrumentConfiguration: InstrumentConfiguration)
+
+    @Delete
+    fun deleteInstrumentConfig(instrumentConfiguration: InstrumentConfiguration)
+}
 
 @Dao
 interface TuningDao {
     @Query("SELECT * FROM instrument_tunings WHERE tuningId = :id")
-    fun getTuningForId(id: Int) : Instrument.Tuning
+    fun getTuningById(id: Long) : Instrument.Tuning
 
     @Query("SELECT * FROM instrument_tunings WHERE numStrings = :numStrings")
-    fun getTuningsForStringCount(numStrings: Int) : LiveData<List<Instrument.Tuning>>
+    fun getTuningsByStringCount(numStrings: Int) : LiveData<List<Instrument.Tuning>>
 
     @Insert
     fun insertTuning(tuning: Instrument.Tuning) : Long
@@ -29,16 +50,8 @@ interface TuningDao {
 
 @Dao
 interface InstrumentDao {
-    @Transaction
-    @Query("SELECT * FROM instruments INNER JOIN instrument_tunings ON instrumentId = tuningId")
-    fun getAllTunedInstruments() : LiveData<List<TunedInstrument>>
-
-    @Transaction
-    @Query("SELECT * FROM instruments INNER JOIN instrument_tunings ON tuningId = default_tuning_id WHERE instrumentId = :id")
-    fun getTunedInstrumentById(id: Int) : LiveData<TunedInstrument>
-
     @Query("SELECT * FROM instruments WHERE instrumentId = :id")
-    fun getInstrumentById(id: Int) : Instrument
+    fun getInstrumentById(id: Long) : Instrument
 
     @Query("SELECT * FROM instruments")
     fun getAllInstruments() : LiveData<List<Instrument>>
@@ -61,11 +74,14 @@ interface ScaleTypeDao {
     @Query("SELECT * FROM scale_types")
     fun getAllScaleTypes() : LiveData<List<Scale.Type>>
 
-    @Insert
-    fun insertScaleType(scaleType: Scale.Type)
+    @Query("SELECT * FROM scale_types WHERE id = :id")
+    fun getScaleTypeById(id: Long) : Scale.Type
 
     @Insert
-    fun insertScaleTypes(scaleTypes: List<Scale.Type>)
+    fun insertScaleType(scaleType: Scale.Type) : Long
+
+    @Insert
+    fun insertScaleTypes(scaleTypes: List<Scale.Type>) : List<Long>
 
     @Delete
     fun deleteScaleType(scaleType: Scale.Type)

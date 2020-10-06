@@ -1,9 +1,11 @@
-package de.theopensourceguy.doyouevenscale
+package de.theopensourceguy.doyouevenscale.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import de.theopensourceguy.doyouevenscale.MyApp
+import de.theopensourceguy.doyouevenscale.R
 import de.theopensourceguy.doyouevenscale.ui.main.SectionsPagerAdapter
 
 class MainActivity : AppCompatActivity() {

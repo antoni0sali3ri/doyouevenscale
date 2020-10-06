@@ -1,4 +1,4 @@
-package de.theopensourceguy.doyouevenscale.ui.main
+package de.theopensourceguy.doyouevenscale.ui.view
 
 import android.content.Context
 import android.view.View

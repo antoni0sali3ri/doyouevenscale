@@ -1,10 +1,11 @@
-package de.theopensourceguy.doyouevenscale.ui.main
+package de.theopensourceguy.doyouevenscale.ui.fragment
 
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import de.theopensourceguy.doyouevenscale.R
+import de.theopensourceguy.doyouevenscale.ui.view.FretRangePicker
 
 class FretRangePickerDialog(val range: IntRange, val listener: ResultListener) : DialogFragment() {
 

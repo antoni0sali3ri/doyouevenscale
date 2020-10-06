@@ -1,4 +1,4 @@
-package de.theopensourceguy.doyouevenscale.ui.main
+package de.theopensourceguy.doyouevenscale.ui.fragment
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import de.theopensourceguy.doyouevenscale.R
 import de.theopensourceguy.doyouevenscale.core.model.Note
+import de.theopensourceguy.doyouevenscale.ui.view.NotePickerView
 
 class NotePickerDialog(val listener: ResultListener, val displayMode: Note.Display) : DialogFragment() {
 

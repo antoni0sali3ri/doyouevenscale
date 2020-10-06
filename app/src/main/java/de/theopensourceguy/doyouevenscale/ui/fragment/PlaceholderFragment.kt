@@ -1,4 +1,4 @@
-package de.theopensourceguy.doyouevenscale.ui.main
+package de.theopensourceguy.doyouevenscale.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import de.theopensourceguy.doyouevenscale.MyApp
 import de.theopensourceguy.doyouevenscale.R
 import de.theopensourceguy.doyouevenscale.core.db.ApplicationDatabase
 import de.theopensourceguy.doyouevenscale.core.model.*
+import de.theopensourceguy.doyouevenscale.ui.view.FretboardView
 
 /**
  * A placeholder fragment containing a simple view.

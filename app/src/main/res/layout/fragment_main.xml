@@ -5,9 +5,9 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.PlaceholderFragment">
+    tools:context=".ui.fragment.PlaceholderFragment">
 
-    <de.theopensourceguy.doyouevenscale.ui.main.FretboardView
+    <de.theopensourceguy.doyouevenscale.ui.view.FretboardView
         android:id="@+id/fretboardView"
         android:layout_width="0dp"
         android:layout_height="0dp"

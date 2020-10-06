@@ -19,10 +19,10 @@ data class Scale(
     @TypeConverters(IntervalConverters::class)
     data class Type(
         var intervals: List<Interval>,
-        var name: String
-    ) {
+        override var name: String
+    ) : ListableEntity {
         @PrimaryKey(autoGenerate = true)
-        var id: Long = 0
+        override var id: Long = 0
 
         constructor(
             name: String,

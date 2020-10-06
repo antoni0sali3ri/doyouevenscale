@@ -17,23 +17,19 @@ class FretRangePickerDialog(val range: IntRange, val listener: ResultListener) :
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
-            // Use the Builder class for convenient dialog construction
             val view = it.layoutInflater.inflate(R.layout.layout_fret_range_picker, null, false)
             rangePicker = FretRangePicker(it, view, range)
 
-            val builder = AlertDialog.Builder(it)
-
-            builder
+            AlertDialog.Builder(it)
                 .setTitle(R.string.dialogFretRangeTitle)
                 .setView(view)
-                .setPositiveButton(android.R.string.ok, { di, i ->
+                .setPositiveButton(android.R.string.ok) { di, i ->
                     listener.updateFretRange(rangePicker.getRange())
-                })
-                .setNegativeButton(android.R.string.cancel, { di, i ->
+                }
+                .setNegativeButton(android.R.string.cancel) { di, i ->
 
-                })
-            // Create the AlertDialog object and return it
-            builder.create()
+                }
+                .create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 

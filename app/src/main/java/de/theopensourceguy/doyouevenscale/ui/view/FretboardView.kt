@@ -1,4 +1,4 @@
-package de.theopensourceguy.doyouevenscale.ui.main
+package de.theopensourceguy.doyouevenscale.ui.view
 
 import android.content.Context
 import android.graphics.*
@@ -442,4 +442,3 @@ class FretboardView : View {
         )
     }
 }
-

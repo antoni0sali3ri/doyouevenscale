@@ -2,10 +2,7 @@ package de.theopensourceguy.doyouevenscale.core.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import de.theopensourceguy.doyouevenscale.core.model.Instrument
-import de.theopensourceguy.doyouevenscale.core.model.InstrumentConfiguration
-import de.theopensourceguy.doyouevenscale.core.model.Scale
-import de.theopensourceguy.doyouevenscale.core.model.TunedInstrument
+import de.theopensourceguy.doyouevenscale.core.model.*
 
 @Database(
     version = 1,
@@ -26,6 +23,14 @@ abstract class ApplicationDatabase : RoomDatabase() {
 
     abstract fun scaleDao(): ScaleTypeDao
 
+    fun <T : ListableEntity> getDaoForClass(clazz: Class<T>): ViewModelDao<T> = when(clazz) {
+        Instrument::class.java -> instrumentDao()
+        InstrumentConfiguration::class.java -> instrumentConfigDao()
+        Instrument.Tuning::class.java -> tuningDao()
+        Scale.Type::class.java -> scaleDao()
+        else -> throw IllegalArgumentException()
+    } as ViewModelDao<T>
+
 }
 
 class DbUtils(val database: ApplicationDatabase) {
@@ -35,10 +40,10 @@ class DbUtils(val database: ApplicationDatabase) {
         scale: Scale,
         fretsShown: IntRange
     ): Long {
-        val tuningId = database.tuningDao().insertTuning(instrument.tuning)
-        val instrumentId = database.instrumentDao().insertInstrument(instrument.instrument)
+        val tuningId = database.tuningDao().insertSingle(instrument.tuning)
+        val instrumentId = database.instrumentDao().insertSingle(instrument.instrument)
         val rootNote = scale.root
-        val scaleTypeId = database.scaleDao().insertScaleType(scale.type)
+        val scaleTypeId = database.scaleDao().insertSingle(scale.type)
         val instrumentConfig = InstrumentConfiguration(
             instrumentId,
             tuningId,
@@ -47,6 +52,6 @@ class DbUtils(val database: ApplicationDatabase) {
             fretsShown.first,
             fretsShown.last
         )
-        return database.instrumentConfigDao().insertInstrumentConfig(instrumentConfig)
+        return database.instrumentConfigDao().insertSingle(instrumentConfig)
     }
 }

@@ -1,6 +1,5 @@
 package de.theopensourceguy.doyouevenscale.ui.main
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -11,11 +10,11 @@ import de.theopensourceguy.doyouevenscale.ui.fragment.PlaceholderFragment
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class SectionsPagerAdapter(val instruments: List<Instrument>, private val context: Context, fm: FragmentManager)
+class InstrumentConfigPagerAdapter(private val instruments: List<Instrument>, fm: FragmentManager)
     : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return PlaceholderFragment.newInstance(instruments[position].instrumentId)
+        return PlaceholderFragment.newInstance(instruments[position].id)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

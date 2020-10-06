@@ -9,23 +9,19 @@ import de.theopensourceguy.doyouevenscale.core.db.NoteConverters
 
 @Entity(
     tableName = "instrument_configurations",
-    foreignKeys = arrayOf(
-        ForeignKey(
-            entity = Instrument::class,
-            parentColumns = arrayOf("instrumentId"),
-            childColumns = arrayOf("instrumentId")
-        ),
-        ForeignKey(
-            entity = Instrument.Tuning::class,
-            parentColumns = arrayOf("tuningId"),
-            childColumns = arrayOf("tuningId")
-        ),
-        ForeignKey(
-            entity = Scale.Type::class,
-            parentColumns = arrayOf("id"),
-            childColumns = arrayOf("scaleTypeId")
-        )
-    )
+    foreignKeys = [ForeignKey(
+        entity = Instrument::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("instrumentId")
+    ), ForeignKey(
+        entity = Instrument.Tuning::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("tuningId")
+    ), ForeignKey(
+        entity = Scale.Type::class,
+        parentColumns = arrayOf("id"),
+        childColumns = arrayOf("scaleTypeId")
+    )]
 )
 @TypeConverters(NoteConverters::class)
 data class InstrumentConfiguration(
@@ -36,9 +32,11 @@ data class InstrumentConfiguration(
     var rootNote: Note,
     var fromFret: Int,
     var toFret: Int
-) {
+) : ListableEntity {
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0L
+    override var id: Long = 0L
+
+    override var name: String = ""
 }
 
 data class TunedInstrument(
@@ -101,10 +99,10 @@ data class TunedInstrument(
 @Entity(tableName = "instruments")
 data class Instrument(
     var numStrings: Int,
-    var name: String,
-) {
+    override var name: String,
+) : ListableEntity {
     @PrimaryKey(autoGenerate = true)
-    var instrumentId: Long = 0
+    override var id: Long = 0
 
     init {
         require(numStrings >= 0 && numStrings <= MaxStrings)
@@ -119,14 +117,14 @@ data class Instrument(
     @TypeConverters(NoteConverters::class)
     data class Tuning(
         var stringPitches: List<Note>,
-        var tuningName: String
-    ) {
+        override var name: String
+    ) : ListableEntity {
         init {
             require(stringPitches.isNotEmpty())
         }
 
         @PrimaryKey(autoGenerate = true)
-        var tuningId: Long = 0
+        override var id: Long = 0
 
         var numStrings: Int = stringPitches.size
 

@@ -49,7 +49,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
 
         db = MyApp.database
         with(db) {
-            val configId = arguments!!.getLong(ARG_INSTRUMENT_CONFIG_ID)
+            val configId = requireArguments().getLong(ARG_INSTRUMENT_CONFIG_ID)
             val cfg = instrumentConfigDao().getInstrumentConfigById(configId)
             val instrument = instrumentDao().getInstrumentById(cfg.instrumentId)
             val tuning = tuningDao().getTuningById(cfg.tuningId)
@@ -66,7 +66,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
 
             instrumentConfig.listeners.add(this@PlaceholderFragment)
 
-            scaleTypes = scaleDao().getAllScaleTypes()
+            scaleTypes = scaleDao().getAll()
             tunings = tuningDao().getTuningsByStringCount(instrument.numStrings)
         }
     }
@@ -110,7 +110,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         spinnerScale = root.findViewById(R.id.spinnerScaleType)
         scaleTypes.observe(viewLifecycleOwner, {
             spinnerScale.adapter = ArrayAdapter(
-                context!!,
+                requireContext(),
                 spinnerItemLayout,
                 it.map { it.name }
             )
@@ -122,9 +122,9 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         spinnerTuning = root.findViewById(R.id.spinnerTuning)
         tunings.observe(viewLifecycleOwner, {
             spinnerTuning.adapter = ArrayAdapter(
-                context!!,
+                requireContext(),
                 spinnerItemLayout,
-                it.map { it.tuningName }
+                it.map { it.name }
             )
             val position = it.indexOf(instrumentConfig.tuning)
             spinnerTuning.setSelection(position)

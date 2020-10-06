@@ -54,4 +54,8 @@
     <string name="tuning_ukulele_standard_name">Ukulele (Standard)</string>
     <string name="instrument_ukulele_name">Ukulele</string>
     <string name="lblScaleName">Scale</string>
+    <string name="title_activity_data_manager">DataManagerActivity</string>
+    <string name="tab_title_dm_instruments">Instruments</string>
+    <string name="tab_title_dm_tunings">Tunings</string>
+    <string name="tab_title_dm_scales">Scales</string>
 </resources>

@@ -4,96 +4,119 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.theopensourceguy.doyouevenscale.core.model.Instrument
 import de.theopensourceguy.doyouevenscale.core.model.InstrumentConfiguration
+import de.theopensourceguy.doyouevenscale.core.model.ListableEntity
 import de.theopensourceguy.doyouevenscale.core.model.Scale
 
+interface ViewModelDao<T : ListableEntity> {
+
+    fun getAll(): LiveData<out List<T>>
+
+    fun insertSingle(item: T): Long
+
+    fun updateSingle(item: T)
+
+    fun deleteSingle(item: T)
+}
+
 @Dao
-interface InstrumentConfigurationDao {
+interface InstrumentConfigurationDao : ViewModelDao<InstrumentConfiguration> {
+
     @Query("SELECT * FROM instrument_configurations")
-    fun getAllInstrumentConfigs() : LiveData<List<InstrumentConfiguration>>
+    override fun getAll(): LiveData<List<InstrumentConfiguration>>
 
     @Query("SELECT * FROM instrument_configurations WHERE id = :id")
-    fun getInstrumentConfigById(id: Long) : InstrumentConfiguration
+    fun getInstrumentConfigById(id: Long): InstrumentConfiguration
 
     @Query("SELECT * FROM instrument_configurations WHERE id IN(:ids)")
-    fun getInstrumentConfigsByIds(ids: List<Long>) : LiveData<List<InstrumentConfiguration>>
+    fun getInstrumentConfigsByIds(ids: List<Long>): LiveData<List<InstrumentConfiguration>>
 
     @Insert
     fun insertInstrumentConfigs(instrumentConfigurations: List<InstrumentConfiguration>): List<Long>
 
     @Insert
-    fun insertInstrumentConfig(instrumentConfiguration: InstrumentConfiguration) : Long
+    override fun insertSingle(item: InstrumentConfiguration): Long
 
     @Update
-    fun updateInstrumentConfig(instrumentConfiguration: InstrumentConfiguration)
+    override fun updateSingle(item: InstrumentConfiguration)
 
     @Delete
-    fun deleteInstrumentConfig(instrumentConfiguration: InstrumentConfiguration)
+    override fun deleteSingle(item: InstrumentConfiguration)
 }
 
 @Dao
-interface TuningDao {
-    @Query("SELECT * FROM instrument_tunings WHERE tuningId = :id")
-    fun getTuningById(id: Long) : Instrument.Tuning
+interface TuningDao : ViewModelDao<Instrument.Tuning> {
+    @Query("SELECT * FROM instrument_tunings")
+    override fun getAll(): LiveData<List<Instrument.Tuning>>
+
+    @Query("SELECT * FROM instrument_tunings WHERE id = :id")
+    fun getTuningById(id: Long): Instrument.Tuning
 
     @Query("SELECT * FROM instrument_tunings WHERE numStrings = :numStrings")
-    fun getTuningsByStringCount(numStrings: Int) : LiveData<List<Instrument.Tuning>>
+    fun getTuningsByStringCount(numStrings: Int): LiveData<List<Instrument.Tuning>>
 
     @Insert
-    fun insertTuning(tuning: Instrument.Tuning) : Long
+    override fun insertSingle(item: Instrument.Tuning): Long
 
     @Insert
     fun insertTunings(tunings: List<Instrument.Tuning>)
 
+    @Update
+    override fun updateSingle(item: Instrument.Tuning)
+
     @Delete
-    fun deleteTuning(tuning: Instrument.Tuning)
+    override fun deleteSingle(item: Instrument.Tuning)
 
     @Delete
     fun deleteTunings(tunings: List<Instrument.Tuning>)
 }
 
 @Dao
-interface InstrumentDao {
-    @Query("SELECT * FROM instruments WHERE instrumentId = :id")
-    fun getInstrumentById(id: Long) : Instrument
+interface InstrumentDao : ViewModelDao<Instrument> {
+    @Query("SELECT * FROM instruments WHERE id = :id")
+    fun getInstrumentById(id: Long): Instrument
 
-    @Query("SELECT * FROM instruments WHERE instrumentId IN(:ids)")
+    @Query("SELECT * FROM instruments WHERE id IN(:ids)")
     fun getInstrumentsByIds(ids: List<Long>): LiveData<List<Instrument>>
 
     @Query("SELECT * FROM instruments")
-    fun getAllInstruments() : LiveData<List<Instrument>>
+    override fun getAll(): LiveData<List<Instrument>>
 
     @Query("SELECT * FROM instruments WHERE numStrings = :numStrings")
-    fun getInstrumentsWithStringCount(numStrings: Int) : LiveData<List<Instrument>>
+    fun getInstrumentsWithStringCount(numStrings: Int): LiveData<List<Instrument>>
 
     @Insert
-    fun insertInstrument(instrument: Instrument) : Long
+    override fun insertSingle(item: Instrument): Long
 
     @Insert
     fun insertInstruments(instruments: List<Instrument>)
 
+    @Update
+    override fun updateSingle(item: Instrument)
+
     @Delete
-    fun deleteInstrument(instrument: Instrument)
+    override fun deleteSingle(item: Instrument)
 }
 
 @Dao
-interface ScaleTypeDao {
+interface ScaleTypeDao : ViewModelDao<Scale.Type> {
     @Query("SELECT * FROM scale_types")
-    fun getAllScaleTypes() : LiveData<List<Scale.Type>>
+    override fun getAll(): LiveData<List<Scale.Type>>
 
     @Query("SELECT * FROM scale_types WHERE id = :id")
-    fun getScaleTypeById(id: Long) : Scale.Type
+    fun getScaleTypeById(id: Long): Scale.Type
 
     @Insert
-    fun insertScaleType(scaleType: Scale.Type) : Long
+    override fun insertSingle(item: Scale.Type): Long
 
     @Insert
-    fun insertScaleTypes(scaleTypes: List<Scale.Type>) : List<Long>
+    fun insertScaleTypes(scaleTypes: List<Scale.Type>): List<Long>
+
+    @Update
+    override fun updateSingle(item: Scale.Type)
 
     @Delete
-    fun deleteScaleType(scaleType: Scale.Type)
+    override fun deleteSingle(item: Scale.Type)
 
     @Delete
     fun deleteScaleTypes(scaleTypes: List<Scale.Type>)
-
-
 }

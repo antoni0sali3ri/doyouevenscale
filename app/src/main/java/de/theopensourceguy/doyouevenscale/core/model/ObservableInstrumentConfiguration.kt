@@ -49,8 +49,8 @@ class ObservableInstrumentConfiguration(
 
     fun getObjectForDb(configId: Long = 0): InstrumentConfiguration {
         return InstrumentConfiguration(
-            instrument.instrumentId,
-            tuning.tuningId,
+            instrument.id,
+            tuning.id,
             scaleType.id,
             rootNote,
             fretsShown.first,

@@ -24,10 +24,10 @@ class NotePickerDialog(val listener: ResultListener, val displayMode: Note.Displ
                 this.dismiss()
             }
 
-            val builder = AlertDialog.Builder(it)
+            AlertDialog.Builder(it)
                 .setTitle(R.string.dialogNotePickerTitle)
                 .setView(view)
-            builder.create()
+                .create()
         } ?: throw IllegalStateException()
     }
 }

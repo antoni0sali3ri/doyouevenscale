@@ -34,9 +34,4 @@ object MyApp : Application() {
             prefs.core.setInstrumentIdList(ids)
         }
     }
-
-    override fun onCreate() {
-        super.onCreate()
-    }
-
 }

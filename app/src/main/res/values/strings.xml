@@ -48,4 +48,5 @@
     <string name="lblFretsShownText">Show frets</string>
     <string name="lblFretRangeTo">to</string>
     <string name="dialogFretRangeTitle">Select the range of frets to show</string>
+    <string name="dialogNotePickerTitle">Select the root note</string>
 </resources>

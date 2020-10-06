@@ -18,7 +18,7 @@ class FretRangePickerDialog(val range: IntRange, val listener: ResultListener) :
         return activity?.let {
             // Use the Builder class for convenient dialog construction
             val view = it.layoutInflater.inflate(R.layout.layout_fret_range_picker, null, false)
-            rangePicker = FretRangePicker(it.applicationContext, view, range)
+            rangePicker = FretRangePicker(it, view, range)
 
             val builder = AlertDialog.Builder(it)
 

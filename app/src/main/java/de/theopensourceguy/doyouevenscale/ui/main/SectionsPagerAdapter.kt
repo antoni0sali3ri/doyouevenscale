@@ -4,15 +4,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import de.theopensourceguy.doyouevenscale.R
 import de.theopensourceguy.doyouevenscale.core.model.Instrument
-
-private val TAB_TITLES = arrayOf(
-        R.string.instrument_guitar_name,
-        R.string.instrument_mandolin_name,
-        R.string.instrument_banjo_name,
-        R.string.instrument_bass_name
-)
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

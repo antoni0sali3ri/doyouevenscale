@@ -16,6 +16,15 @@ enum class Note(val nameSharp: String, val nameFlat: String) {
 
     fun shift(halfSteps: Int) = shift(this, halfSteps)
 
+    fun getName(display: Display) = when (display) {
+        Display.Sharp -> nameSharp
+        Display.Flat -> nameFlat
+    }
+
+    enum class Display {
+        Sharp, Flat
+    }
+
     companion object {
         fun shift(note: Note, halfSteps: Int): Note {
             val notes = values()

@@ -26,6 +26,7 @@
         android:id="@+id/layFretboardControls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="#eee"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -33,13 +34,26 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/cardviewControlsPaddingHorizontal"
+            android:paddingVertical="@dimen/cardviewControlsPaddingVertical"
             android:animateLayoutChanges="true">
+
+            <TextView
+                android:id="@+id/txtRootNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/note_text_size"
+                android:paddingHorizontal="@dimen/spinner_item_margin_horizontal"
+                app:layout_constraintBaseline_toBaselineOf="@id/spinnerScaleType"
+                app:layout_constraintEnd_toStartOf="@id/spinnerScaleType"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Spinner
                 android:id="@+id/spinnerRootNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dialog"
+                android:visibility="gone"
                 app:layout_constraintBaseline_toBaselineOf="@id/spinnerScaleType"
                 app:layout_constraintEnd_toStartOf="@id/spinnerScaleType"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -51,7 +65,7 @@
                 android:spinnerMode="dialog"
                 app:layout_constraintBottom_toTopOf="@id/layFretboardControlsAdvanced"
                 app:layout_constraintEnd_toStartOf="@id/btnExpandControls"
-                app:layout_constraintStart_toEndOf="@id/spinnerRootNote"
+                app:layout_constraintStart_toEndOf="@id/txtRootNote"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView

@@ -17,7 +17,8 @@ import de.theopensourceguy.doyouevenscale.core.model.*
  */
 class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     ObservableInstrumentConfiguration.OnChangeListener,
-    FretRangePickerDialog.ResultListener {
+    FretRangePickerDialog.ResultListener,
+    NotePickerDialog.ResultListener {
 
     private val TAG: String = "FretboardFragment"
     private val spinnerItemLayout = R.layout.layout_spinner_item
@@ -25,6 +26,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     private lateinit var db: ApplicationDatabase
 
     private lateinit var instrumentConfig: ObservableInstrumentConfiguration
+    private var noteDisplay: Note.Display = Note.Display.Sharp
 
     private lateinit var scaleTypes: LiveData<List<Scale.Type>>
     private lateinit var tunings: LiveData<List<Instrument.Tuning>>
@@ -34,6 +36,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     private lateinit var btnExpandControls: ImageView
     private var controlsExpanded: Boolean = false
 
+    private lateinit var txtNote: TextView
     private lateinit var spinnerNote: Spinner
     private lateinit var spinnerScale: Spinner
     private lateinit var spinnerTuning: Spinner
@@ -90,10 +93,18 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
             controlsExpanded = !controlsExpanded
         }
 
+        txtNote = root.findViewById(R.id.txtRootNote)
+        txtNote.setOnClickListener {
+            showNotePickerDialog()
+        }
+        txtNote.text = instrumentConfig.rootNote.nameSharp
+
+        /*
         spinnerNote = root.findViewById(R.id.spinnerRootNote)
         spinnerNote.adapter = NoteSpinnerAdapter()
         spinnerNote.onItemSelectedListener = this
         spinnerNote.setSelection(instrumentConfig.rootNote.ordinal)
+        */
 
         spinnerScale = root.findViewById(R.id.spinnerScaleType)
         scaleTypes.observe(viewLifecycleOwner, {
@@ -151,6 +162,11 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         }
     }
 
+    fun showNotePickerDialog() {
+        val dialog = NotePickerDialog(this, noteDisplay)
+        dialog.show(childFragmentManager, "NotePickerDialog")
+    }
+
     fun showFretRangeDialog() {
         val dialog = FretRangePickerDialog(instrumentConfig.fretsShown, this)
         dialog.show(childFragmentManager, "RangePickerDialog")
@@ -182,10 +198,12 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         when (parent) {
             null -> {
             }
+            /*
             spinnerNote -> {
                 val newRoot = Note.values()[position]
                 instrumentConfig.rootNote = newRoot
             }
+            */
             spinnerScale -> {
                 val newScaleType = scaleTypes.value!!.get(position)
                 instrumentConfig.scaleType = newScaleType
@@ -245,5 +263,11 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         spinnerMinFret.text = range.first.toString()
         spinnerMaxFret.text = range.last.toString()
         instrumentConfig.fretsShown = range
+    }
+
+    override fun onNoteSelected(note: String, displayMode: Note.Display) {
+        instrumentConfig.rootNote = Note.valueOf(note)
+        noteDisplay = displayMode
+        txtNote.text = instrumentConfig.rootNote.getName(displayMode)
     }
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ToggleButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toggleButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/note_padding"
+    android:textOff="♭"
+    android:textOn="♯"
+    android:textSize="@dimen/note_text_size" />

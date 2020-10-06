@@ -49,4 +49,8 @@
     <string name="lblFretRangeTo">to</string>
     <string name="dialogFretRangeTitle">Select the range of frets to show</string>
     <string name="dialogNotePickerTitle">Select the root note</string>
+    <string name="tuning_guitar_halfdown_name">Guitar (½ step down)></string>
+    <string name="tuning_guitar_fulldown_name">Guitar (1 step down)</string>
+    <string name="tuning_ukulele_standard_name">Ukulele (Standard)</string>
+    <string name="instrument_ukulele_name">Ukulele</string>
 </resources>

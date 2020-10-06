@@ -5,7 +5,8 @@ class ObservableInstrumentConfiguration(
     _tuning: Instrument.Tuning,
     _root: Note,
     _scaleType: Scale.Type,
-    _fretsShown: IntRange
+    _fretsShown: IntRange,
+    _noteDisplay: Note.Display
 ) {
     val listeners: MutableSet<OnChangeListener> = mutableSetOf()
 
@@ -40,6 +41,12 @@ class ObservableInstrumentConfiguration(
             field = value
         }
 
+    var noteDisplay: Note.Display = _noteDisplay
+        set(value) {
+            listeners.forEach { it.onNoteDisplayChanged(value, field) }
+            field = value
+        }
+
     fun getObjectForDb(configId: Long = 0): InstrumentConfiguration {
         return InstrumentConfiguration(
             instrument.instrumentId,
@@ -57,6 +64,8 @@ class ObservableInstrumentConfiguration(
         fun onScaleChanged(newScale: Scale, oldScale: Scale)
 
         fun onFretRangeChanged(newRange: IntRange, oldRange: IntRange)
+
+        fun onNoteDisplayChanged(newDisplay: Note.Display, oldDisplay: Note.Display)
     }
 }
 

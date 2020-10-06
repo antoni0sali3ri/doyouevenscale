@@ -26,7 +26,6 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     private lateinit var db: ApplicationDatabase
 
     private lateinit var instrumentConfig: ObservableInstrumentConfiguration
-    private var noteDisplay: Note.Display = Note.Display.Sharp
 
     private lateinit var scaleTypes: LiveData<List<Scale.Type>>
     private lateinit var tunings: LiveData<List<Instrument.Tuning>>
@@ -60,7 +59,8 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
                 tuning,
                 cfg.rootNote,
                 scaleType,
-                cfg.fromFret..cfg.toFret
+                cfg.fromFret..cfg.toFret,
+                Note.Display.Sharp
             )
 
             instrumentConfig.listeners.add(this@PlaceholderFragment)
@@ -138,6 +138,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         fretboardView = root.findViewById(R.id.fretboardView)
         fretboardView.setStringCount(instrumentConfig.instrument.numStrings)
         fretboardView.updateFretboard(instrumentConfig.fretsShown, EqualTemperamentFretSpacing)
+        fretboardView.updateStringLabels(instrumentConfig.tuning, instrumentConfig.noteDisplay)
         return root
     }
 
@@ -163,7 +164,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     }
 
     fun showNotePickerDialog() {
-        val dialog = NotePickerDialog(this, noteDisplay)
+        val dialog = NotePickerDialog(this, instrumentConfig.noteDisplay)
         dialog.show(childFragmentManager, "NotePickerDialog")
     }
 
@@ -220,8 +221,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     }
 
     override fun onTuningChanged(newTuning: Instrument.Tuning, oldTuning: Instrument.Tuning) {
-
-        fretboardView.updateStringLabels(newTuning)
+        fretboardView.updateStringLabels(newTuning, instrumentConfig.noteDisplay)
 
         val inst = TunedInstrument(instrumentConfig.instrument, newTuning)
         val scale = Scale(instrumentConfig.rootNote, instrumentConfig.scaleType)
@@ -235,20 +235,18 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     }
 
     override fun onScaleChanged(newScale: Scale, oldScale: Scale) {
-
         val inst = TunedInstrument(instrumentConfig.instrument, instrumentConfig.tuning)
         fretboardView.updateScale(
             inst.getFretsForScale(newScale, instrumentConfig.fretsShown),
             inst.getRoots(newScale, instrumentConfig.fretsShown)
         )
+        txtNote.text = newScale.root.getName(instrumentConfig.noteDisplay)
         fretboardView.scaleToSize()
         fretboardView.postInvalidate()
     }
 
     override fun onFretRangeChanged(newRange: IntRange, oldRange: IntRange) {
-
         fretboardView.updateFretboard(newRange, EqualTemperamentFretSpacing)
-        fretboardView.updateFretLabels(newRange)
         val inst = TunedInstrument(instrumentConfig.instrument, instrumentConfig.tuning)
         val scale = Scale(instrumentConfig.rootNote, instrumentConfig.scaleType)
         fretboardView.updateScale(
@@ -259,6 +257,11 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         fretboardView.postInvalidate()
     }
 
+    override fun onNoteDisplayChanged(newDisplay: Note.Display, oldDisplay: Note.Display) {
+        txtNote.text = instrumentConfig.rootNote.getName(newDisplay)
+        fretboardView.updateStringLabels(instrumentConfig.tuning, newDisplay)
+    }
+
     override fun updateFretRange(range: IntRange) {
         spinnerMinFret.text = range.first.toString()
         spinnerMaxFret.text = range.last.toString()
@@ -267,7 +270,6 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
 
     override fun onNoteSelected(note: String, displayMode: Note.Display) {
         instrumentConfig.rootNote = Note.valueOf(note)
-        noteDisplay = displayMode
-        txtNote.text = instrumentConfig.rootNote.getName(displayMode)
+        instrumentConfig.noteDisplay = displayMode
     }
 }

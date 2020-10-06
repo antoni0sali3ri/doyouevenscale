@@ -80,21 +80,24 @@ class NotePickerView(context: Context, _displayMode: Note.Display) : ViewGroup(c
             val centerX = (r - l) / 2.0
             val centerY = (b - t) / 2.0
             val radius = 0.8 * min(centerX, centerY)
-            val tvSize = 0.15 * radius
             var cx: Double
             var cy: Double
             textViews.forEach {
                 cx = centerX + cos(angle) * radius
                 cy = centerY + sin(angle) * radius
-                it.layout(
-                    (cx - tvSize).toInt(), (cy - tvSize).toInt(),
-                    (cx + tvSize).toInt(), (cy + tvSize).toInt()
-                )
+                it.apply {
+                    val tvSize = textSize
+                    layout(
+                        (cx - tvSize).toInt(), (cy - tvSize * 0.75).toInt(),
+                        (cx + tvSize).toInt(), (cy + tvSize * 0.75).toInt()
+                    )
+                }
                 angle += increment
             }
+            val buttonSize = toggleButton.textSize
             toggleButton.layout(
-                (centerX - tvSize).toInt(), (centerY - tvSize).toInt(),
-                (centerX + tvSize).toInt(), (centerY + tvSize).toInt()
+                (centerX - buttonSize).toInt(), (centerY - buttonSize).toInt(),
+                (centerX + buttonSize).toInt(), (centerY + buttonSize).toInt()
             )
         }
     }

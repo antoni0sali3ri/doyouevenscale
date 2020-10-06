@@ -13,7 +13,8 @@ class Predef(private val context: Context) {
         InstrumentConfiguration(1, 1, 1, Note.C, 0, 12),
         InstrumentConfiguration(2, 2, 1, Note.C, 0, 12),
         InstrumentConfiguration(3, 3, 1, Note.C, 0, 12),
-        InstrumentConfiguration(4, 4, 1, Note.C, 0, 12)
+        InstrumentConfiguration(4, 4, 1, Note.C, 0, 12),
+        InstrumentConfiguration(5, 10, 1, Note.C, 0, 12)
     )
 
     val instruments = listOf(
@@ -21,6 +22,7 @@ class Predef(private val context: Context) {
         Instrument(4, getString(R.string.instrument_bass_name)).apply { instrumentId = 2 },
         Instrument(4, getString(R.string.instrument_mandolin_name)).apply { instrumentId = 3 },
         Instrument(5, getString(R.string.instrument_banjo_name)).apply { instrumentId = 4 },
+        Instrument(4, getString(R.string.instrument_ukulele_name)).apply { instrumentId = 5 }
     )
 
     val tunings = listOf(
@@ -51,7 +53,19 @@ class Predef(private val context: Context) {
         Instrument.Tuning(
             listOf(Note.C, Note.G, Note.D, Note.A),
             getString(R.string.tuning_viola_name)
-        ).apply { tuningId = 7 }
+        ).apply { tuningId = 7 },
+        Instrument.Tuning(
+            listOf(Note.Dis, Note.Gis, Note.Cis, Note.Fis, Note.Ais, Note.Dis),
+            getString(R.string.tuning_guitar_halfdown_name)
+        ).apply { tuningId = 8 },
+        Instrument.Tuning(
+            listOf(Note.D, Note.G, Note.C, Note.F, Note.A, Note.D),
+            getString(R.string.tuning_guitar_fulldown_name)
+        ).apply { tuningId = 9 },
+        Instrument.Tuning(
+            listOf(Note.G, Note.C, Note.E, Note.A),
+            getString(R.string.tuning_ukulele_standard_name)
+        ).apply { tuningId = 10 }
     )
 
     val scaleTypes = listOf(

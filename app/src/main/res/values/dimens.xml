@@ -15,4 +15,5 @@
     <dimen name="cardviewControlsPadding">12dp</dimen>
     <dimen name="cardviewControlsPaddingHorizontal">16dp</dimen>
     <dimen name="cardviewControlsPaddingVertical">8dp</dimen>
+    <dimen name="note_display_text_size">32sp</dimen>
 </resources>

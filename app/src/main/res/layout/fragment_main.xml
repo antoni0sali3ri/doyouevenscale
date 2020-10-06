@@ -40,6 +40,17 @@
             android:animateLayoutChanges="true">
 
             <TextView
+                android:id="@+id/lblScaleName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lblScaleName"
+                android:textSize="@dimen/spinner_item_text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/txtRootNote"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/layFretboardControlsAdvanced" />
+
+            <TextView
                 android:id="@+id/txtRootNote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,7 +58,7 @@
                 android:paddingHorizontal="@dimen/spinner_item_margin_horizontal"
                 app:layout_constraintBaseline_toBaselineOf="@id/spinnerScaleType"
                 app:layout_constraintEnd_toStartOf="@id/spinnerScaleType"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/lblScaleName" />
 
             <Spinner
                 android:id="@+id/spinnerRootNote"
@@ -136,6 +147,7 @@
                         android:id="@+id/spinnerMinFret"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/spinner_item_margin_horizontal"
                         android:textSize="@dimen/spinner_item_text_size" />
 
                     <TextView
@@ -149,6 +161,7 @@
                         android:id="@+id/spinnerMaxFret"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/spinner_item_margin_horizontal"
                         android:textSize="@dimen/spinner_item_text_size" />
                 </LinearLayout>
 

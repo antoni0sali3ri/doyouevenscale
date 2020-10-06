@@ -31,9 +31,9 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
 
             <Spinner
                 android:id="@+id/spinnerRootNote"
@@ -41,8 +41,8 @@
                 android:layout_height="wrap_content"
                 android:spinnerMode="dialog"
                 app:layout_constraintBaseline_toBaselineOf="@id/spinnerScaleType"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/spinnerScaleType" />
+                app:layout_constraintEnd_toStartOf="@id/spinnerScaleType"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Spinner
                 android:id="@+id/spinnerScaleType"
@@ -59,30 +59,28 @@
                 android:layout_width="@dimen/button_expand_size"
                 android:layout_height="@dimen/button_expand_size"
                 android:src="@drawable/ic_expand_less"
-                app:layout_constraintStart_toEndOf="@id/spinnerScaleType"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/layFretboardControlsAdvanced"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/spinnerScaleType"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layFretboardControlsAdvanced"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/spinnerScaleType"
                 app:layout_constraintBottom_toBottomOf="parent"
-                >
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/spinnerScaleType">
 
                 <TextView
                     android:id="@+id/lblTuning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spinner_item_margin_horizontal"
                     android:text="@string/lblTuningText"
                     android:textSize="@dimen/spinner_item_text_size"
-                    android:layout_marginEnd="@dimen/spinner_item_margin_horizontal"
                     app:layout_constraintBaseline_toBaselineOf="@id/spinnerTuning"
                     app:layout_constraintEnd_toStartOf="@id/spinnerTuning"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -92,43 +90,53 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dialog"
-                    app:layout_constraintBottom_toTopOf="@id/spinnerMaxFret"
+                    app:layout_constraintBottom_toTopOf="@id/layFretRange"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/lblTuning"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/lblFretsShown"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spinner_item_margin_horizontal"
                     android:text="@string/lblFretsShownText"
                     android:textSize="@dimen/spinner_item_text_size"
-                    android:layout_marginEnd="@dimen/spinner_item_margin_horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/layFretRange"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/spinnerMinFret"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/spinnerMaxFret"
-                    />
+                    app:layout_constraintTop_toTopOf="@id/layFretRange" />
 
-                <Spinner
-                    android:id="@+id/spinnerMinFret"
+                <LinearLayout
+                    android:id="@+id/layFretRange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:spinnerMode="dialog"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/spinnerMaxFret"
+                    android:orientation="horizontal"
                     app:layout_constraintStart_toEndOf="@id/lblFretsShown"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerTuning" />
-
-                <Spinner
-                    android:id="@+id/spinnerMaxFret"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:spinnerMode="dialog"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/spinnerMinFret"
-                    app:layout_constraintTop_toBottomOf="@id/spinnerTuning" />
+                    app:layout_constraintTop_toBottomOf="@id/spinnerTuning"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:id="@+id/spinnerMinFret"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/spinner_item_text_size" />
+
+                    <TextView
+                        android:id="@+id/lblFretRangeTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lblFretRangeTo"
+                        android:textSize="@dimen/spinner_item_text_size" />
+
+                    <TextView
+                        android:id="@+id/spinnerMaxFret"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/spinner_item_text_size" />
+                </LinearLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -221,8 +221,9 @@ class FretboardView : View {
 
             fretPosScaled = fretPos.map { yofs + it * h }.toTypedArray()
 
-            val stringSpacing = .7f * (fretPosScaled[1] - fretPosScaled[0])
-            val fretboardWidth = stringSpacing * (stringCount - 1)
+            val stringGaps = stringCount - 1
+            val stringSpacing = Math.min(.7f * (fretPosScaled[1] - fretPosScaled[0]), (.7f * w) / stringGaps)
+            val fretboardWidth = stringSpacing * stringGaps
             val stringOfs = (w - fretboardWidth) / 2f
             stringPosScaled = (0 until stringCount).map {
                 xofs + stringOfs + it * stringSpacing

@@ -1,7 +1,6 @@
 package de.theopensourceguy.doyouevenscale.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,8 @@ import de.theopensourceguy.doyouevenscale.core.model.*
  * A placeholder fragment containing a simple view.
  */
 class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
-    ObservableInstrumentConfiguration.OnChangeListener {
+    ObservableInstrumentConfiguration.OnChangeListener,
+    FretRangePickerDialog.ResultListener {
 
     private val TAG: String = "FretboardFragment"
     private val spinnerItemLayout = R.layout.layout_spinner_item
@@ -30,12 +30,15 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     private lateinit var tunings: LiveData<List<Instrument.Tuning>>
 
     private lateinit var layControlsAdvanced: ViewGroup
+    private lateinit var layFretRange: ViewGroup
     private lateinit var btnExpandControls: ImageView
     private var controlsExpanded: Boolean = false
 
     private lateinit var spinnerNote: Spinner
     private lateinit var spinnerScale: Spinner
     private lateinit var spinnerTuning: Spinner
+    private lateinit var spinnerMinFret: TextView
+    private lateinit var spinnerMaxFret: TextView
     private lateinit var fretboardView: FretboardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +74,12 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         val root = inflater.inflate(R.layout.fragment_main, container, false)
 
         layControlsAdvanced = root.findViewById(R.id.layFretboardControlsAdvanced)
+
+        layFretRange = root.findViewById(R.id.layFretRange)
+        layFretRange.setOnClickListener {
+            showFretRangeDialog()
+        }
+
 
         btnExpandControls = root.findViewById(R.id.btnExpandControls)
         btnExpandControls.setOnClickListener {
@@ -110,6 +119,11 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         })
         spinnerTuning.onItemSelectedListener = this
 
+        spinnerMinFret = root.findViewById(R.id.spinnerMinFret)
+        spinnerMinFret.text = instrumentConfig.fretsShown.first.toString()
+        spinnerMaxFret = root.findViewById(R.id.spinnerMaxFret)
+        spinnerMaxFret.text = instrumentConfig.fretsShown.last.toString()
+
         fretboardView = root.findViewById(R.id.fretboardView)
         fretboardView.setStringCount(instrumentConfig.instrument.numStrings)
         fretboardView.updateFretboard(instrumentConfig.fretsShown, EqualTemperamentFretSpacing)
@@ -137,6 +151,11 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         }
     }
 
+    fun showFretRangeDialog() {
+        val dialog = FretRangePickerDialog(instrumentConfig.fretsShown, this)
+        dialog.show(childFragmentManager, "RangePickerDialog")
+    }
+
     companion object {
 
         /**
@@ -160,7 +179,6 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        Log.d(TAG, "onItemSelected(parent = $parent, position = $position)")
         when (parent) {
             null -> {
             }
@@ -183,12 +201,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         TODO("Not yet implemented")
     }
 
-    private fun updateFretboardView() {
-
-    }
-
     override fun onTuningChanged(newTuning: Instrument.Tuning, oldTuning: Instrument.Tuning) {
-        Log.d(TAG, "onTuningChanged($newTuning, $oldTuning)")
 
         fretboardView.updateStringLabels(newTuning)
 
@@ -204,7 +217,6 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     }
 
     override fun onScaleChanged(newScale: Scale, oldScale: Scale) {
-        Log.d(TAG, "onScaleChanged($newScale, $oldScale)")
 
         val inst = TunedInstrument(instrumentConfig.instrument, instrumentConfig.tuning)
         fretboardView.updateScale(
@@ -216,7 +228,6 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     }
 
     override fun onFretRangeChanged(newRange: IntRange, oldRange: IntRange) {
-        Log.d(TAG, "onFretRangeChanged($newRange, $oldRange)")
 
         fretboardView.updateFretboard(newRange, EqualTemperamentFretSpacing)
         fretboardView.updateFretLabels(newRange)
@@ -228,5 +239,11 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         )
         fretboardView.scaleToSize()
         fretboardView.postInvalidate()
+    }
+
+    override fun updateFretRange(range: IntRange) {
+        spinnerMinFret.text = range.first.toString()
+        spinnerMaxFret.text = range.last.toString()
+        instrumentConfig.fretsShown = range
     }
 }

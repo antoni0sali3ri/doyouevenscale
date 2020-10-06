@@ -46,4 +46,6 @@
     <string name="scale_pentatonic_blues_name">Blues Pentatonic</string>
     <string name="lblTuningText">Tuning</string>
     <string name="lblFretsShownText">Show frets</string>
+    <string name="lblFretRangeTo">to</string>
+    <string name="dialogFretRangeTitle">Select the range of frets to show</string>
 </resources>

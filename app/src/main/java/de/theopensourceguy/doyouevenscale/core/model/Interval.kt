@@ -34,18 +34,18 @@ data class Interval(
         }
 
         val NAME_RES = arrayOf(
-            R.string.intervalPrime,
-            R.string.intervalMinSecond,
-            R.string.intervalMajSecond,
-            R.string.intervalMinThird,
-            R.string.intervalMajThird,
-            R.string.intervalFourth,
-            R.string.intervalTritone,
-            R.string.intervalFifth,
-            R.string.intervalMinSixth,
-            R.string.intervalMajSixth,
-            R.string.intervalMinSeventh,
-            R.string.intervalMajSeventh
+            R.string.interval_prime,
+            R.string.interval_minor_second,
+            R.string.interval_major_second,
+            R.string.interval_minor_third,
+            R.string.interval_major_third,
+            R.string.interval_fourth,
+            R.string.interval_tritone,
+            R.string.interval_fifth,
+            R.string.interval_minor_sixth,
+            R.string.interval_major_sixth,
+            R.string.interval_minor_seventh,
+            R.string.interval_major_seventh
         )
 
         fun nameResFor(halfSteps: Int) = NAME_RES[halfSteps % 12]

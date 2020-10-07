@@ -1,63 +1,72 @@
 <resources>
     <string name="app_name">Do you even scale</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="intervalPrime">Prime</string>
-    <string name="intervalMinSecond">Minor Second</string>
-    <string name="intervalMajSecond">Major Second</string>
-    <string name="intervalMinThird">Minor Third</string>
-    <string name="intervalMajThird">Major Third</string>
-    <string name="intervalFourth">Fourth</string>
-    <string name="intervalTritone">Tritone</string>
-    <string name="intervalFifth">Fifth</string>
-    <string name="intervalMinSixth">Minor Sixth</string>
-    <string name="intervalMajSixth">Major Sixth</string>
-    <string name="intervalMinSeventh">Minor Seventh</string>
-    <string name="intervalMajSeventh">Major Seventh</string>
+    <string name="title_activity_data_manager">Manage data</string>
 
-    <string name="scale_ionian_name">Ionian major</string>
-    <string name="scale_dorian_name">Dorian minor</string>
-    <string name="scale_phrygian_name">Phrygian minor</string>
-    <string name="scale_lydian_name">Lydian major</string>
-    <string name="scale_mixolydian_name">Mixolydian major</string>
-    <string name="scale_aeolian_name">Aeolian minor</string>
-    <string name="scale_locrian_name">Locrian minor</string>
-    <string name="scale_harmonic_name">Harmonic minor</string>
-    <string name="scale_melodic_name">Melodic minor</string>
+    <!-- INTERVALS -->
+    <string name="interval_prime">Prime</string>
+    <string name="interval_minor_second">Minor Second</string>
+    <string name="interval_major_second">Major Second</string>
+    <string name="interval_minor_third">Minor Third</string>
+    <string name="interval_major_third">Major Third</string>
+    <string name="interval_fourth">Fourth</string>
+    <string name="interval_tritone">Tritone</string>
+    <string name="interval_fifth">Fifth</string>
+    <string name="interval_minor_sixth">Minor Sixth</string>
+    <string name="interval_major_sixth">Major Sixth</string>
+    <string name="interval_minor_seventh">Minor Seventh</string>
+    <string name="interval_major_seventh">Major Seventh</string>
 
+    <!-- SCALES -->
+    <string name="scale_ionian_major_name">Ionian major</string>
+    <string name="scale_dorian_minor_name">Dorian minor</string>
+    <string name="scale_phrygian_minor_name">Phrygian minor</string>
+    <string name="scale_lydian_major_name">Lydian major</string>
+    <string name="scale_mixolydian_major_name">Mixolydian major</string>
+    <string name="scale_aeolian_minor_name">Aeolian minor</string>
+    <string name="scale_locrian_minor_name">Locrian minor</string>
+    <string name="scale_harmonic_minor_name">Harmonic minor</string>
+    <string name="scale_melodic_minor_name">Melodic minor</string>
+    <string name="scale_pentatonic_major_name">Major Pentatonic</string>
+    <string name="scale_pentatonic_minor_name">Minor pentatonic</string>
+    <string name="scale_pentatonic_blues_name">Blues Pentatonic</string>
+
+    <!-- TUNINGS -->
     <string name="tuning_guitar_standard_name">Guitar (Standard)</string>
-    <string name="tuning_guitar_opend_name">Guitar (Open D)</string>
+    <string name="tuning_guitar_halfdown_name">Guitar (½ step down)</string>
+    <string name="tuning_guitar_fulldown_name">Guitar (1 step down)</string>
     <string name="tuning_guitar_dropd_name">Guitar (Drop D)</string>
+    <string name="tuning_guitar_dropc_name">Guitar (Drop C)</string>
     <string name="tuning_guitar_dadgad_name">Guitar (DADGAD)</string>
-    <string name="tuning_violin_name">Violin (Standard)</string>
-    <string name="tuning_viola_name">Viola (Standard)</string>
+    <string name="tuning_guitar_opend_name">Guitar (Open D)</string>
+    <string name="tuning_violin_name">Violin/Mandolin</string>
+    <string name="tuning_viola_name">Viola/Mandola</string>
     <string name="tuning_bass_name">Bass (Standard)</string>
     <string name="tuning_bass_5str_name">Bass (5-string)</string>
     <string name="tuning_bass_6str_name">Bass (6-string)</string>
     <string name="tuning_banjo_openg_name">Banjo (Open G)</string>
+    <string name="tuning_banjo_opengm_name">Banjo (Open Gm)</string>
     <string name="tuning_banjo_doublec_name">Banjo (Double C)</string>
+    <string name="tuning_banjo_openc_name">Banjo (Open C)</string>
+    <string name="tuning_banjo_opend_name">Banjo (Open D)</string>
+    <string name="tuning_banjo_sawmill_name">Banjo (Sawmill)</string>
+    <string name="tuning_ukulele_standard_name">Ukulele (Standard)</string>
 
+    <!-- INSTRUMENTS -->
     <string name="instrument_guitar_name">Guitar</string>
-    <string name="instrument_banjo_name">Banjo</string>
+    <string name="instrument_banjo_5str_name">Banjo (Bluegrass)</string>
+    <string name="instrument_banjo_4str_name">Banjo (Tenor)</string>
     <string name="instrument_mandolin_name">Mandolin</string>
     <string name="instrument_bass_name">Bass</string>
-    <string name="scale_pentatonic_major_name">Major Pentatonic</string>
-    <string name="scale_pentatonic_minor_name">Minor pentatonic</string>
-    <string name="scale_pentatonic_blues_name">Blues Pentatonic</string>
-    <string name="lblTuningText">Tuning</string>
-    <string name="lblFretsShownText">Show frets</string>
-    <string name="lblFretRangeTo">to</string>
-    <string name="dialogFretRangeTitle">Select the range of frets to show</string>
-    <string name="dialogNotePickerTitle">Select the root note</string>
-    <string name="tuning_guitar_halfdown_name">Guitar (½ step down)</string>
-    <string name="tuning_guitar_fulldown_name">Guitar (1 step down)</string>
-    <string name="tuning_ukulele_standard_name">Ukulele (Standard)</string>
     <string name="instrument_ukulele_name">Ukulele</string>
-    <string name="lblScaleName">Scale</string>
-    <string name="title_activity_data_manager">DataManagerActivity</string>
+
+    <!-- UI ELEMENTS -->
+    <string name="lbl_tuning_text">Tuning</string>
+    <string name="lbl_frets_shown_text">Show frets</string>
+    <string name="lbl_fret_range_to">to</string>
+    <string name="lbl_scale_name_text">Scale</string>
+    <string name="dialog_title_fret_range">Select the range of frets to show</string>
+    <string name="dialog_title_note_picker">Select the root note</string>
     <string name="tab_title_dm_instruments">Instruments</string>
     <string name="tab_title_dm_tunings">Tunings</string>
     <string name="tab_title_dm_scales">Scales</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -21,7 +21,7 @@ class Predef(private val context: Context) {
         Instrument(6, getString(R.string.instrument_guitar_name)).apply { id = 1 },
         Instrument(4, getString(R.string.instrument_bass_name)).apply { id = 2 },
         Instrument(4, getString(R.string.instrument_mandolin_name)).apply { id = 3 },
-        Instrument(5, getString(R.string.instrument_banjo_name)).apply { id = 4 },
+        Instrument(5, getString(R.string.instrument_banjo_5str_name)).apply { id = 4 },
         Instrument(4, getString(R.string.instrument_ukulele_name)).apply { id = 5 }
     )
 
@@ -70,39 +70,39 @@ class Predef(private val context: Context) {
 
     val scaleTypes = listOf(
         Scale.Type(
-            getString(R.string.scale_ionian_name),
+            getString(R.string.scale_ionian_major_name),
             2, 4, 5, 7, 9, 11
         ).apply { id = 1 },
         Scale.Type(
-            getString(R.string.scale_dorian_name),
+            getString(R.string.scale_dorian_minor_name),
             2, 3, 5, 7, 9, 10
         ).apply { id = 2 },
         Scale.Type(
-            getString(R.string.scale_phrygian_name),
+            getString(R.string.scale_phrygian_minor_name),
             1, 3, 5, 7, 8, 10
         ).apply { id = 3 },
         Scale.Type(
-            getString(R.string.scale_lydian_name),
+            getString(R.string.scale_lydian_major_name),
             2, 4, 6, 7, 9, 11
         ).apply { id = 4 },
         Scale.Type(
-            getString(R.string.scale_mixolydian_name),
+            getString(R.string.scale_mixolydian_major_name),
             2, 4, 5, 7, 9, 10
         ).apply { id = 5 },
         Scale.Type(
-            getString(R.string.scale_aeolian_name),
+            getString(R.string.scale_aeolian_minor_name),
             2, 3, 5, 7, 8, 10
         ).apply { id = 6 },
         Scale.Type(
-            getString(R.string.scale_locrian_name),
+            getString(R.string.scale_locrian_minor_name),
             1, 3, 5, 6, 8, 10
         ).apply { id = 7 },
         Scale.Type(
-            getString(R.string.scale_harmonic_name),
+            getString(R.string.scale_harmonic_minor_name),
             2, 3, 5, 7, 8, 11
         ).apply { id = 8 },
         Scale.Type(
-            getString(R.string.scale_melodic_name),
+            getString(R.string.scale_melodic_minor_name),
             2, 3, 5, 7, 9, 11
         ).apply { id = 9 },
         Scale.Type(

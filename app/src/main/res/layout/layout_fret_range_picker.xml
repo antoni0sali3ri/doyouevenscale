@@ -17,7 +17,7 @@
         android:id="@+id/lblFretRangeTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lblFretRangeTo"
+        android:text="@string/lbl_fret_range_to"
         android:textSize="@dimen/spinner_item_text_size"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

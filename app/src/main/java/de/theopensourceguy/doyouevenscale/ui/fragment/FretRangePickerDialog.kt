@@ -21,7 +21,7 @@ class FretRangePickerDialog(val range: IntRange, val listener: ResultListener) :
             rangePicker = FretRangePicker(it, view, range)
 
             AlertDialog.Builder(it)
-                .setTitle(R.string.dialogFretRangeTitle)
+                .setTitle(R.string.dialog_title_fret_range)
                 .setView(view)
                 .setPositiveButton(android.R.string.ok) { di, i ->
                     listener.updateFretRange(rangePicker.getRange())

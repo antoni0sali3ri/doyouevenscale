@@ -69,4 +69,7 @@
     <string name="tab_title_dm_instruments">Instruments</string>
     <string name="tab_title_dm_tunings">Tunings</string>
     <string name="tab_title_dm_scales">Scales</string>
+    <string name="save">Save</string>
+    <string name="lbl_instrument_string_count">Number of strings</string>
+    <string name="name">Name</string>
 </resources>

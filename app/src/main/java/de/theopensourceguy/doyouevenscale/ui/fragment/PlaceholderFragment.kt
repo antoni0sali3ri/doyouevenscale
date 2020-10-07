@@ -153,6 +153,12 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         fretboardView.setStringCount(instrumentConfig.instrument.numStrings)
         fretboardView.updateFretboard(instrumentConfig.fretsShown, EqualTemperamentFretSpacing)
         fretboardView.updateStringLabels(instrumentConfig.tuning, instrumentConfig.noteDisplay)
+        val inst = TunedInstrument(instrumentConfig.instrument, instrumentConfig.tuning)
+        val scale = Scale(instrumentConfig.rootNote, instrumentConfig.scaleType)
+        fretboardView.updateScale(
+            inst.getFretsForScale(scale, instrumentConfig.fretsShown),
+            inst.getRoots(scale, instrumentConfig.fretsShown)
+        )
         return root
     }
 
@@ -254,7 +260,6 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         )
 
         fretboardView.scaleToSize()
-        fretboardView.postInvalidate()
     }
 
     override fun onScaleChanged(newScale: Scale, oldScale: Scale) {
@@ -264,8 +269,8 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
             inst.getRoots(newScale, instrumentConfig.fretsShown)
         )
         txtNote.text = newScale.root.getName(instrumentConfig.noteDisplay)
+
         fretboardView.scaleToSize()
-        fretboardView.postInvalidate()
     }
 
     override fun onFretRangeChanged(newRange: IntRange, oldRange: IntRange) {
@@ -276,13 +281,15 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
             inst.getFretsForScale(scale, newRange),
             inst.getRoots(scale, newRange)
         )
+
         fretboardView.scaleToSize()
-        fretboardView.postInvalidate()
     }
 
     override fun onNoteDisplayChanged(newDisplay: Note.Display, oldDisplay: Note.Display) {
         txtNote.text = instrumentConfig.rootNote.getName(newDisplay)
         fretboardView.updateStringLabels(instrumentConfig.tuning, newDisplay)
+
+        fretboardView.scaleToSize()
     }
 
     override fun updateFretRange(range: IntRange) {

@@ -2,6 +2,7 @@ package de.theopensourceguy.doyouevenscale.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewPager: ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.d(TAG, "onCreate(savedInstanceState = $savedInstanceState)")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.my_toolbar))
@@ -52,5 +54,10 @@ class MainActivity : AppCompatActivity() {
                 tabs.setupWithViewPager(viewPager)
             })
         })
+    }
+
+    companion object {
+        val TAG = MainActivity::class.java.simpleName
+        val ARG_PAGE_NUMBER = "page_number"
     }
 }

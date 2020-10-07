@@ -2,10 +2,15 @@ package de.theopensourceguy.doyouevenscale.ui.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.NumberPicker
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import de.theopensourceguy.doyouevenscale.MyApp
 import de.theopensourceguy.doyouevenscale.R
@@ -23,17 +28,28 @@ sealed class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : Fra
     protected lateinit var item: T
 
     protected lateinit var btnSubmit: Button
-
-    protected fun validateItem(item: T) {
-
-    }
+    protected lateinit var btnCancel: Button
+    protected lateinit var edtEntityName: EditText
 
     private lateinit var dao : ViewModelDao<T>
+    private lateinit var commitListener: OnCommitListener
 
-    protected fun commitChanges(item: T) = dao.insertSingle(item)
+    protected fun commitChanges() {
+        if (item.id == 0L)
+            dao.insertSingle(item)
+        else
+            dao.updateSingle(item)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
+        if (context is OnCommitListener) {
+            commitListener = context
+        } else {
+            throw ClassCastException("Attached context needs to implement OnCommitListener")
+        }
+
         dao = MyApp.getDatabase(requireContext()).getDaoForClass(clazz)
     }
 
@@ -52,7 +68,41 @@ sealed class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : Fra
     ): View? {
         val root = inflater.inflate(layoutResource, container, false)
         btnSubmit = root.findViewById(R.id.btnSubmit)
+        btnSubmit.setOnClickListener {
+            commitChanges()
+            commitListener.onItemSaved()
+        }
+
+        btnCancel = root.findViewById(R.id.btnCancel)
+        btnCancel.setOnClickListener {
+            commitListener.onEditCanceled()
+        }
+
+        edtEntityName = root.findViewById(R.id.editEntityName)
+        edtEntityName.setText(item.name, TextView.BufferType.EDITABLE)
+        edtEntityName.addTextChangedListener(entityNameTextWatcher)
         return root
+    }
+
+    val entityNameTextWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            s?.let {
+                item.name = s.toString()
+            }
+        }
+
+    }
+
+    interface OnCommitListener {
+        fun onItemSaved()
+
+        fun onEditCanceled()
     }
 
     companion object {
@@ -79,6 +129,23 @@ class InstrumentEditorFragment : EntityEditorFragment<Instrument>(Instrument::cl
     override val layoutResource: Int = R.layout.fragment_instrument_editor
 
     override val templateItem: Instrument = Instrument(4, "Instrument")
+
+    private lateinit var npStringCount: NumberPicker
+
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        npStringCount = view.findViewById(R.id.numberPickerStringCount)
+        npStringCount.minValue = 1
+        npStringCount.maxValue = Instrument.MaxStrings
+        npStringCount.value = item.numStrings
+        npStringCount.setOnValueChangedListener { picker, oldVal, newVal ->
+            item.numStrings = newVal
+        }
+    }
+
 }
 
 class TuningEditorFragment : EntityEditorFragment<Instrument.Tuning>(Instrument.Tuning::class.java) {

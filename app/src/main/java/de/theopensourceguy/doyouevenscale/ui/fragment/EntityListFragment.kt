@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.theopensourceguy.doyouevenscale.MyApp
 import de.theopensourceguy.doyouevenscale.R
+import de.theopensourceguy.doyouevenscale.core.model.Instrument
 import de.theopensourceguy.doyouevenscale.core.model.ListableEntity
+import de.theopensourceguy.doyouevenscale.core.model.Scale
 import de.theopensourceguy.doyouevenscale.ui.activity.EditorActivity
 import de.theopensourceguy.doyouevenscale.ui.main.ListableEntityRecyclerViewAdapter
 
@@ -23,7 +25,7 @@ import de.theopensourceguy.doyouevenscale.ui.main.ListableEntityRecyclerViewAdap
 class EntityListViewModel<T : ListableEntity>(val items: LiveData<out List<T>>) : ViewModel() {
 }
 
-class EntityListFragment<T : ListableEntity>(private val clazz: Class<T>, ) : Fragment() {
+sealed class EntityListFragment<T : ListableEntity>(private val clazz: Class<T>) : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: EntityListViewModel<T>
@@ -66,3 +68,9 @@ class EntityListFragment<T : ListableEntity>(private val clazz: Class<T>, ) : Fr
         })
     }
 }
+
+class InstrumentListFragment() : EntityListFragment<Instrument>(Instrument::class.java)
+
+class TuningListFragment(): EntityListFragment<Instrument.Tuning>(Instrument.Tuning::class.java)
+
+class ScaleListFragment(): EntityListFragment<Scale.Type>(Scale.Type::class.java)

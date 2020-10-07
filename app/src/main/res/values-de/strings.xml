@@ -60,4 +60,7 @@
     <string name="tab_title_dm_tunings">Stimmungen</string>
     <string name="tab_title_dm_scales">Tonleitern</string>
     <string name="title_activity_data_manager">Daten verwalten</string>
+    <string name="save">Speichern</string>
+    <string name="name">Name</string>
+    <string name="lbl_instrument_string_count">Saitenanzahl</string>
 </resources>

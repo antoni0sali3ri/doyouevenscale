@@ -260,6 +260,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         )
 
         fretboardView.scaleToSize()
+        fretboardView.postInvalidate()
     }
 
     override fun onScaleChanged(newScale: Scale, oldScale: Scale) {
@@ -271,6 +272,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         txtNote.text = newScale.root.getName(instrumentConfig.noteDisplay)
 
         fretboardView.scaleToSize()
+        fretboardView.postInvalidate()
     }
 
     override fun onFretRangeChanged(newRange: IntRange, oldRange: IntRange) {
@@ -283,6 +285,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         )
 
         fretboardView.scaleToSize()
+        fretboardView.postInvalidate()
     }
 
     override fun onNoteDisplayChanged(newDisplay: Note.Display, oldDisplay: Note.Display) {
@@ -290,6 +293,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         fretboardView.updateStringLabels(instrumentConfig.tuning, newDisplay)
 
         fretboardView.scaleToSize()
+        fretboardView.postInvalidate()
     }
 
     override fun updateFretRange(range: IntRange) {

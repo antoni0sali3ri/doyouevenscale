@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadInstruments() {
-        val ids = MyApp.prefs.core.getInstrumentIdList()
+        val ids = MyApp.getPrefs(this).core.getInstrumentIdList()
         val configs = MyApp.getDatabase(this).instrumentConfigDao().getInstrumentConfigsByIds(ids)
         configs.observe(this, {
             val instruments = MyApp.getDatabase(this).instrumentDao().getInstrumentsByIds(it.map { it.instrumentId })

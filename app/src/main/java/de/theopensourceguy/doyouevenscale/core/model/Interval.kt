@@ -1,18 +1,38 @@
 package de.theopensourceguy.doyouevenscale.core.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import de.theopensourceguy.doyouevenscale.R
 
 data class Interval(
     val halfSteps: Int
-) {
+) : Parcelable {
     init {
         require(halfSteps >= 0)
     }
     val nameRes = nameResFor(halfSteps)
 
+    constructor(parcel: Parcel) : this(parcel.readInt())
+
     fun shift(note: Note, shiftUp: Boolean = true) : Note = note.shift(if (shiftUp) halfSteps else -halfSteps)
 
-    companion object {
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(halfSteps)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Interval> {
+        override fun createFromParcel(parcel: Parcel): Interval {
+            return Interval(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Interval?> {
+            return arrayOfNulls(size)
+        }
+
         val NAME_RES = arrayOf(
             R.string.intervalPrime,
             R.string.intervalMinSecond,

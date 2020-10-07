@@ -1,6 +1,8 @@
 package de.theopensourceguy.doyouevenscale.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import de.theopensourceguy.doyouevenscale.MyApp
 import de.theopensourceguy.doyouevenscale.R
-import de.theopensourceguy.doyouevenscale.core.db.ApplicationDatabase
 import de.theopensourceguy.doyouevenscale.core.model.*
 import de.theopensourceguy.doyouevenscale.ui.view.FretboardView
 
@@ -23,8 +24,6 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
 
     private val TAG: String = "FretboardFragment"
     private val spinnerItemLayout = R.layout.layout_spinner_item
-
-    private lateinit var db: ApplicationDatabase
 
     private lateinit var instrumentConfig: ObservableInstrumentConfiguration
 
@@ -44,30 +43,43 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
     private lateinit var spinnerMaxFret: TextView
     private lateinit var fretboardView: FretboardView
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d(TAG, "onAttach(context = $context)")
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate(savedInstanceState = $savedInstanceState")
+        if (savedInstanceState != null) {
+            instrumentConfig = savedInstanceState.getParcelable(ARG_INSTRUMENT_CONFIG)!!
+        } else {
+            with(MyApp.getDatabase(requireContext())) {
 
-        db = MyApp.database
-        with(db) {
-            val configId = requireArguments().getLong(ARG_INSTRUMENT_CONFIG_ID)
-            val cfg = instrumentConfigDao().getInstrumentConfigById(configId)
-            val instrument = instrumentDao().getInstrumentById(cfg.instrumentId)
-            val tuning = tuningDao().getTuningById(cfg.tuningId)
-            val scaleType = scaleDao().getScaleTypeById(cfg.scaleTypeId)
+                val configId = requireArguments().getLong(ARG_INSTRUMENT_CONFIG_ID)
+                val cfg = instrumentConfigDao().getSingle(configId)
+                val instrument = instrumentDao().getSingle(cfg.instrumentId)
+                val tuning = tuningDao().getSingle(cfg.tuningId)
+                val scaleType = scaleDao().getSingle(cfg.scaleTypeId)
 
-            instrumentConfig = ObservableInstrumentConfiguration(
-                instrument,
-                tuning,
-                cfg.rootNote,
-                scaleType,
-                cfg.fromFret..cfg.toFret,
-                Note.Display.Sharp
-            )
+                instrumentConfig = ObservableInstrumentConfiguration(
+                    instrument,
+                    tuning,
+                    cfg.rootNote,
+                    scaleType,
+                    cfg.fromFret..cfg.toFret,
+                    Note.Display.Sharp
+                )
+            }
+        }
+        instrumentConfig.listeners.add(this@PlaceholderFragment)
 
-            instrumentConfig.listeners.add(this@PlaceholderFragment)
-
-            scaleTypes = scaleDao().getAll()
-            tunings = tuningDao().getTuningsByStringCount(instrument.numStrings)
+        context?.let {
+            MyApp.getDatabase(it).apply {
+                scaleTypes = scaleDao().getAll()
+                tunings = tuningDao().getTuningsByStringCount(instrumentConfig.instrument.numStrings)
+            }
         }
     }
 
@@ -75,6 +87,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(TAG, "onCreateView(savedInstanceState = $savedInstanceState")
         val root = inflater.inflate(R.layout.fragment_main, container, false)
 
         layControlsAdvanced = root.findViewById(R.id.layFretboardControlsAdvanced)
@@ -143,6 +156,14 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         return root
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.apply {
+            putParcelable(ARG_INSTRUMENT_CONFIG, instrumentConfig)
+        }
+
+    }
+
     inner class NoteSpinnerAdapter : BaseAdapter() {
 
         var sharp: Boolean = false
@@ -181,6 +202,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
          * fragment.
          */
         private const val ARG_INSTRUMENT_CONFIG_ID = "instrument_config_id"
+        private const val ARG_INSTRUMENT_CONFIG = "instrument_config"
 
         /**
          * Returns a new instance of this fragment for the given section

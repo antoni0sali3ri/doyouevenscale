@@ -1,5 +1,8 @@
 package de.theopensourceguy.doyouevenscale.core.model
 
+import android.os.Parcel
+import android.os.Parcelable
+
 class ObservableInstrumentConfiguration(
     _instrument: Instrument,
     _tuning: Instrument.Tuning,
@@ -7,7 +10,7 @@ class ObservableInstrumentConfiguration(
     _scaleType: Scale.Type,
     _fretsShown: IntRange,
     _noteDisplay: Note.Display
-) {
+) : Parcelable {
     val listeners: MutableSet<OnChangeListener> = mutableSetOf()
 
     val instrument: Instrument = _instrument
@@ -47,6 +50,15 @@ class ObservableInstrumentConfiguration(
             field = value
         }
 
+    constructor(parcel: Parcel) : this(
+        parcel.readParcelable(Instrument::class.java.classLoader)!!,
+        parcel.readParcelable(Instrument.Tuning::class.java.classLoader)!!,
+        parcel.readParcelable(Note::class.java.classLoader)!!,
+        parcel.readParcelable(Scale.Type::class.java.classLoader)!!,
+        parcel.readInt()..parcel.readInt(),
+        Note.Display.valueOf(parcel.readString()!!)
+    )
+
     fun getObjectForDb(configId: Long = 0): InstrumentConfiguration {
         return InstrumentConfiguration(
             instrument.id,
@@ -66,6 +78,32 @@ class ObservableInstrumentConfiguration(
         fun onFretRangeChanged(newRange: IntRange, oldRange: IntRange)
 
         fun onNoteDisplayChanged(newDisplay: Note.Display, oldDisplay: Note.Display)
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.apply {
+            writeParcelable(instrument, flags)
+            writeParcelable(tuning, flags)
+            writeParcelable(rootNote, flags)
+            writeParcelable(scaleType, flags)
+            writeInt(fretsShown.first)
+            writeInt(fretsShown.last)
+            writeString(noteDisplay.toString())
+        }
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<ObservableInstrumentConfiguration> {
+        override fun createFromParcel(parcel: Parcel): ObservableInstrumentConfiguration {
+            return ObservableInstrumentConfiguration(parcel)
+        }
+
+        override fun newArray(size: Int): Array<ObservableInstrumentConfiguration?> {
+            return arrayOfNulls(size)
+        }
     }
 }
 

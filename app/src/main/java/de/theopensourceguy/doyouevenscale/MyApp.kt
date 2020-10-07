@@ -3,6 +3,7 @@ package de.theopensourceguy.doyouevenscale
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import ca.allanwang.kau.kpref.KPrefFactoryAndroid
 import ca.allanwang.kau.kpref.KPrefFactoryInMemory
 import de.theopensourceguy.doyouevenscale.core.db.ApplicationDatabase
 import de.theopensourceguy.doyouevenscale.core.model.Predef
@@ -13,18 +14,43 @@ object MyApp : Application() {
 
     lateinit var prefs: Prefs
 
-    lateinit var database: ApplicationDatabase
+    private var database: ApplicationDatabase? = null
 
-    fun initialize(context: Context) {
-        //prefs = Prefs(KPrefFactoryAndroid(context))
-        prefs = Prefs(KPrefFactoryInMemory)
-        database = Room.inMemoryDatabaseBuilder(context, ApplicationDatabase::class.java)
-            .allowMainThreadQueries()
-            .build()
-        initDatabase(context)
+    fun getDatabase(context: Context) : ApplicationDatabase {
+        if (database == null) {
+            initializeDatabase(context)
+        }
+        return database!!
     }
 
-    fun initDatabase(context: Context) {
+    fun initialize(context: Context) {
+        initializePrefs(context)
+        populateDatabase(context)
+    }
+
+    private fun initializePrefs(context: Context) {
+        if (BuildConfig.DEBUG) {
+            prefs = Prefs(KPrefFactoryInMemory)
+        } else {
+            prefs = Prefs(KPrefFactoryAndroid(context))
+        }
+    }
+
+    private fun initializeDatabase(context: Context) {
+        if (BuildConfig.DEBUG) {
+            database = Room.inMemoryDatabaseBuilder(context, ApplicationDatabase::class.java)
+                .allowMainThreadQueries()
+                .build()
+        } else {
+            database = Room
+                .databaseBuilder(context, ApplicationDatabase::class.java, "${BuildConfig.APPLICATION_ID}.db")
+                .build()
+        }
+
+    }
+
+    private fun populateDatabase(context: Context) {
+        val database = getDatabase(context)
         if (prefs.core.firstRun) {
             val predef = Predef(context)
             database.tuningDao().insertTunings(predef.tunings)

@@ -1,6 +1,9 @@
 package de.theopensourceguy.doyouevenscale.core.model
 
-enum class Note(val nameSharp: String, val nameFlat: String) {
+import android.os.Parcel
+import android.os.Parcelable
+
+enum class Note(val nameSharp: String, val nameFlat: String) : Parcelable {
     C("C", "C"),
     Cis("C♯", "D♭"),
     D("D", "D"),
@@ -25,7 +28,23 @@ enum class Note(val nameSharp: String, val nameFlat: String) {
         Sharp, Flat
     }
 
-    companion object {
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(this.toString())
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Note> {
+        override fun createFromParcel(parcel: Parcel): Note {
+            return valueOf(parcel.readString()!!)
+        }
+
+        override fun newArray(size: Int): Array<Note?> {
+            return arrayOfNulls(size)
+        }
+
         fun shift(note: Note, halfSteps: Int): Note {
             val notes = values()
             val index = notes.indexOf(note)

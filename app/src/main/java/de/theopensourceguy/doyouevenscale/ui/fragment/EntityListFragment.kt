@@ -1,5 +1,7 @@
 package de.theopensourceguy.doyouevenscale.ui.fragment
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import de.theopensourceguy.doyouevenscale.MyApp
 import de.theopensourceguy.doyouevenscale.R
 import de.theopensourceguy.doyouevenscale.core.model.ListableEntity
+import de.theopensourceguy.doyouevenscale.ui.activity.EditorActivity
 import de.theopensourceguy.doyouevenscale.ui.main.ListableEntityRecyclerViewAdapter
 
 /**
@@ -20,18 +23,21 @@ import de.theopensourceguy.doyouevenscale.ui.main.ListableEntityRecyclerViewAdap
 class EntityListViewModel<T : ListableEntity>(val items: LiveData<out List<T>>) : ViewModel() {
 }
 
-class EntityListFragment<T : ListableEntity>(clazz: Class<T>, ) : Fragment() {
-
-    private var columnCount = 1
+class EntityListFragment<T : ListableEntity>(private val clazz: Class<T>, ) : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private val viewModel: EntityListViewModel<T> = EntityListViewModel(
-        MyApp.database.getDaoForClass(clazz).getAll()
-    )
+    private lateinit var viewModel: EntityListViewModel<T>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModel = EntityListViewModel(
+            MyApp.getDatabase(context).getDaoForClass(clazz).getAll()
+        )
     }
 
     override fun onCreateView(
@@ -48,8 +54,15 @@ class EntityListFragment<T : ListableEntity>(clazz: Class<T>, ) : Fragment() {
             }
         }
         viewModel.items.observe(viewLifecycleOwner) {
-            recyclerView.adapter = ListableEntityRecyclerViewAdapter(it, {}, {})
+            recyclerView.adapter = ListableEntityRecyclerViewAdapter(it, onEditItem, {})
         }
         return view
+    }
+
+    val onEditItem = { id: Long ->
+        startActivity(Intent(requireContext(), EditorActivity::class.java).apply {
+            putExtra(EditorActivity.ARG_CLASS, clazz)
+            putExtra(EntityEditorFragment.ARG_ITEM_ID, id)
+        })
     }
 }

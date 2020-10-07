@@ -3,19 +3,17 @@
     package="de.theopensourceguy.doyouevenscale">
 
     <application
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-        >
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".ui.activity.EditorActivity"></activity>
         <activity
             android:name=".ui.activity.DataManagerActivity"
             android:label="@string/title_activity_data_manager"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ui.activity.TabsActivity" />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name"

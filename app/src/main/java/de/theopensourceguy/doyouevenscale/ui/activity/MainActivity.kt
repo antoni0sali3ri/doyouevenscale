@@ -43,9 +43,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadInstruments() {
         val ids = MyApp.prefs.core.getInstrumentIdList()
-        val configs = MyApp.database.instrumentConfigDao().getInstrumentConfigsByIds(ids)
+        val configs = MyApp.getDatabase(this).instrumentConfigDao().getInstrumentConfigsByIds(ids)
         configs.observe(this, {
-            val instruments = MyApp.database.instrumentDao().getInstrumentsByIds(it.map { it.instrumentId })
+            val instruments = MyApp.getDatabase(this).instrumentDao().getInstrumentsByIds(it.map { it.instrumentId })
             instruments.observe(this, {
                 val sectionsPagerAdapter = InstrumentConfigPagerAdapter(it, supportFragmentManager)
                 viewPager.adapter = sectionsPagerAdapter

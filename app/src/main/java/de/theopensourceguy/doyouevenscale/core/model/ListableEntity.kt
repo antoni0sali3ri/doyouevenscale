@@ -6,3 +6,7 @@ interface ListableEntity {
 
     var name : String
 }
+
+interface Copyable<T> {
+    fun copy(): T
+}

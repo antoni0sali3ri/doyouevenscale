@@ -11,6 +11,8 @@ interface ViewModelDao<T : ListableEntity> {
 
     fun getAll(): LiveData<out List<T>>
 
+    fun getSingle(id: Long) : T
+
     fun insertSingle(item: T): Long
 
     fun updateSingle(item: T)
@@ -25,7 +27,7 @@ interface InstrumentConfigurationDao : ViewModelDao<InstrumentConfiguration> {
     override fun getAll(): LiveData<List<InstrumentConfiguration>>
 
     @Query("SELECT * FROM instrument_configurations WHERE id = :id")
-    fun getInstrumentConfigById(id: Long): InstrumentConfiguration
+    override fun getSingle(id: Long): InstrumentConfiguration
 
     @Query("SELECT * FROM instrument_configurations WHERE id IN(:ids)")
     fun getInstrumentConfigsByIds(ids: List<Long>): LiveData<List<InstrumentConfiguration>>
@@ -49,7 +51,7 @@ interface TuningDao : ViewModelDao<Instrument.Tuning> {
     override fun getAll(): LiveData<List<Instrument.Tuning>>
 
     @Query("SELECT * FROM instrument_tunings WHERE id = :id")
-    fun getTuningById(id: Long): Instrument.Tuning
+    override fun getSingle(id: Long): Instrument.Tuning
 
     @Query("SELECT * FROM instrument_tunings WHERE numStrings = :numStrings")
     fun getTuningsByStringCount(numStrings: Int): LiveData<List<Instrument.Tuning>>
@@ -73,7 +75,7 @@ interface TuningDao : ViewModelDao<Instrument.Tuning> {
 @Dao
 interface InstrumentDao : ViewModelDao<Instrument> {
     @Query("SELECT * FROM instruments WHERE id = :id")
-    fun getInstrumentById(id: Long): Instrument
+    override fun getSingle(id: Long): Instrument
 
     @Query("SELECT * FROM instruments WHERE id IN(:ids)")
     fun getInstrumentsByIds(ids: List<Long>): LiveData<List<Instrument>>
@@ -103,7 +105,7 @@ interface ScaleTypeDao : ViewModelDao<Scale.Type> {
     override fun getAll(): LiveData<List<Scale.Type>>
 
     @Query("SELECT * FROM scale_types WHERE id = :id")
-    fun getScaleTypeById(id: Long): Scale.Type
+    override fun getSingle(id: Long): Scale.Type
 
     @Insert
     override fun insertSingle(item: Scale.Type): Long

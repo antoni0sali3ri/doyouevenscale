@@ -1,6 +1,8 @@
 package de.theopensourceguy.doyouevenscale.core.model
 
 import android.graphics.Point
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -100,17 +102,19 @@ data class TunedInstrument(
 data class Instrument(
     var numStrings: Int,
     override var name: String,
-) : ListableEntity {
+) : ListableEntity, Parcelable {
     @PrimaryKey(autoGenerate = true)
     override var id: Long = 0
 
-    init {
-        require(numStrings >= 0 && numStrings <= MaxStrings)
+    constructor(parcel: Parcel) : this(
+        parcel.readInt(),
+        parcel.readString()!!
+    ) {
+        id = parcel.readLong()
     }
 
-    companion object {
-        val MaxStrings = 10
-        val MaxFrets = 30 // Any more than that and it's gonna look messy af
+    init {
+        require(numStrings >= 0 && numStrings <= MaxStrings)
     }
 
     @Entity(tableName = "instrument_tunings")
@@ -118,19 +122,69 @@ data class Instrument(
     data class Tuning(
         var stringPitches: List<Note>,
         override var name: String
-    ) : ListableEntity {
-        init {
-            require(stringPitches.isNotEmpty())
-        }
+    ) : ListableEntity, Parcelable {
 
         @PrimaryKey(autoGenerate = true)
         override var id: Long = 0
 
         var numStrings: Int = stringPitches.size
 
+        constructor(parcel: Parcel) : this(
+            emptyList<Note>(),
+            parcel.readString()!!
+        ) {
+            id = parcel.readLong()
+            numStrings = parcel.readInt()
+            parcel.readTypedList(stringPitches, Note.CREATOR)
+        }
+
         fun pitchOf(stringNo: Int): Note {
             return stringPitches[stringNo - 1]
         }
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {
+            parcel.writeString(name)
+            parcel.writeLong(id)
+            parcel.writeInt(numStrings)
+            parcel.writeTypedList(stringPitches)
+        }
+
+        override fun describeContents(): Int {
+            return 0
+        }
+
+        companion object CREATOR : Parcelable.Creator<Tuning> {
+            override fun createFromParcel(parcel: Parcel): Tuning {
+                return Tuning(parcel)
+            }
+
+            override fun newArray(size: Int): Array<Tuning?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(numStrings)
+        parcel.writeString(name)
+        parcel.writeLong(id)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Instrument> {
+        override fun createFromParcel(parcel: Parcel): Instrument {
+            return Instrument(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Instrument?> {
+            return arrayOfNulls(size)
+        }
+
+        val MaxStrings = 10
+        val MaxFrets = 30 // Any more than that and it's gonna look messy af
     }
 }
 

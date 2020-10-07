@@ -12,7 +12,7 @@ object MyApp : Application() {
     val APP_ID = "de.theopensourceguy.ScaleViewer"
     val DB_ID = "$APP_ID.db"
 
-    lateinit var prefs: Prefs
+    private var prefs: Prefs? = null
 
     private var database: ApplicationDatabase? = null
 
@@ -23,8 +23,14 @@ object MyApp : Application() {
         return database!!
     }
 
+    fun getPrefs(context: Context) : Prefs {
+        if (prefs == null) {
+            initializePrefs(context)
+        }
+        return prefs!!
+    }
+
     fun initialize(context: Context) {
-        initializePrefs(context)
         populateDatabase(context)
     }
 
@@ -50,8 +56,9 @@ object MyApp : Application() {
     }
 
     private fun populateDatabase(context: Context) {
-        val database = getDatabase(context)
+        val prefs = getPrefs(context)
         if (prefs.core.firstRun) {
+            val database = getDatabase(context)
             val predef = Predef(context)
             database.tuningDao().insertTunings(predef.tunings)
             database.scaleDao().insertScaleTypes(predef.scaleTypes)

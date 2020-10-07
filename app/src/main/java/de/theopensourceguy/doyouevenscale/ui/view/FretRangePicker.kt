@@ -1,6 +1,7 @@
 package de.theopensourceguy.doyouevenscale.ui.view
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.NumberPicker
 import de.theopensourceguy.doyouevenscale.R
@@ -18,6 +19,9 @@ class FretRangePicker(private val context: Context, root: View, values: IntRange
         numPickMax.minValue = values.first + 1
         numPickMax.maxValue = Instrument.MaxFrets
         numPickMax.value = values.last
+
+        numPickMin.setOnValueChangedListener(this)
+        numPickMax.setOnValueChangedListener(this)
     }
 
     fun setValues(lower: Int, upper: Int) {
@@ -28,6 +32,7 @@ class FretRangePicker(private val context: Context, root: View, values: IntRange
     fun getRange() = numPickMin.value..numPickMax.value
 
     override fun onValueChange(picker: NumberPicker?, oldVal: Int, newVal: Int) {
+        Log.d("FretRangePicker", "onValueChange(picker = $picker, oldVal = $oldVal, newVal = $newVal")
         when (picker) {
             null -> {}
             numPickMin -> {

@@ -135,7 +135,9 @@ data class Instrument(
         ) {
             id = parcel.readLong()
             numStrings = parcel.readInt()
-            parcel.readTypedList(stringPitches, Note.CREATOR)
+            val pitches = mutableListOf<Note>()
+            parcel.readTypedList(pitches, Note.CREATOR)
+            stringPitches = pitches.toList()
         }
 
         fun pitchOf(stringNo: Int): Note {

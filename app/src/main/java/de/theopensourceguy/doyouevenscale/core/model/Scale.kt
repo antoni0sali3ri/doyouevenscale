@@ -31,6 +31,9 @@ data class Scale(
             parcel.readString()!!
         ) {
             id = parcel.readLong()
+            val ints = mutableListOf<Interval>()
+            parcel.readTypedList(ints, Interval.CREATOR)
+            intervals = ints.toList()
         }
 
         constructor(
@@ -45,7 +48,7 @@ data class Scale(
         override fun writeToParcel(parcel: Parcel, flags: Int) {
             parcel.writeString(name)
             parcel.writeLong(id)
-            parcel.readTypedList(intervals, Interval.CREATOR)
+            parcel.writeTypedList(intervals)
         }
 
         override fun describeContents(): Int {

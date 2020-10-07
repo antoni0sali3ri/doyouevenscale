@@ -17,7 +17,7 @@ import de.theopensourceguy.doyouevenscale.ui.view.FretboardView
 /**
  * A placeholder fragment containing a simple view.
  */
-class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
+class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
     ObservableInstrumentConfiguration.OnChangeListener,
     FretRangePickerDialog.ResultListener,
     NotePickerDialog.ResultListener {
@@ -73,7 +73,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
                 )
             }
         }
-        instrumentConfig.listeners.add(this@PlaceholderFragment)
+        instrumentConfig.listeners.add(this@FretboardFragment)
 
         context?.let {
             MyApp.getDatabase(it).apply {
@@ -88,7 +88,7 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
         savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG, "onCreateView(savedInstanceState = $savedInstanceState")
-        val root = inflater.inflate(R.layout.fragment_main, container, false)
+        val root = inflater.inflate(R.layout.fragment_fretboard, container, false)
 
         layControlsAdvanced = root.findViewById(R.id.layFretboardControlsAdvanced)
 
@@ -215,8 +215,8 @@ class PlaceholderFragment : Fragment(), AdapterView.OnItemSelectedListener,
          * number.
          */
         @JvmStatic
-        fun newInstance(instrumentConfigId: Long): PlaceholderFragment {
-            return PlaceholderFragment().apply {
+        fun newInstance(instrumentConfigId: Long): FretboardFragment {
+            return FretboardFragment().apply {
                 arguments = Bundle().apply {
                     putLong(ARG_INSTRUMENT_CONFIG_ID, instrumentConfigId)
                 }

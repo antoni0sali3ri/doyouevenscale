@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import de.theopensourceguy.doyouevenscale.core.model.Instrument
-import de.theopensourceguy.doyouevenscale.ui.fragment.PlaceholderFragment
+import de.theopensourceguy.doyouevenscale.ui.fragment.FretboardFragment
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -14,7 +14,7 @@ class InstrumentConfigPagerAdapter(private val instruments: List<Instrument>, fm
     : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {
-        return PlaceholderFragment.newInstance(instruments[position].id)
+        return FretboardFragment.newInstance(instruments[position].id)
     }
 
     override fun getPageTitle(position: Int): CharSequence? {

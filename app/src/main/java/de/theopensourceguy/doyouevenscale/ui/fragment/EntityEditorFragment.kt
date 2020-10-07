@@ -152,10 +152,22 @@ class TuningEditorFragment : EntityEditorFragment<Instrument.Tuning>(Instrument.
     override val layoutResource: Int = R.layout.fragment_tuning_editor
 
     override val templateItem: Instrument.Tuning = Instrument.Tuning(listOf(Note.C), "Tuning")
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btnSubmit.isEnabled = false
+    }
 }
 
 class ScaleEditorFragment : EntityEditorFragment<Scale.Type>(Scale.Type::class.java) {
     override val layoutResource: Int = R.layout.fragment_scale_editor
 
     override val templateItem: Scale.Type = Scale.Type("Scale", 2, 3)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btnSubmit.isEnabled = false
+    }
 }

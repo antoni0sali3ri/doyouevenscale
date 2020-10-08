@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TableLayout
+        android:id="@+id/layControls"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <include layout="@layout/layout_editor_entity_name"
+            android:id="@+id/layEntityName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            />
+
+        <TableRow>
+            <TextView
+                android:id="@+id/lblInstrument"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_instrument_preset_instrument"
+                android:labelFor="@id/spinnerPresetInstrument"
+                />
+
+            <Spinner
+                android:id="@+id/spinnerPresetInstrument"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"
+                />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/lblTuning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_instrument_preset_tuning"
+                android:labelFor="@id/spinnerPresetTuning"
+                />
+
+            <Spinner
+                android:id="@+id/spinnerPresetTuning"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"
+                />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/lblScale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_instrument_preset_scale"
+                />
+
+            <LinearLayout
+                android:id="@+id/layScaleControls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/spinnerPresetRootNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+                <Spinner
+                    android:id="@+id/spinnerPresetScaleType"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/lblFretRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lbl_instrument_preset_fretrange"
+                android:labelFor="@id/layFretRange" />
+
+            <LinearLayout
+                android:id="@+id/layFretRange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/txtFretRangeMin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_fret_range_to" />
+
+                <TextView
+                    android:id="@+id/fretRangeMax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+
+    <include layout="@layout/layout_editor_buttons"
+        android:id="@+id/layButtonBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

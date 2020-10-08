@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate(savedInstanceState = $savedInstanceState)")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.my_toolbar))
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         MyApp.initialize(this)
 
@@ -44,8 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadInstruments() {
-        val ids = MyApp.getPrefs(this).core.getInstrumentIdList()
-        val configs = MyApp.getDatabase(this).instrumentConfigDao().getInstrumentConfigsByIds(ids)
+        val configs = MyApp.getDatabase(this).instrumentConfigDao().getInstrumentPresetTabs()
         configs.observe(this, {
             val instruments = MyApp.getDatabase(this).instrumentDao().getInstrumentsByIds(it.map { it.instrumentId })
             instruments.observe(this, {

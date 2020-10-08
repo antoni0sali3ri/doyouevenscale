@@ -6,7 +6,7 @@ import de.theopensourceguy.doyouevenscale.R
 
 data class Interval(
     val halfSteps: Int
-) : Parcelable {
+) : Parcelable, Comparable<Interval> {
     init {
         require(halfSteps >= 0)
     }
@@ -33,6 +33,7 @@ data class Interval(
             return arrayOfNulls(size)
         }
 
+
         val NAME_RES = arrayOf(
             R.string.interval_prime,
             R.string.interval_minor_second,
@@ -48,8 +49,12 @@ data class Interval(
             R.string.interval_major_seventh
         )
 
+        val INTERVALS = (0..11).map { Interval(it) }.toTypedArray()
+
         fun nameResFor(halfSteps: Int) = NAME_RES[halfSteps % 12]
     }
+
+    override fun compareTo(other: Interval): Int = halfSteps.compareTo(other.halfSteps)
 }
 
 fun Int.toInterval() : Interval {

@@ -63,4 +63,14 @@
     <string name="save">Speichern</string>
     <string name="name">Name</string>
     <string name="lbl_instrument_string_count">Saitenanzahl</string>
+    <string name="tab_title_dm_presets">Voreinstellungen</string>
+    <string name="action_create_entity_title">Neu erstellen</string>
+    <string name="action_restore_defaults_title">Zurücksetzen</string>
+    <string name="lbl_scale_intervals">Intervalle</string>
+    <string name="dialog_title_intervals">Intervall auswählen</string>
+    <string name="lbl_instrument_preset_instrument">Instrument</string>
+    <string name="lbl_instrument_preset_tuning">Stimmung</string>
+    <string name="lbl_instrument_preset_scale">Tonleiter</string>
+    <string name="lbl_instrument_preset_fretrange">Zeige Bünde</string>
+    <string name="lbl_string_pitches">Saitenstimmungen</string>
 </resources>

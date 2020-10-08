@@ -1,41 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/lblEntityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/name"
-        android:labelFor="@id/editEntityName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/editEntityName"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/recyclerViewIntervals"
-        />
-
-    <EditText
-        android:id="@+id/editEntityName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:lines="1"
-        app:layout_constraintStart_toEndOf="@id/lblEntityName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/recyclerViewIntervals"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewIntervals"
-        android:layout_width="0dp"
+    <TableLayout
+        android:id="@+id/layControls"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editEntityName"
-        app:layout_constraintBottom_toTopOf="@id/layButtonBar"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include layout="@layout/layout_editor_entity_name"
+            android:id="@+id/layEntityName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/lblScaleIntervals"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:text="@string/lbl_scale_intervals"
+                android:labelFor="@id/recyclerViewIntervals" />
+
+            <ImageButton
+                android:id="@+id/btnAddInterval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_add" />
+        </TableRow>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewIntervals"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </TableLayout>
 
     <include layout="@layout/layout_editor_buttons"
         android:id="@+id/layButtonBar"
@@ -43,6 +47,5 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewIntervals"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

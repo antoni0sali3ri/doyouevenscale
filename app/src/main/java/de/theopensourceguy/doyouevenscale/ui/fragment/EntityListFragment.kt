@@ -7,16 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import de.theopensourceguy.doyouevenscale.MyApp
 import de.theopensourceguy.doyouevenscale.R
-import de.theopensourceguy.doyouevenscale.core.model.Instrument
-import de.theopensourceguy.doyouevenscale.core.model.ListableEntity
-import de.theopensourceguy.doyouevenscale.core.model.Scale
+import de.theopensourceguy.doyouevenscale.core.model.*
 import de.theopensourceguy.doyouevenscale.ui.activity.EditorActivity
+import de.theopensourceguy.doyouevenscale.ui.fragment.editor.EntityEditorFragment
 import de.theopensourceguy.doyouevenscale.ui.main.ListableEntityRecyclerViewAdapter
 
 /**
@@ -28,7 +27,10 @@ class EntityListViewModel<T : ListableEntity>(val items: LiveData<out List<T>>) 
 sealed class EntityListFragment<T : ListableEntity>(private val clazz: Class<T>) : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewModel: EntityListViewModel<T>
+    protected abstract val viewModel: EntityViewModel<T>
+
+    protected open fun getAdapter(items: List<T>) =
+        ListableEntityRecyclerViewAdapter(items, onEditItem, onDeleteItem)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,9 +39,6 @@ sealed class EntityListFragment<T : ListableEntity>(private val clazz: Class<T>)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        viewModel = EntityListViewModel(
-            MyApp.getDatabase(context).getDaoForClass(clazz).getAll()
-        )
     }
 
     override fun onCreateView(
@@ -56,21 +55,52 @@ sealed class EntityListFragment<T : ListableEntity>(private val clazz: Class<T>)
             }
         }
         viewModel.items.observe(viewLifecycleOwner) {
-            recyclerView.adapter = ListableEntityRecyclerViewAdapter(it, onEditItem, {})
+            recyclerView.adapter = getAdapter(it)
         }
         return view
     }
 
-    val onEditItem = { id: Long ->
+    fun createItem() {
+        startActivity(Intent(requireContext(), EditorActivity::class.java).apply {
+            putExtra(EditorActivity.ARG_CLASS, clazz)
+            putExtra(EntityEditorFragment.ARG_ITEM_ID, 0)
+        })
+    }
+
+    protected val onEditItem = { id: Long ->
         startActivity(Intent(requireContext(), EditorActivity::class.java).apply {
             putExtra(EditorActivity.ARG_CLASS, clazz)
             putExtra(EntityEditorFragment.ARG_ITEM_ID, id)
         })
     }
+
+    protected val onDeleteItem: (Long) -> Unit = { id: Long ->
+        viewModel.delete(id)
+    }
 }
 
-class InstrumentListFragment() : EntityListFragment<Instrument>(Instrument::class.java)
+class InstrumentPresetListFragment :
+    EntityListFragment<InstrumentPreset>(InstrumentPreset::class.java) {
 
-class TuningListFragment(): EntityListFragment<Instrument.Tuning>(Instrument.Tuning::class.java)
+    override fun getAdapter(items: List<InstrumentPreset>) = Adapter(items)
 
-class ScaleListFragment(): EntityListFragment<Scale.Type>(Scale.Type::class.java)
+    inner class Adapter(items: List<InstrumentPreset>) :
+        ListableEntityRecyclerViewAdapter<InstrumentPreset>(items, onEditItem, onDeleteItem) {
+
+        override val itemLayout: Int = R.layout.list_item_data_manager_draggable
+    }
+
+    override val viewModel: PresetViewModel by activityViewModels()
+}
+
+class InstrumentListFragment : EntityListFragment<Instrument>(Instrument::class.java) {
+    override val viewModel: InstrumentViewModel by activityViewModels()
+}
+
+class TuningListFragment : EntityListFragment<Instrument.Tuning>(Instrument.Tuning::class.java) {
+    override val viewModel: TuningViewModel by activityViewModels()
+}
+
+class ScaleListFragment : EntityListFragment<Scale.Type>(Scale.Type::class.java) {
+    override val viewModel: ScaleViewModel by activityViewModels()
+}

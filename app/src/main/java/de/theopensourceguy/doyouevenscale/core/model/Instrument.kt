@@ -5,6 +5,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import de.theopensourceguy.doyouevenscale.core.db.NoteConverters
@@ -12,22 +13,24 @@ import de.theopensourceguy.doyouevenscale.core.db.NoteConverters
 @Entity(
     tableName = "instrument_configurations",
     foreignKeys = [ForeignKey(
+        onDelete = CASCADE,
         entity = Instrument::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("instrumentId")
     ), ForeignKey(
+        onDelete = CASCADE,
         entity = Instrument.Tuning::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("tuningId")
     ), ForeignKey(
+        onDelete = CASCADE,
         entity = Scale.Type::class,
         parentColumns = arrayOf("id"),
         childColumns = arrayOf("scaleTypeId")
     )]
 )
 @TypeConverters(NoteConverters::class)
-data class InstrumentConfiguration(
-
+data class InstrumentPreset(
     var instrumentId: Long,
     var tuningId: Long,
     var scaleTypeId: Long,
@@ -39,6 +42,8 @@ data class InstrumentConfiguration(
     override var id: Long = 0L
 
     override var name: String = ""
+
+    var showAsTab: Int = -1
 }
 
 data class TunedInstrument(
@@ -128,6 +133,11 @@ data class Instrument(
         override var id: Long = 0
 
         var numStrings: Int = stringPitches.size
+
+        fun setPitches(pitches: List<Note>) {
+            stringPitches = pitches
+            numStrings = pitches.size
+        }
 
         constructor(parcel: Parcel) : this(
             emptyList<Note>(),

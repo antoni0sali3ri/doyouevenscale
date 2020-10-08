@@ -10,11 +10,23 @@ class Predef(private val context: Context) {
     fun getString(@StringRes res: Int): String = context.resources.getString(res)
 
     val configs = listOf(
-        InstrumentConfiguration(1, 1, 1, Note.C, 0, 12),
-        InstrumentConfiguration(2, 2, 1, Note.C, 0, 12),
-        InstrumentConfiguration(3, 3, 1, Note.C, 0, 12),
-        InstrumentConfiguration(4, 4, 1, Note.C, 0, 12),
-        InstrumentConfiguration(5, 10, 1, Note.C, 0, 12)
+        InstrumentPreset(1, 1, 1, Note.C, 0, 12). apply {
+            showAsTab = 0
+            name = getString(R.string.instrument_guitar_name)
+        },
+        InstrumentPreset(2, 2, 1, Note.C, 0, 12).apply {
+            showAsTab = 1
+            name = getString(R.string.instrument_bass_name)
+        },
+        InstrumentPreset(3, 3, 1, Note.C, 0, 12).apply {
+            name = getString(R.string.instrument_mandolin_name)
+        },
+        InstrumentPreset(4, 4, 1, Note.C, 0, 12).apply {
+            name = getString(R.string.instrument_banjo_5str_name)
+        },
+        InstrumentPreset(5, 10, 1, Note.C, 0, 12).apply {
+            name = getString(R.string.instrument_ukulele_name)
+        }
     )
 
     val instruments = listOf(

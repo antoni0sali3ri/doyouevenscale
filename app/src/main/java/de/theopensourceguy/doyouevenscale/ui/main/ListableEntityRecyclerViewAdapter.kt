@@ -11,15 +11,17 @@ import de.theopensourceguy.doyouevenscale.core.model.ListableEntity
 
 /**
  */
-class ListableEntityRecyclerViewAdapter<T : ListableEntity>(
+open class ListableEntityRecyclerViewAdapter<T : ListableEntity>(
     var values: List<T>,
     val onEdit: (Long) -> Unit,
     val onDelete: (Long) -> Unit
 ) : RecyclerView.Adapter<ListableEntityRecyclerViewAdapter<T>.ViewHolder>() {
 
+    protected open val itemLayout = R.layout.list_item_data_manager
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_data_manager, parent, false)
+            .inflate(itemLayout, parent, false)
         return ViewHolder(view)
     }
 

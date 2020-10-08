@@ -59,8 +59,8 @@ class ObservableInstrumentConfiguration(
         Note.Display.valueOf(parcel.readString()!!)
     )
 
-    fun getObjectForDb(configId: Long = 0): InstrumentConfiguration {
-        return InstrumentConfiguration(
+    fun getObjectForDb(configId: Long = 0): InstrumentPreset {
+        return InstrumentPreset(
             instrument.id,
             tuning.id,
             scaleType.id,

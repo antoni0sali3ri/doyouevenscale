@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import de.theopensourceguy.doyouevenscale.R
 import de.theopensourceguy.doyouevenscale.core.model.ListableEntity
-import de.theopensourceguy.doyouevenscale.ui.fragment.EntityEditorFragment
+import de.theopensourceguy.doyouevenscale.ui.fragment.editor.EntityEditorFragment
 
 class EditorActivity : AppCompatActivity(), EntityEditorFragment.OnCommitListener {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -14,16 +14,19 @@ object MyApp : Application() {
 
     private var prefs: Prefs? = null
 
+    @Volatile
     private var database: ApplicationDatabase? = null
 
-    fun getDatabase(context: Context) : ApplicationDatabase {
-        if (database == null) {
+    fun getDatabase(context: Context): ApplicationDatabase {
+        if (database == null) synchronized(this) {
             initializeDatabase(context)
+            return database!!
         }
-        return database!!
+        else
+            return database!!
     }
 
-    fun getPrefs(context: Context) : Prefs {
+    fun getPrefs(context: Context): Prefs {
         if (prefs == null) {
             initializePrefs(context)
         }
@@ -31,7 +34,9 @@ object MyApp : Application() {
     }
 
     fun initialize(context: Context) {
-        populateDatabase(context)
+        val prefs = getPrefs(context)
+        if (prefs.core.firstRun)
+            populateDatabase(context)
     }
 
     private fun initializePrefs(context: Context) {
@@ -49,22 +54,26 @@ object MyApp : Application() {
                 .build()
         } else {
             database = Room
-                .databaseBuilder(context, ApplicationDatabase::class.java, "${BuildConfig.APPLICATION_ID}.db")
+                .databaseBuilder(
+                    context,
+                    ApplicationDatabase::class.java,
+                    "${BuildConfig.APPLICATION_ID}.db"
+                )
                 .build()
         }
+    }
 
+    fun resetDatabase(context: Context) {
+        getDatabase(context).clearAllTables()
+        populateDatabase(context)
     }
 
     private fun populateDatabase(context: Context) {
-        val prefs = getPrefs(context)
-        if (prefs.core.firstRun) {
-            val database = getDatabase(context)
-            val predef = Predef(context)
-            database.tuningDao().insertTunings(predef.tunings)
-            database.scaleDao().insertScaleTypes(predef.scaleTypes)
-            database.instrumentDao().insertInstruments(predef.instruments)
-            val ids = database.instrumentConfigDao().insertInstrumentConfigs(predef.configs)
-            prefs.core.setInstrumentIdList(ids)
-        }
+        val database = getDatabase(context)
+        val predef = Predef(context)
+        database.tuningDao().insertTunings(predef.tunings)
+        database.scaleDao().insertScaleTypes(predef.scaleTypes)
+        database.instrumentDao().insertInstruments(predef.instruments)
+        database.instrumentConfigDao().insertInstrumentPresets(predef.configs)
     }
 }

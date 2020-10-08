@@ -1,4 +1,4 @@
-package de.theopensourceguy.doyouevenscale.ui.fragment
+package de.theopensourceguy.doyouevenscale.ui.fragment.dialog
 
 import android.app.AlertDialog
 import android.app.Dialog

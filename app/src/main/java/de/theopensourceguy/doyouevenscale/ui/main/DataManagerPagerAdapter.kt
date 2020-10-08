@@ -1,15 +1,15 @@
 package de.theopensourceguy.doyouevenscale.ui.main
 
 import android.content.Context
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import de.theopensourceguy.doyouevenscale.R
-import de.theopensourceguy.doyouevenscale.ui.fragment.InstrumentListFragment
-import de.theopensourceguy.doyouevenscale.ui.fragment.ScaleListFragment
-import de.theopensourceguy.doyouevenscale.ui.fragment.TuningListFragment
+import de.theopensourceguy.doyouevenscale.ui.fragment.*
 
 val TAB_TITLES = listOf(
+    R.string.tab_title_dm_presets,
     R.string.tab_title_dm_instruments,
     R.string.tab_title_dm_tunings,
     R.string.tab_title_dm_scales
@@ -21,10 +21,13 @@ val TAB_TITLES = listOf(
 class DataManagerPagerAdapter(private val context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm) {
 
+    private val items: MutableMap<Int, EntityListFragment<*>> = mutableMapOf()
+
     override fun getItem(position: Int): Fragment = when (position) {
-        0 -> InstrumentListFragment()
-        1 -> TuningListFragment()
-        2 -> ScaleListFragment()
+        0 -> InstrumentPresetListFragment()
+        1 -> InstrumentListFragment()
+        2 -> TuningListFragment()
+        3 -> ScaleListFragment()
         else -> throw IndexOutOfBoundsException()
     }
 
@@ -33,6 +36,19 @@ class DataManagerPagerAdapter(private val context: Context, fm: FragmentManager)
     }
 
     override fun getCount(): Int {
-        return 3
+        return 4
     }
+
+    override fun instantiateItem(container: ViewGroup, position: Int): EntityListFragment<*> {
+        val fragment = super.instantiateItem(container, position) as EntityListFragment<*>
+        items.put(position, fragment)
+        return fragment
+    }
+
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        super.destroyItem(container, position, `object`)
+        items.remove(position)
+    }
+
+    fun getFragmentAt(position: Int) = items[position]
 }

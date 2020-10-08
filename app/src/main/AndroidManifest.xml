@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ui.activity.EditorActivity"></activity>
+        <activity android:name=".ui.activity.EditorActivity" />
         <activity
             android:name=".ui.activity.DataManagerActivity"
             android:label="@string/title_activity_data_manager"

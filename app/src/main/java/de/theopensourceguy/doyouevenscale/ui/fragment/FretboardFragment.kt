@@ -8,10 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import de.theopensourceguy.doyouevenscale.MyApp
 import de.theopensourceguy.doyouevenscale.R
 import de.theopensourceguy.doyouevenscale.core.model.*
+import de.theopensourceguy.doyouevenscale.ui.fragment.dialog.FretRangePickerDialog
+import de.theopensourceguy.doyouevenscale.ui.fragment.dialog.NotePickerDialog
 import de.theopensourceguy.doyouevenscale.ui.view.FretboardView
 
 /**
@@ -25,12 +28,15 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
     private val TAG: String = "FretboardFragment"
     private val spinnerItemLayout = R.layout.layout_spinner_item
 
+    private val tuningViewModel: TuningViewModel by activityViewModels()
+    private val scaleViewModel: ScaleViewModel by activityViewModels()
+
     private lateinit var instrumentConfig: ObservableInstrumentConfiguration
 
     private lateinit var scaleTypes: LiveData<List<Scale.Type>>
     private lateinit var tunings: LiveData<List<Instrument.Tuning>>
 
-    private lateinit var layControlsAdvanced: ViewGroup
+    private lateinit var layControlsAdvanced: List<TableRow>
     private lateinit var layFretRange: ViewGroup
     private lateinit var btnExpandControls: ImageView
     private var controlsExpanded: Boolean = false
@@ -61,6 +67,7 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
                 val cfg = instrumentConfigDao().getSingle(configId)
                 val instrument = instrumentDao().getSingle(cfg.instrumentId)
                 val tuning = tuningDao().getSingle(cfg.tuningId)
+                Log.d(TAG, "Tuning = $tuning")
                 val scaleType = scaleDao().getSingle(cfg.scaleTypeId)
 
                 instrumentConfig = ObservableInstrumentConfiguration(
@@ -90,7 +97,10 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
         Log.d(TAG, "onCreateView(savedInstanceState = $savedInstanceState")
         val root = inflater.inflate(R.layout.fragment_fretboard, container, false)
 
-        layControlsAdvanced = root.findViewById(R.id.layFretboardControlsAdvanced)
+        layControlsAdvanced = listOf(
+            root.findViewById(R.id.tblRowTuning),
+            root.findViewById(R.id.tblRowFretRange)
+        )
 
         layFretRange = root.findViewById(R.id.layFretRange)
         layFretRange.setOnClickListener {
@@ -100,7 +110,7 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
 
         btnExpandControls = root.findViewById(R.id.btnExpandControls)
         btnExpandControls.setOnClickListener {
-            layControlsAdvanced.visibility = if (controlsExpanded) View.GONE else View.VISIBLE
+            layControlsAdvanced.forEach {it.visibility = if (controlsExpanded) View.GONE else View.VISIBLE }
             btnExpandControls.setImageResource(
                 if (controlsExpanded) R.drawable.ic_expand_less else R.drawable.ic_expand_more
             )
@@ -121,27 +131,31 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
         */
 
         spinnerScale = root.findViewById(R.id.spinnerScaleType)
-        scaleTypes.observe(viewLifecycleOwner, {
+        scaleTypes.observeForever {
             spinnerScale.adapter = ArrayAdapter(
                 requireContext(),
                 spinnerItemLayout,
                 it.map { it.name }
-            )
+            ).apply {
+                notifyDataSetChanged()
+            }
             val position = it.indexOf(instrumentConfig.scaleType)
             spinnerScale.setSelection(position)
-        })
+        }
         spinnerScale.onItemSelectedListener = this
 
         spinnerTuning = root.findViewById(R.id.spinnerTuning)
-        tunings.observe(viewLifecycleOwner, {
+        tunings.observeForever {
             spinnerTuning.adapter = ArrayAdapter(
                 requireContext(),
                 spinnerItemLayout,
                 it.map { it.name }
-            )
+            ).apply {
+                notifyDataSetChanged()
+            }
             val position = it.indexOf(instrumentConfig.tuning)
             spinnerTuning.setSelection(position)
-        })
+        }
         spinnerTuning.onItemSelectedListener = this
 
         spinnerMinFret = root.findViewById(R.id.spinnerMinFret)

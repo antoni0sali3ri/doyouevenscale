@@ -1,4 +1,4 @@
-package de.theopensourceguy.doyouevenscale.ui.fragment
+package de.theopensourceguy.doyouevenscale.ui.fragment.editor
 
 import android.content.Context
 import android.os.Bundle
@@ -9,36 +9,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.NumberPicker
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import de.theopensourceguy.doyouevenscale.MyApp
 import de.theopensourceguy.doyouevenscale.R
-import de.theopensourceguy.doyouevenscale.core.db.ViewModelDao
-import de.theopensourceguy.doyouevenscale.core.model.Instrument
-import de.theopensourceguy.doyouevenscale.core.model.ListableEntity
-import de.theopensourceguy.doyouevenscale.core.model.Note
-import de.theopensourceguy.doyouevenscale.core.model.Scale
+import de.theopensourceguy.doyouevenscale.core.model.*
 
-sealed class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : Fragment() {
+abstract class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : Fragment() {
 
     protected abstract val layoutResource: Int
     protected abstract val templateItem: T
 
     protected lateinit var item: T
 
+    protected abstract val viewModel: EntityViewModel<T>
+
     protected lateinit var btnSubmit: Button
     protected lateinit var btnCancel: Button
     protected lateinit var edtEntityName: EditText
 
-    private lateinit var dao : ViewModelDao<T>
     private lateinit var commitListener: OnCommitListener
 
     protected fun commitChanges() {
         if (item.id == 0L)
-            dao.insertSingle(item)
+            viewModel.insert(item)
         else
-            dao.updateSingle(item)
+            viewModel.update(item)
     }
 
     override fun onAttach(context: Context) {
@@ -49,8 +44,6 @@ sealed class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : Fra
         } else {
             throw ClassCastException("Attached context needs to implement OnCommitListener")
         }
-
-        dao = MyApp.getDatabase(requireContext()).getDaoForClass(clazz)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +51,7 @@ sealed class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : Fra
 
         val itemId = requireArguments().getLong(ARG_ITEM_ID)
 
-        item = if (itemId > 0) dao.getSingle(itemId) else templateItem
+        item = if (itemId > 0) viewModel.getSingle(itemId) else templateItem
     }
 
     override fun onCreateView(
@@ -106,11 +99,12 @@ sealed class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : Fra
     }
 
     companion object {
-        val ARG_ITEM_ID: String = "entity_item_id"
+        const val ARG_ITEM_ID: String = "entity_item_id"
 
         @JvmStatic
-        fun <T : ListableEntity> newInstance(clazz: Class<T>, itemId: Long = 0) : Fragment {
-            val fragment = when(clazz) {
+        fun <T : ListableEntity> newInstance(clazz: Class<T>, itemId: Long = 0): Fragment {
+            val fragment = when (clazz) {
+                InstrumentPreset::class.java -> InstrumentPresetEditorFragment()
                 Instrument::class.java -> InstrumentEditorFragment()
                 Instrument.Tuning::class.java -> TuningEditorFragment()
                 Scale.Type::class.java -> ScaleEditorFragment()
@@ -125,49 +119,3 @@ sealed class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : Fra
     }
 }
 
-class InstrumentEditorFragment : EntityEditorFragment<Instrument>(Instrument::class.java) {
-    override val layoutResource: Int = R.layout.fragment_instrument_editor
-
-    override val templateItem: Instrument = Instrument(4, "Instrument")
-
-    private lateinit var npStringCount: NumberPicker
-
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        npStringCount = view.findViewById(R.id.numberPickerStringCount)
-        npStringCount.minValue = 1
-        npStringCount.maxValue = Instrument.MaxStrings
-        npStringCount.value = item.numStrings
-        npStringCount.setOnValueChangedListener { picker, oldVal, newVal ->
-            item.numStrings = newVal
-        }
-    }
-
-}
-
-class TuningEditorFragment : EntityEditorFragment<Instrument.Tuning>(Instrument.Tuning::class.java) {
-    override val layoutResource: Int = R.layout.fragment_tuning_editor
-
-    override val templateItem: Instrument.Tuning = Instrument.Tuning(listOf(Note.C), "Tuning")
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        btnSubmit.isEnabled = false
-    }
-}
-
-class ScaleEditorFragment : EntityEditorFragment<Scale.Type>(Scale.Type::class.java) {
-    override val layoutResource: Int = R.layout.fragment_scale_editor
-
-    override val templateItem: Scale.Type = Scale.Type("Scale", 2, 3)
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        btnSubmit.isEnabled = false
-    }
-}

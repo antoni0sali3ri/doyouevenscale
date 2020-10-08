@@ -1,10 +1,12 @@
 <resources>
     <declare-styleable name="FretboardView">
-        <attr name="fretboardFillColor" format="color"/>
+        <attr name="backgroundColor" format="color"/>
         <attr name="fretColor" format="color"/>
         <attr name="stringColor" format="color"/>
+        <attr name="inlayColor" format="color"/>
+        <attr name="noteStrokeColor" format="color"/>
         <attr name="noteColor" format="color"/>
-
-        <attr name="exampleColor" format="color" />
+        <attr name="highlightColor" format="color"/>
+        <attr name="labelColor" format="color"/>
     </declare-styleable>
 </resources>

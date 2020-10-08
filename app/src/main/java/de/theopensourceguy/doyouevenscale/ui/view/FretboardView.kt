@@ -9,27 +9,104 @@ import de.theopensourceguy.doyouevenscale.R
 import de.theopensourceguy.doyouevenscale.core.model.FretSpacing
 import de.theopensourceguy.doyouevenscale.core.model.Instrument
 import de.theopensourceguy.doyouevenscale.core.model.Note
+import kotlin.math.min
 
 /**
  * TODO: document your custom view class.
  */
 class FretboardView : View {
 
-    private var _fretboardColor: Int = Color.rgb(0xfe, 0xde, 0)
-    private var _inlayColor: Int = Color.rgb(0xde, 0xde, 0xde)
-    private var _fretColor: Int = Color.rgb(0xcc, 0xcc, 0xcc)
-    private var _stringColor: Int = Color.rgb(0xaa, 0xaa, 0xaa)
-    private var _noteColor: Int = Color.rgb(0x22, 0x22, 0x22)
+    private var _fretboardColor: Int = Color.WHITE
+    var fretboardColor: Int
+        get() = _fretboardColor
+        set(value) {
+            _fretboardColor = value
+            pnt.fretboard.color = value
+            invalidate()
+            requestLayout()
+        }
+
+    private var _inlayColor: Int = Color.GRAY
+    var inlayColor: Int
+        get() = _inlayColor
+        set(value) {
+            _inlayColor = value
+            pnt.inlays.color = value
+            invalidate()
+            requestLayout()
+        }
+
+    private var _fretColor: Int = Color.BLACK
+    var fretColor: Int
+        get() = _fretColor
+        set(value) {
+            _fretColor = value
+            pnt.frets.color = value
+            invalidate()
+            requestLayout()
+        }
+
+    private var _stringColor: Int = Color.BLACK
+    var stringColor: Int
+        get() = _stringColor
+        set(value) {
+            _stringColor = value
+            pnt.strings.color = value
+            invalidate()
+            requestLayout()
+        }
+
+    private var _noteStrokeColor: Int = Color.BLACK
+    var noteStrokeColor: Int
+        get() = _noteStrokeColor
+        set(value) {
+            _noteStrokeColor = value
+            pnt.notes.color = value
+            invalidate()
+            requestLayout()
+        }
+
+    private var _noteColor: Int = Color.WHITE
+    var noteColor: Int
+        get() = _noteColor
+        set(value) {
+            _noteColor = value
+            pnt.notes.color = value
+            invalidate()
+            requestLayout()
+        }
+
+    private var _highlightColor: Int = Color.BLACK
+    var highlightColor: Int
+        get() = _highlightColor
+        set(value) {
+            _highlightColor = value
+            pnt.roots.color = value
+            invalidate()
+            requestLayout()
+        }
+
+    private var _labelColor: Int = Color.BLACK
+    var labelColor: Int
+        get() = _labelColor
+        set(value) {
+            _labelColor = value
+            pnt.roots.color = value
+            invalidate()
+            requestLayout()
+        }
 
     private val crs: Coordinates = Coordinates()
-    private val pnt: Paint = Paint()
+    private val pnt: Paints
 
     constructor(context: Context) : super(context) {
         init(null, 0)
+        pnt = Paints()
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         init(attrs, 0)
+        pnt = Paints()
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
@@ -38,15 +115,26 @@ class FretboardView : View {
         defStyle
     ) {
         init(attrs, defStyle)
+        pnt = Paints()
     }
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         // Load attributes
-        val a = context.obtainStyledAttributes(
+        context.obtainStyledAttributes(
             attrs, R.styleable.FretboardView, defStyle, 0
-        )
-        a.recycle()
-
+        ).apply {
+            try {
+                _fretboardColor = getInt(R.styleable.FretboardView_backgroundColor, _fretboardColor)
+                _inlayColor = getInt(R.styleable.FretboardView_inlayColor, _inlayColor)
+                _fretColor = getInt(R.styleable.FretboardView_fretColor, _fretColor)
+                _stringColor = getInt(R.styleable.FretboardView_stringColor, _stringColor)
+                _noteStrokeColor = getInt(R.styleable.FretboardView_noteStrokeColor, _noteStrokeColor)
+                _noteColor = getInt(R.styleable.FretboardView_noteColor, _noteColor)
+                _highlightColor = getInt(R.styleable.FretboardView_highlightColor, _highlightColor)
+            } finally {
+                recycle()
+            }
+        }
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -68,9 +156,8 @@ class FretboardView : View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val noteRadius = 20f
-        val inlayRadius = 10f
-        val labelTextSize = 50f
+        val fretLabelSize = pnt.fretLabels.textSize
+        val stringLabelSize = pnt.stringLabels.textSize
 
         canvas.apply {
             // Draw the fretboard background
@@ -83,45 +170,47 @@ class FretboardView : View {
                 if (crs.isVertical) drawCircle(
                     inlayCoord,
                     it,
-                    inlayRadius,
+                    crs.inlayRadius,
                     pnt.inlays
                 ) else drawCircle(
                     it,
                     inlayCoord,
-                    inlayRadius,
+                    crs.inlayRadius,
                     pnt.inlays
                 )
             }
 
             // Draw the string labels
             val stringLabelCoord = if (crs.isVertical) {
-                crs.fretboardRect.top - 1.2f * crs.stringLabelSize
+                crs.fretboardRect.top - 2.5f * crs.noteRadius
             } else {
-                crs.fretboardRect.left - 1.5f * crs.stringLabelSize
+                crs.fretboardRect.left - 2.5f * crs.noteRadius
             }
             for (i in 0 until crs.stringCount) {
                 if (crs.isVertical) {
                     drawText(
                         crs.stringLabels[i],
-                        crs.stringPosScaled[i] - 0.2f * crs.stringLabelSize,
+                        crs.stringPosScaled[i],
                         stringLabelCoord,
-                        pnt.labels
+                        pnt.stringLabels
                     )
                 } else {
                     drawText(
                         crs.stringLabels[crs.stringCount - i - 1],
                         stringLabelCoord,
-                        crs.stringPosScaled[i] + 0.4f * crs.stringLabelSize,
-                        pnt.labels
+                        crs.stringPosScaled[i] + 0.35f * stringLabelSize,
+                        pnt.stringLabels
                     )
                 }
             }
 
             // Draw the fret numbers
             val fretLabelCoord = if (crs.isVertical) {
-                crs.fretboardRect.left - 2 * labelTextSize
+                // x coordinate
+                crs.fretboardRect.left - crs.noteRadius * 2
             } else {
-                crs.fretboardRect.bottom + 2 * labelTextSize
+                // y coordinate
+                crs.fretboardRect.bottom + crs.noteRadius * 2 + pnt.fretLabels.textSize
             }
             val count = crs.fretLabels.size
             for (i in 0 until count) {
@@ -129,15 +218,15 @@ class FretboardView : View {
                     drawText(
                         crs.fretLabels[i].toString(),
                         fretLabelCoord,
-                        crs.fretLabelsPosScaled[i] + labelTextSize * .4f,
-                        pnt.labels
+                        crs.fretLabelsPosScaled[i] + fretLabelSize * .35f,
+                        pnt.fretLabels
                     )
                 } else {
                     drawText(
                         crs.fretLabels[i].toString(),
-                        crs.fretLabelsPosScaled[i] - labelTextSize * .4f,
+                        crs.fretLabelsPosScaled[i],
                         fretLabelCoord,
-                        pnt.labels
+                        pnt.fretLabels
                     )
                 }
             }
@@ -160,71 +249,93 @@ class FretboardView : View {
 
             // Draw the fingerings for the current scale
             crs.notesInScale.forEach {
-                if (crs.isVertical) drawCircle(
+                if (crs.isVertical) drawNote(
+                    this,
                     crs.stringPosScaled[it.x - 1],
                     crs.fretPosScaled[it.y],
-                    noteRadius,
+                    crs.noteRadius,
                     pnt.notes
-                ) else drawCircle(
+                ) else drawNote(
+                    this,
                     crs.fretPosScaled[it.y],
                     crs.stringPosScaled[crs.stringCount - it.x],
-                    noteRadius,
+                    crs.noteRadius,
                     pnt.notes
                 )
             }
 
             // Fill in the root positions of the current scale
             crs.rootNotes.forEach {
-                if (crs.isVertical) drawCircle(
+                if (crs.isVertical) drawNote(
+                    this,
                     crs.stringPosScaled[it.x - 1],
                     crs.fretPosScaled[it.y],
-                    noteRadius,
+                    crs.noteRadius,
                     pnt.roots
-                ) else drawCircle(
+                ) else drawNote(
+                    this,
                     crs.fretPosScaled[it.y],
                     crs.stringPosScaled[crs.stringCount - it.x],
-                    noteRadius,
+                    crs.noteRadius,
                     pnt.roots
                 )
             }
         }
     }
 
-    inner class Paint {
+    fun drawNote(canvas: Canvas, x: Float, y: Float, radius: Float, paint: android.graphics.Paint) {
+        canvas.drawCircle(x, y, radius, paint)
+        canvas.drawCircle(x, y, radius, pnt.noteStroke)
+    }
+
+    inner class Paints {
 
         val fretboard = Paint(0).apply {
-            color = _fretboardColor
+            color = fretboardColor
         }
 
-        val inlays = Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
-            color = _inlayColor
-            style = android.graphics.Paint.Style.FILL_AND_STROKE
+        val inlays = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = inlayColor
+            style = Paint.Style.FILL_AND_STROKE
         }
 
         val strings = Paint(0).apply {
-            color = _stringColor
+            color = stringColor
             strokeWidth = 5f
         }
 
         val frets = Paint(0).apply {
-            color = _fretColor
+            color = fretColor
             strokeWidth = 7f
         }
 
-        val labels = Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
-            color = _noteColor
+        val stringLabels = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = _labelColor
+            textAlign = Paint.Align.CENTER
             textSize = 50f
         }
 
-        val notes = Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
-            color = _noteColor
-            strokeWidth = 7f
-            style = android.graphics.Paint.Style.STROKE
+        val fretLabels = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = _labelColor
+            textAlign = Paint.Align.RIGHT
+            textSize = 50f
         }
 
-        val roots = Paint(android.graphics.Paint.ANTI_ALIAS_FLAG).apply {
+        val noteStroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = _noteStrokeColor
+            strokeWidth = 7f
+            style = Paint.Style.STROKE
+        }
+
+        val notes = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = _noteColor
-            style = android.graphics.Paint.Style.FILL_AND_STROKE
+            style = Paint.Style.FILL
+
+        }
+
+        val roots = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = _highlightColor
+            style = Paint.Style.FILL
         }
     }
 
@@ -275,6 +386,9 @@ class FretboardView : View {
         var firstFret: Int = 0
         var stringCount: Int = 0
         var stringLabelSize: Float = 50f
+        var noteRadius: Float = 25f
+        var inlayRadius: Float = 10f
+        var stringSpacing: Float = 0f
         var isVertical: Boolean = true
         lateinit var notesInScale: List<Point>
         lateinit var rootNotes: List<Point>
@@ -341,6 +455,8 @@ class FretboardView : View {
         fun scaleToSize() {
             if (!readyToDraw()) return
 
+            setTextAlignment()
+
             if (isVertical)
                 scaleToSizeVert()
             else
@@ -364,25 +480,49 @@ class FretboardView : View {
             fretLabelsPosScaled = labels.toTypedArray()
         }
 
+        private fun calculateRadii() {
+            val last = fretPosScaled.size - 1
+            val size = min(
+                fretPosScaled[last] - fretPosScaled[last-1],
+                stringSpacing
+            ) / 2
+            noteRadius = size * .45f
+            inlayRadius = size * .25f
+            pnt.noteStroke.strokeWidth = size * .15f
+        }
+
+        private fun setTextAlignment() {
+            if (isVertical) {
+                pnt.fretLabels.textAlign = Paint.Align.RIGHT
+                pnt.stringLabels.textAlign = Paint.Align.CENTER
+            } else {
+                pnt.fretLabels.textAlign = Paint.Align.CENTER
+                pnt.stringLabels.textAlign = Paint.Align.RIGHT
+            }
+        }
+
         private fun scaleToSizeVert() {
             val w = width
-            val h = height - 2 * stringLabelSize
+            val h = height - 1.5f * stringLabelSize
             val xofs = xOffset
-            val yofs = yOffset + 2 * stringLabelSize
+            val yofs = yOffset + 1.5f * stringLabelSize
 
             fretPosScaled = fretPos.map { yofs + it * h }.toTypedArray()
 
             calculateInlays()
             calculateFretLabels()
 
+            stringLabelSize
             val stringGaps = stringCount - 1
-            val stringSpacing =
+            stringSpacing =
                 Math.min(.7f * (fretPosScaled[1] - fretPosScaled[0]), (.7f * w) / stringGaps)
             val fretboardWidth = stringSpacing * stringGaps
             val stringOfs = (w - fretboardWidth) / 2f
             stringPosScaled = (0 until stringCount).map {
                 xofs + stringOfs + it * stringSpacing
             }.toTypedArray()
+
+            calculateRadii()
 
             fretboardRect = RectF(
                 xofs + stringOfs,
@@ -399,9 +539,9 @@ class FretboardView : View {
         }
 
         private fun scaleToSizeHoriz() {
-            val w = width - 2 * stringLabelSize
+            val w = width - 1.5f * stringLabelSize
             val h = height
-            val xofs = xOffset + 2 * stringLabelSize
+            val xofs = xOffset + 1.5f * stringLabelSize
             val yofs = yOffset
 
             fretPosScaled = fretPos.map { xofs + it * w }.toTypedArray()
@@ -410,13 +550,15 @@ class FretboardView : View {
             calculateFretLabels()
 
             val stringGaps = stringCount - 1
-            val stringSpacing =
+            stringSpacing =
                 Math.min(.7f * (fretPosScaled[1] - fretPosScaled[0]), (.7f * h) / stringGaps)
             val fretboardWidth = stringSpacing * stringGaps
             val stringOfs = (h - fretboardWidth) / 2f
             stringPosScaled = (0 until stringCount).map {
                 yofs + stringOfs + it * stringSpacing
             }.toTypedArray()
+
+            calculateRadii()
 
             fretboardRect = RectF(
                 xofs,

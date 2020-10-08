@@ -3,6 +3,17 @@
     <color name="colorPrimary">#F9A825</color>
     <color name="colorPrimaryDark">#1B5E20</color>
     <color name="colorAccent">#CCFF90</color>
+
+    <color name="colorActivityBackground">#FFFFFF</color>
     <color name="button_color">#FFFF8D</color>
+
+    <color name="colorFretboardBackground">#FFFFFF</color>
+    <color name="colorFretboardStrings">#000000</color>
+    <color name="colorFretboardFrets">#000000</color>
+    <color name="colorFretboardInlays">#444444</color>
+    <color name="colorFretboardNoteStroke">#000000</color>
+    <color name="colorFretboardNotes">#FFFFFF</color>
+    <color name="colorFretboardNotesHighlight">#000000</color>
+    <color name="colorFretboardLabels">#000000</color>
 
 </resources>

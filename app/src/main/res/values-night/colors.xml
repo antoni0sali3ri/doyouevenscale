@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorActivityBackground">#000000</color>
+    <color name="button_color">#FFFF8D</color>
+
+    <color name="colorFretboardBackground">#000000</color>
+    <color name="colorFretboardStrings">#FFFFFF</color>
+    <color name="colorFretboardFrets">#FFFFFF</color>
+    <color name="colorFretboardInlays">#BBBBBB</color>
+    <color name="colorFretboardNoteStroke">#FFFFFF</color>
+    <color name="colorFretboardNotes">#000000</color>
+    <color name="colorFretboardNotesHighlight">#FFFFFF</color>
+    <color name="colorFretboardLabels">#FFFFFF</color>
+
+</resources>

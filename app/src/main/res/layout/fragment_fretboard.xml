@@ -11,16 +11,19 @@
         android:id="@+id/fretboardView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="16dp"
-        app:exampleColor="#000000"
-        app:fretColor="#eee"
-        app:fretboardFillColor="#abab00"
+        android:padding="24dp"
+        app:backgroundColor="@color/colorFretboardBackground"
+        app:inlayColor="@color/colorFretboardInlays"
+        app:fretColor="@color/colorFretboardFrets"
+        app:stringColor="@color/colorFretboardStrings"
+        app:noteColor="@color/colorFretboardNotes"
+        app:highlightColor="@color/colorFretboardNotesHighlight"
+        app:labelColor="@color/colorFretboardLabels"
         app:layout_constraintBottom_toTopOf="@id/layFretboardControls"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:noteColor="#222"
-        app:stringColor="#ccc" />
+        />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/layFretboardControls"

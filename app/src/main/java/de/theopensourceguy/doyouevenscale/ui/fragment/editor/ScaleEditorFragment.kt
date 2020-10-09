@@ -29,21 +29,24 @@ class ScaleEditorFragment : EntityEditorFragment<Scale.Type>(Scale.Type::class.j
 
     override val viewModel: ScaleViewModel by activityViewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initializeViews(item: Scale.Type) {
+        super.initializeViews(item)
 
         intervals.addAll(item.intervals)
-
-        recyclerViewIntervals = view.findViewById(R.id.recyclerViewIntervals)
         recyclerViewIntervals.apply {
-            layoutManager = LinearLayoutManager(view.context)
-            adapter = IntervalListAdapter(view.context, intervals)
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = IntervalListAdapter(requireContext(), intervals)
         }
-
-        btnAddInterval = view.findViewById(R.id.btnAddInterval)
         btnAddInterval.setOnClickListener {
             IntervalPickerDialog(this, intervals).show(childFragmentManager, "IntervalPickerDialog")
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recyclerViewIntervals = view.findViewById(R.id.recyclerViewIntervals)
+        btnAddInterval = view.findViewById(R.id.btnAddInterval)
     }
 
     override fun onIntervalSelected(interval: Interval) {

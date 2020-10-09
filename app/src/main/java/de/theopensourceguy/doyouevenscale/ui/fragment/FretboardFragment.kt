@@ -9,13 +9,15 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.lifecycleScope
 import de.theopensourceguy.doyouevenscale.MyApp
 import de.theopensourceguy.doyouevenscale.R
 import de.theopensourceguy.doyouevenscale.core.model.*
 import de.theopensourceguy.doyouevenscale.ui.fragment.dialog.FretRangePickerDialog
 import de.theopensourceguy.doyouevenscale.ui.fragment.dialog.NotePickerDialog
 import de.theopensourceguy.doyouevenscale.ui.view.FretboardView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * A placeholder fragment containing a simple view.
@@ -32,9 +34,6 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
     private val scaleViewModel: ScaleViewModel by activityViewModels()
 
     private lateinit var instrumentConfig: ObservableInstrumentConfiguration
-
-    private lateinit var scaleTypes: LiveData<List<Scale.Type>>
-    private lateinit var tunings: LiveData<List<Instrument.Tuning>>
 
     private lateinit var layControlsAdvanced: List<TableRow>
     private lateinit var layFretRange: ViewGroup
@@ -61,33 +60,76 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
         if (savedInstanceState != null) {
             instrumentConfig = savedInstanceState.getParcelable(ARG_INSTRUMENT_CONFIG)!!
         } else {
-            with(MyApp.getDatabase(requireContext())) {
+            lifecycleScope.launch(Dispatchers.IO) {
 
-                val configId = requireArguments().getLong(ARG_INSTRUMENT_CONFIG_ID)
-                val cfg = instrumentConfigDao().getSingle(configId)
-                val instrument = instrumentDao().getSingle(cfg.instrumentId)
-                val tuning = tuningDao().getSingle(cfg.tuningId)
-                Log.d(TAG, "Tuning = $tuning")
-                val scaleType = scaleDao().getSingle(cfg.scaleTypeId)
+                with(MyApp.getDatabase(requireContext())) {
 
-                instrumentConfig = ObservableInstrumentConfiguration(
-                    instrument,
-                    tuning,
-                    cfg.rootNote,
-                    scaleType,
-                    cfg.fromFret..cfg.toFret,
-                    Note.Display.Sharp
-                )
+                    val configId = requireArguments().getLong(ARG_INSTRUMENT_CONFIG_ID)
+                    val cfg = instrumentConfigDao().getSingle(configId)
+                    val instrument = instrumentDao().getSingle(cfg.instrumentId)
+                    val tuning = tuningDao().getSingle(cfg.tuningId)
+                    Log.d(TAG, "Tuning = $tuning")
+                    val scaleType = scaleDao().getSingle(cfg.scaleTypeId)
+
+                    instrumentConfig = ObservableInstrumentConfiguration(
+                        instrument,
+                        tuning,
+                        cfg.rootNote,
+                        scaleType,
+                        cfg.fromFret..cfg.toFret,
+                        Note.Display.Sharp
+                    )
+                }
             }
         }
+        lifecycleScope.launchWhenStarted {
+            Log.d(TAG, "lifecycleScope.launchWhenStarted { initializeViews() }")
+            initializeViews()
+        }
+    }
+
+    private fun initializeViews() {
+        txtNote.text = instrumentConfig.rootNote.nameSharp
+
+        spinnerMinFret.text = instrumentConfig.fretsShown.first.toString()
+        spinnerMaxFret.text = instrumentConfig.fretsShown.last.toString()
+
+        tuningViewModel.items.observe(viewLifecycleOwner) {
+            val tunings = it.filter { it.numStrings == instrumentConfig.instrument.numStrings }
+            spinnerTuning.adapter = ArrayAdapter(
+                requireContext(),
+                spinnerItemLayout,
+                tunings.map { it.name }
+            ).apply {
+                notifyDataSetChanged()
+            }
+            val position = tunings.indexOf(instrumentConfig.tuning)
+            spinnerTuning.setSelection(position)
+        }
+
+        scaleViewModel.items.observe(viewLifecycleOwner) {
+            spinnerScale.adapter = ArrayAdapter(
+                requireContext(),
+                spinnerItemLayout,
+                it.map { it.name }
+            ).apply {
+                notifyDataSetChanged()
+            }
+            val position = it.indexOf(instrumentConfig.scaleType)
+            spinnerScale.setSelection(position)
+        }
+
+        fretboardView.setStringCount(instrumentConfig.instrument.numStrings)
+        fretboardView.updateFretboard(instrumentConfig.fretsShown, EqualTemperamentFretSpacing)
+        fretboardView.updateStringLabels(instrumentConfig.tuning, instrumentConfig.noteDisplay)
+        val inst = TunedInstrument(instrumentConfig.instrument, instrumentConfig.tuning)
+        val scale = Scale(instrumentConfig.rootNote, instrumentConfig.scaleType)
+        fretboardView.updateScale(
+            inst.getFretsForScale(scale, instrumentConfig.fretsShown),
+            inst.getRoots(scale, instrumentConfig.fretsShown)
+        )
+
         instrumentConfig.listeners.add(this@FretboardFragment)
-
-        context?.let {
-            MyApp.getDatabase(it).apply {
-                scaleTypes = scaleDao().getAll()
-                tunings = tuningDao().getTuningsByStringCount(instrumentConfig.instrument.numStrings)
-            }
-        }
     }
 
     override fun onCreateView(
@@ -110,7 +152,9 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
 
         btnExpandControls = root.findViewById(R.id.btnExpandControls)
         btnExpandControls.setOnClickListener {
-            layControlsAdvanced.forEach {it.visibility = if (controlsExpanded) View.GONE else View.VISIBLE }
+            layControlsAdvanced.forEach {
+                it.visibility = if (controlsExpanded) View.GONE else View.VISIBLE
+            }
             btnExpandControls.setImageResource(
                 if (controlsExpanded) R.drawable.ic_expand_less else R.drawable.ic_expand_more
             )
@@ -121,58 +165,23 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
         txtNote.setOnClickListener {
             showNotePickerDialog()
         }
-        txtNote.text = instrumentConfig.rootNote.nameSharp
-
-        /*
-        spinnerNote = root.findViewById(R.id.spinnerRootNote)
-        spinnerNote.adapter = NoteSpinnerAdapter()
-        spinnerNote.onItemSelectedListener = this
-        spinnerNote.setSelection(instrumentConfig.rootNote.ordinal)
-        */
 
         spinnerScale = root.findViewById(R.id.spinnerScaleType)
-        scaleTypes.observeForever {
-            spinnerScale.adapter = ArrayAdapter(
-                requireContext(),
-                spinnerItemLayout,
-                it.map { it.name }
-            ).apply {
-                notifyDataSetChanged()
-            }
-            val position = it.indexOf(instrumentConfig.scaleType)
-            spinnerScale.setSelection(position)
-        }
         spinnerScale.onItemSelectedListener = this
 
         spinnerTuning = root.findViewById(R.id.spinnerTuning)
-        tunings.observeForever {
-            spinnerTuning.adapter = ArrayAdapter(
-                requireContext(),
-                spinnerItemLayout,
-                it.map { it.name }
-            ).apply {
-                notifyDataSetChanged()
-            }
-            val position = it.indexOf(instrumentConfig.tuning)
-            spinnerTuning.setSelection(position)
-        }
         spinnerTuning.onItemSelectedListener = this
 
         spinnerMinFret = root.findViewById(R.id.spinnerMinFret)
-        spinnerMinFret.text = instrumentConfig.fretsShown.first.toString()
         spinnerMaxFret = root.findViewById(R.id.spinnerMaxFret)
-        spinnerMaxFret.text = instrumentConfig.fretsShown.last.toString()
 
         fretboardView = root.findViewById(R.id.fretboardView)
-        fretboardView.setStringCount(instrumentConfig.instrument.numStrings)
-        fretboardView.updateFretboard(instrumentConfig.fretsShown, EqualTemperamentFretSpacing)
-        fretboardView.updateStringLabels(instrumentConfig.tuning, instrumentConfig.noteDisplay)
-        val inst = TunedInstrument(instrumentConfig.instrument, instrumentConfig.tuning)
-        val scale = Scale(instrumentConfig.rootNote, instrumentConfig.scaleType)
-        fretboardView.updateScale(
-            inst.getFretsForScale(scale, instrumentConfig.fretsShown),
-            inst.getRoots(scale, instrumentConfig.fretsShown)
-        )
+
+        if (instrumentConfig != null) {
+            initializeViews()
+        } else {
+            Log.d(TAG, "instrumentConfig == null")
+        }
         return root
     }
 
@@ -182,27 +191,6 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
             putParcelable(ARG_INSTRUMENT_CONFIG, instrumentConfig)
         }
 
-    }
-
-    inner class NoteSpinnerAdapter : BaseAdapter() {
-
-        var sharp: Boolean = false
-
-        override fun getCount(): Int = 12
-
-        override fun getItem(position: Int): String = Note.values()[position].let {
-            if (sharp) it.nameSharp else it.nameFlat
-        }
-
-        override fun getItemId(position: Int): Long = position.toLong()
-
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val view = convertView ?: layoutInflater.inflate(spinnerItemLayout, parent, false)
-            if (view is TextView) {
-                view.text = getItem(position)
-            }
-            return view
-        }
     }
 
     fun showNotePickerDialog() {
@@ -242,18 +230,14 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
         when (parent) {
             null -> {
             }
-            /*
-            spinnerNote -> {
-                val newRoot = Note.values()[position]
-                instrumentConfig.rootNote = newRoot
-            }
-            */
             spinnerScale -> {
-                val newScaleType = scaleTypes.value!!.get(position)
+                val newScaleType = scaleViewModel.items.value!!.get(position)
                 instrumentConfig.scaleType = newScaleType
             }
             spinnerTuning -> {
-                val newTuning = tunings.value!!.get(position)
+                val newTuning = tuningViewModel.items.value!!.filter {
+                    it.numStrings == instrumentConfig.instrument.numStrings
+                }.get(position)
                 instrumentConfig.tuning = newTuning
             }
         }

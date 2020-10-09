@@ -16,6 +16,10 @@ class InstrumentPresetEditorFragment :
 
     override val viewModel: PresetViewModel by activityViewModels()
 
+    override fun initializeViews(item: InstrumentPreset) {
+        super.initializeViews(item)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

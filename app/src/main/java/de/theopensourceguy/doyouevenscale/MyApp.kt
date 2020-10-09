@@ -5,8 +5,11 @@ import android.content.Context
 import androidx.room.Room
 import ca.allanwang.kau.kpref.KPrefFactoryAndroid
 import ca.allanwang.kau.kpref.KPrefFactoryInMemory
+import ca.allanwang.kau.utils.ctxCoroutine
 import de.theopensourceguy.doyouevenscale.core.db.ApplicationDatabase
 import de.theopensourceguy.doyouevenscale.core.model.Predef
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 object MyApp : Application() {
     val APP_ID = "de.theopensourceguy.ScaleViewer"
@@ -50,7 +53,7 @@ object MyApp : Application() {
     private fun initializeDatabase(context: Context) {
         if (BuildConfig.DEBUG) {
             database = Room.inMemoryDatabaseBuilder(context, ApplicationDatabase::class.java)
-                .allowMainThreadQueries()
+                //.allowMainThreadQueries()
                 .build()
         } else {
             database = Room
@@ -71,9 +74,13 @@ object MyApp : Application() {
     private fun populateDatabase(context: Context) {
         val database = getDatabase(context)
         val predef = Predef(context)
-        database.tuningDao().insertTunings(predef.tunings)
-        database.scaleDao().insertScaleTypes(predef.scaleTypes)
-        database.instrumentDao().insertInstruments(predef.instruments)
-        database.instrumentConfigDao().insertInstrumentPresets(predef.configs)
+        context.ctxCoroutine.launch(Dispatchers.IO) {
+            with (database) {
+                tuningDao().insertTunings(predef.tunings)
+                scaleDao().insertScaleTypes(predef.scaleTypes)
+                instrumentDao().insertInstruments(predef.instruments)
+                instrumentConfigDao().insertInstrumentPresets(predef.configs)
+            }
+        }
     }
 }

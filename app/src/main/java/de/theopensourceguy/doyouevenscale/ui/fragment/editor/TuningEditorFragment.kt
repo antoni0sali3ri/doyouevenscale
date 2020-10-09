@@ -33,21 +33,16 @@ class TuningEditorFragment :
 
     override val viewModel: TuningViewModel by activityViewModels()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initializeViews(item: Instrument.Tuning) {
+        super.initializeViews(item)
 
         isNew = item.id == 0L
-
         stringPitches.addAll(item.stringPitches)
 
-        recyclerViewNotes = view.findViewById(R.id.recyclerViewNotes)
         recyclerViewNotes.apply {
-            layoutManager = LinearLayoutManager(view.context)
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = NoteListAdapter(stringPitches, this@TuningEditorFragment)
         }
-
-        btnAddString = view.findViewById(R.id.btnAddString)
-        updateAddButton()
         if (isNew)
             btnAddString.setOnClickListener {
                 editingIndex = stringPitches.size
@@ -56,9 +51,14 @@ class TuningEditorFragment :
         updateAddButton()
     }
 
-    fun updateAddButton() {
-        //Log.d("TuningEditorFragment", "updateAddButton() isNew = $isNew, stringPitches.size = ${stringPitches.size}")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        recyclerViewNotes = view.findViewById(R.id.recyclerViewNotes)
+        btnAddString = view.findViewById(R.id.btnAddString)
+    }
+
+    fun updateAddButton() {
         btnAddString.visibility = if (isNew && stringPitches.size < Instrument.MaxStrings)
             View.VISIBLE
         else

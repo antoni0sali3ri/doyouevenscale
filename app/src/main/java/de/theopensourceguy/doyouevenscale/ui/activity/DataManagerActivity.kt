@@ -5,11 +5,14 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import de.theopensourceguy.doyouevenscale.MyApp
 import de.theopensourceguy.doyouevenscale.R
 import de.theopensourceguy.doyouevenscale.ui.main.DataManagerPagerAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class DataManagerActivity : AppCompatActivity() {
 
@@ -41,7 +44,9 @@ class DataManagerActivity : AppCompatActivity() {
             true
         }
         R.id.action_restore_defaults -> {
-            MyApp.resetDatabase(this)
+            lifecycleScope.launch(Dispatchers.IO) {
+                MyApp.resetDatabase(this@DataManagerActivity)
+            }
             true
         }
         else -> super.onOptionsItemSelected(item)

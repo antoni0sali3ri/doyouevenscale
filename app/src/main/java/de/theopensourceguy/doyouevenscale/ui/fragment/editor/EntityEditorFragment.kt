@@ -11,8 +11,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import ca.allanwang.kau.utils.launchMain
 import de.theopensourceguy.doyouevenscale.R
 import de.theopensourceguy.doyouevenscale.core.model.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 abstract class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : Fragment() {
 
@@ -51,7 +55,18 @@ abstract class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : F
 
         val itemId = requireArguments().getLong(ARG_ITEM_ID)
 
-        item = if (itemId > 0) viewModel.getSingle(itemId) else templateItem
+        lifecycleScope.launch(Dispatchers.IO) {
+            val item = if (itemId > 0) viewModel.getSingle(itemId) else templateItem
+            launchMain {
+                initializeViews(item)
+            }
+        }
+    }
+
+    protected open fun initializeViews(item: T) {
+        this.item = item
+        edtEntityName.setText(item.name, TextView.BufferType.EDITABLE)
+
     }
 
     override fun onCreateView(
@@ -72,7 +87,6 @@ abstract class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : F
         }
 
         edtEntityName = root.findViewById(R.id.editEntityName)
-        edtEntityName.setText(item.name, TextView.BufferType.EDITABLE)
         edtEntityName.addTextChangedListener(entityNameTextWatcher)
         return root
     }

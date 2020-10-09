@@ -19,12 +19,15 @@ class Predef(private val context: Context) {
             name = getString(R.string.instrument_bass_name)
         },
         InstrumentPreset(3, 3, 1, Note.C, 0, 12).apply {
+            showAsTab = 2
             name = getString(R.string.instrument_mandolin_name)
         },
         InstrumentPreset(4, 4, 1, Note.C, 0, 12).apply {
+            showAsTab = 3
             name = getString(R.string.instrument_banjo_5str_name)
         },
         InstrumentPreset(5, 10, 1, Note.C, 0, 12).apply {
+            showAsTab = 4
             name = getString(R.string.instrument_ukulele_name)
         }
     )

@@ -17,10 +17,9 @@ class InstrumentEditorFragment : EntityEditorFragment<Instrument>(Instrument::cl
 
     private lateinit var npStringCount: NumberPicker
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initializeViews(item: Instrument) {
+        super.initializeViews(item)
 
-        npStringCount = view.findViewById(R.id.numberPickerStringCount)
         if (item.id == 0L) {
             npStringCount.minValue = 1
             npStringCount.maxValue = Instrument.MaxStrings
@@ -32,6 +31,12 @@ class InstrumentEditorFragment : EntityEditorFragment<Instrument>(Instrument::cl
         npStringCount.setOnValueChangedListener { picker, oldVal, newVal ->
             item.numStrings = newVal
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        npStringCount = view.findViewById(R.id.numberPickerStringCount)
     }
 
 

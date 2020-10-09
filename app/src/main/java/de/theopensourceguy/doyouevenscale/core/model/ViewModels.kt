@@ -33,6 +33,9 @@ sealed class EntityViewModel<T : ListableEntity>(application: Application, clazz
 }
 
 class TuningViewModel(application: Application) : EntityViewModel<Instrument.Tuning>(application, Instrument.Tuning::class.java) {
+    fun getTuningsForStringCount(stringCount: Int) : List<Instrument.Tuning> {
+        return items.value?.filter { it.numStrings == stringCount } ?: emptyList()
+    }
 }
 
 class InstrumentViewModel(application: Application) : EntityViewModel<Instrument>(application, Instrument::class.java)

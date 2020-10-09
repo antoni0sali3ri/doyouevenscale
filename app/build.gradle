@@ -8,7 +8,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "de.theopensourceguy.doyouevenscale"
+        applicationId "com.github.antoni0sali3ri.doyouevenscale"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1

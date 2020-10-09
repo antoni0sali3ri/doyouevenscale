@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.FretboardFragment">
 
-    <de.theopensourceguy.doyouevenscale.ui.view.FretboardView
+    <com.github.antoni0sali3ri.doyouevenscale.ui.view.FretboardView
         android:id="@+id/fretboardView"
         android:layout_width="0dp"
         android:layout_height="0dp"

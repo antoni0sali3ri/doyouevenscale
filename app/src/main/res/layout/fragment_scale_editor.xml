@@ -8,6 +8,7 @@
         android:id="@+id/layControls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/AppTableLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,7 +19,7 @@
             android:layout_height="wrap_content"/>
 
         <TableRow>
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lblScaleIntervals"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -29,15 +30,17 @@
 
             <ImageButton
                 android:id="@+id/btnAddInterval"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_width="@dimen/action_button_size"
+                android:layout_height="@dimen/action_button_size"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="0dp"
+                style="@style/AppTheme.ActionButton"
                 android:src="@drawable/ic_add" />
         </TableRow>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewIntervals"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </TableLayout>
 

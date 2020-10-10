@@ -16,6 +16,7 @@
         app:inlayColor="@color/colorFretboardInlays"
         app:fretColor="@color/colorFretboardFrets"
         app:stringColor="@color/colorFretboardStrings"
+        app:noteStrokeColor="@color/colorFretboardNoteStroke"
         app:noteColor="@color/colorFretboardNotes"
         app:highlightColor="@color/colorFretboardNotesHighlight"
         app:labelColor="@color/colorFretboardLabels"
@@ -25,11 +26,10 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/layFretboardControls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#eee"
         app:layout_constraintTop_toBottomOf="@id/fretboardView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,35 +38,42 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="*"
+            android:stretchColumns="1"
             android:animateLayoutChanges="true">
 
-            <TableRow>
-                <TextView
+            <TableRow
+                android:layout_height="@dimen/controls_row_height"
+                android:minHeight="@dimen/controls_row_height">
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/lblScaleName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:lines="1"
+                    style="@style/AppSpinnerTitle"
                     android:text="@string/lbl_scale_name_text"
-                    android:textSize="@dimen/spinner_item_text_size" />
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/txtRootNote"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/note_text_size"
-                        android:paddingHorizontal="@dimen/spinner_item_margin_horizontal" />
+                        android:layout_gravity="center_vertical"
+                        style="@style/AppSpinnerItem"
+                        />
 
                     <Spinner
                         android:id="@+id/spinnerScaleType"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
                         android:spinnerMode="dialog" />
 
                     <ImageView
@@ -78,63 +85,74 @@
             </TableRow>
 
             <TableRow android:id="@+id/tblRowTuning"
+                android:layout_height="@dimen/controls_row_height"
+                android:minHeight="@dimen/controls_row_height"
                 android:visibility="gone">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/lblTuning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:lines="1"
+                    style="@style/AppSpinnerTitle"
                     android:text="@string/lbl_tuning_text"
-                    android:textSize="@dimen/spinner_item_text_size" />
+                    />
 
                 <Spinner
                     android:id="@+id/spinnerTuning"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:spinnerMode="dialog" />
 
             </TableRow>
 
             <TableRow android:id="@+id/tblRowFretRange"
+                android:layout_height="@dimen/controls_row_height"
+                android:minHeight="@dimen/controls_row_height"
                 android:visibility="gone"
-                android:paddingVertical="8dp">
-                <TextView
+                >
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/lblFretsShown"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spinner_item_margin_horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:lines="1"
+                    style="@style/AppSpinnerTitle"
                     android:text="@string/lbl_frets_shown_text"
-                    android:textSize="@dimen/spinner_item_text_size" />
+                    />
 
                 <LinearLayout
                     android:id="@+id/layFretRange"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/spinnerMinFret"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/spinner_item_margin_horizontal"
-                        android:textSize="@dimen/spinner_item_text_size" />
+                        style="@style/AppSpinnerItem"
+                        />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/lblFretRangeTo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/lbl_fret_range_to"
-                        android:textSize="@dimen/spinner_item_text_size" />
+                        style="@style/AppSpinnerItem"
+                        />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/spinnerMaxFret"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/spinner_item_margin_horizontal"
-                        android:textSize="@dimen/spinner_item_text_size" />
+                        style="@style/AppSpinnerItem"
+                        />
                 </LinearLayout>
             </TableRow>
         </TableLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

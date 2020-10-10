@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.textview.MaterialTextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
-    android:textSize="@dimen/spinner_item_text_size"
-
-    android:paddingStart="@dimen/spinner_item_margin_horizontal"
-    android:paddingEnd="@dimen/spinner_item_margin_horizontal"
-    android:paddingTop="@dimen/spinner_item_margin_vertical"
-    android:paddingBottom="@dimen/spinner_item_margin_vertical" />
+    style="@style/AppSpinnerItem"
+/>
 

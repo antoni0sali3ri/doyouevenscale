@@ -27,6 +27,7 @@ class NotePickerDialog(val listener: ResultListener, val displayMode: Note.Displ
             AlertDialog.Builder(it)
                 .setTitle(R.string.dialog_title_note_picker)
                 .setView(view)
+                .setNegativeButton(android.R.string.cancel, {_,_ -> })
                 .create()
         } ?: throw IllegalStateException()
     }

@@ -61,7 +61,7 @@
 
     <!-- UI ELEMENTS -->
     <string name="lbl_tuning_text">Tuning</string>
-    <string name="lbl_frets_shown_text">Show frets</string>
+    <string name="lbl_frets_shown_text">Frets</string>
     <string name="lbl_fret_range_to">to</string>
     <string name="lbl_scale_name_text">Scale</string>
     <string name="dialog_title_fret_range">Select the range of frets to show</string>

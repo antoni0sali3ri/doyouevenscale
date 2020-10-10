@@ -51,7 +51,7 @@
     <string name="instrument_bass_name">Bass</string>
     <string name="instrument_ukulele_name">Ukulele</string>
     <string name="lbl_tuning_text">Stimmung</string>
-    <string name="lbl_frets_shown_text">Zeige Bünde</string>
+    <string name="lbl_frets_shown_text">Bünde</string>
     <string name="lbl_fret_range_to">bis</string>
     <string name="lbl_scale_name_text">Tonleiter</string>
     <string name="dialog_title_fret_range">Anzuzeigende Bünde auswählen</string>

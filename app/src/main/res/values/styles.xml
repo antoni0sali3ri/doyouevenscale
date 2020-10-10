@@ -1,10 +1,19 @@
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -12,17 +21,86 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
     <style name="NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
-    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
+    <style name="AppTextAppearance" />
+
+    <style name="AppTextAppearance.ListItem">
+        <item name="android:textSize">@dimen/text_size_list_item</item>
+    </style>
+
+    <style name="AppListItem">
+
+    </style>
+
+    <style name="AppListItem.ItemName">
+        <item name="android:textAppearance">@style/AppTextAppearance.ListItem</item>
+    </style>
+
+
+    <style name="AppTabLayout">
+        <item name="tabTextColor">@color/colorTabText</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTableLayout">
+        <item name="android:layout_marginStart">@dimen/padding_editor_table_layout</item>
+        <item name="android:layout_marginEnd">@dimen/padding_editor_table_layout</item>
+        <item name="android:layout_marginTop">@dimen/padding_editor_table_layout</item>
+        <item name="android:layout_marginBottom">@dimen/padding_editor_table_layout</item>
+    </style>
+
+    <style name="AppControlsRow">
+        <item name="android:layout_height">@dimen/controls_row_height</item>
+    </style>
+
+    <style name="AppSpinnerTitle">
+        <item name="android:layout_marginStart">@dimen/margin_spinner_title</item>
+        <item name="android:layout_marginEnd">@dimen/margin_spinner_title</item>
+        <item name="android:lines">1</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/text_size_spinner_title</item>
+    </style>
+
+    <style name="AppSpinnerItem">
+        <item name="android:textSize">@dimen/spinner_item_text_size</item>
+        <item name="android:paddingTop">@dimen/spinner_item_margin_vertical</item>
+        <item name="android:paddingBottom">@dimen/spinner_item_margin_vertical</item>
+        <item name="android:paddingStart">@dimen/spinner_item_margin_horizontal</item>
+        <item name="android:paddingEnd">@dimen/spinner_item_margin_horizontal</item>
+
+
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.TextView.SpinnerItem</item>
+
+    </style>
+
+    <style name="AppTheme.ListItem" parent="MD_ListItem">
+        <item name="android:padding">@dimen/list_item_padding</item>
+    </style>
+
+    <style name="AppTheme.DragHandle">
+        <item name="android:layout_marginEnd">@dimen/drag_handle_padding</item>
+    </style>
+
+    <style name="AppTheme.ActionButton" parent="MD_ActionButton">
+        <item name="android:layout_marginEnd">@dimen/action_button_margin</item>
+        <item name="android:background">#00000000</item>
+    </style>
+
+    <dimen name="text_size_list_item">18sp</dimen>
+    <dimen name="spinner_item_padding">8dp</dimen>
+    <color name="colorTabText">#FFFFFF</color>
 </resources>

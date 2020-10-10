@@ -3,7 +3,6 @@
     android:id="@+id/toggleButton"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/button_color"
     android:padding="@dimen/note_padding"
     android:textOff="♭"
     android:textOn="♯"

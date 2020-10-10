@@ -12,6 +12,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        style="@style/AppTableLayout"
         >
 
         <include layout="@layout/layout_editor_entity_name"
@@ -21,7 +22,7 @@
             />
 
         <TableRow>
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lblInstrument"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,7 +39,7 @@
         </TableRow>
 
         <TableRow>
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lblTuning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -55,7 +56,7 @@
         </TableRow>
 
         <TableRow>
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lblScale"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/spinnerPresetRootNote"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,7 +84,7 @@
         </TableRow>
 
         <TableRow>
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lblFretRange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,17 +96,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtFretRangeMin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lbl_fret_range_to" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/fretRangeMax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

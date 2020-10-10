@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/lblFretRangeTo" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/lblFretRangeTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

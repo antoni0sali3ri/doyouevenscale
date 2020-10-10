@@ -8,8 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.antoni0sali3ri.doyouevenscale.R
@@ -17,12 +16,6 @@ import com.github.antoni0sali3ri.doyouevenscale.core.model.*
 import com.github.antoni0sali3ri.doyouevenscale.ui.activity.EditorActivity
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.editor.EntityEditorFragment
 import com.github.antoni0sali3ri.doyouevenscale.ui.main.ListableEntityRecyclerViewAdapter
-
-/**
- * A fragment representing a list of Items.
- */
-class EntityListViewModel<T : ListableEntity>(val items: LiveData<out List<T>>) : ViewModel() {
-}
 
 sealed class EntityListFragment<T : ListableEntity>(private val clazz: Class<T>) : Fragment() {
 
@@ -52,6 +45,9 @@ sealed class EntityListFragment<T : ListableEntity>(private val clazz: Class<T>)
             recyclerView = view
             with(view) {
                 layoutManager = LinearLayoutManager(context)
+                val deco = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+                //deco.setDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.list_divider)!!)
+                addItemDecoration(deco)
             }
         }
         viewModel.items.observe(viewLifecycleOwner) {

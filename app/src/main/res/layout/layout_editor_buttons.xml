@@ -4,22 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="?android:attr/buttonBarStyle" >
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCancel"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:backgroundTint="#00000000"
         style="?android:attr/buttonBarButtonStyle"
         android:text="@android:string/cancel"/>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSubmit"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:backgroundTint="#00000000"
         style="?android:attr/buttonBarButtonStyle"
         android:text="@string/save" />
 

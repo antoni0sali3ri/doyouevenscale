@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.antoni0sali3ri.doyouevenscale.R
@@ -42,6 +43,7 @@ class TuningEditorFragment :
         recyclerViewNotes.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = NoteListAdapter(stringPitches, this@TuningEditorFragment)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
         if (isNew)
             btnAddString.setOnClickListener {

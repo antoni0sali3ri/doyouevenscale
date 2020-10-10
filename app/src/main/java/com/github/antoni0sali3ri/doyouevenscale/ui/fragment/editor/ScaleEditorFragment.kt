@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.antoni0sali3ri.doyouevenscale.R
@@ -36,6 +37,7 @@ class ScaleEditorFragment : EntityEditorFragment<Scale.Type>(Scale.Type::class.j
         recyclerViewIntervals.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = IntervalListAdapter(requireContext(), intervals)
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
         btnAddInterval.setOnClickListener {
             IntervalPickerDialog(this, intervals).show(childFragmentManager, "IntervalPickerDialog")

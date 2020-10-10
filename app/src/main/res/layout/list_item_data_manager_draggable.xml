@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    style="@style/AppTheme.ListItem"
     android:orientation="horizontal">
 
     <TextView
@@ -12,27 +13,43 @@
 
     <ImageView
         android:id="@+id/dragHandle"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_drag_handle" />
+        android:layout_width="@dimen/action_button_size"
+        android:layout_height="@dimen/action_button_size"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_drag_handle"
+        style="@style/AppTheme.DragHandle"
+        />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/itemTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
         android:layout_weight="1"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        style="@style/AppTextAppearance.ListItem"
+        />
+
+    <ImageButton
+        android:id="@+id/btnShowAsTab"
+        android:layout_width="@dimen/action_button_size"
+        android:layout_height="@dimen/action_button_size"
+        android:src="@drawable/ic_visibility"
+        style="@style/AppTheme.ActionButton"
+        />
 
     <ImageButton
         android:id="@+id/btnEditItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_edit" />
+        android:layout_width="@dimen/action_button_size"
+        android:layout_height="@dimen/action_button_size"
+        android:src="@drawable/ic_edit"
+        style="@style/AppTheme.ActionButton"
+        />
 
     <ImageButton
         android:id="@+id/btnDeleteItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_delete" />
+        android:layout_width="@dimen/action_button_size"
+        android:layout_height="@dimen/action_button_size"
+        android:layout_marginEnd="0dp"
+        android:src="@drawable/ic_delete"
+        style="@style/AppTheme.ActionButton"
+        />
 </LinearLayout>

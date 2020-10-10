@@ -7,8 +7,8 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="spinner_item_height">24sp</dimen>
     <dimen name="spinner_item_margin_vertical">8dp</dimen>
-    <dimen name="spinner_item_margin_horizontal">8dp</dimen>
-    <dimen name="spinner_item_text_size">24sp</dimen>
+    <dimen name="spinner_item_margin_horizontal">16dp</dimen>
+    <dimen name="spinner_item_text_size">18sp</dimen>
     <dimen name="button_expand_size">48dp</dimen>
     <dimen name="note_text_size">24sp</dimen>
     <dimen name="note_padding">8dp</dimen>
@@ -17,4 +17,16 @@
     <dimen name="cardviewControlsPaddingVertical">8dp</dimen>
     <dimen name="note_display_text_size">32sp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="list_item_padding">8dp</dimen>
+    <dimen name="drag_handle_padding">8dp</dimen>
+    <dimen name="action_button_size">40dp</dimen>
+    <dimen name="action_button_margin">8dp</dimen>
+    <dimen name="list_item_text_margin">8dp</dimen>
+    <dimen name="margin_note_selector">16dp</dimen>
+    <dimen name="margin_fret_selector">8dp</dimen>
+    <dimen name="padding_editor_table_layout">16dp</dimen>
+    <dimen name="text_size_spinner_title">22sp</dimen>
+    <dimen name="margin_spinner_title">16dp</dimen>
+    <dimen name="controls_row_height">48dp</dimen>
+    <dimen name="list_item_interval_row_height">48dp</dimen>
 </resources>

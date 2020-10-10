@@ -193,12 +193,12 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
 
     }
 
-    fun showNotePickerDialog() {
+    private fun showNotePickerDialog() {
         val dialog = NotePickerDialog(this, instrumentConfig.noteDisplay)
         dialog.show(childFragmentManager, "NotePickerDialog")
     }
 
-    fun showFretRangeDialog() {
+    private fun showFretRangeDialog() {
         val dialog = FretRangePickerDialog(instrumentConfig.fretsShown, this)
         dialog.show(childFragmentManager, "RangePickerDialog")
     }

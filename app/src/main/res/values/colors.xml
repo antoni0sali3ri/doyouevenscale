@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F9A825</color>
-    <color name="colorPrimaryDark">#1B5E20</color>
-    <color name="colorAccent">#CCFF90</color>
+    <color name="colorPrimary">#0288D1</color>
+    <color name="colorPrimaryVariant">#29B6F6</color>
+    <color name="colorOnPrimary">@color/colorText</color>
 
-    <color name="colorActivityBackground">#FFFFFF</color>
-    <color name="button_color">#FFFF8D</color>
+    <color name="colorSecondary">#388E3C</color>
+    <color name="colorSecondaryVariant">#66BB6A</color>
+    <color name="colorOnSecondary">@color/colorText</color>
+
+    <color name="colorAccent">#FFEA00</color>
+    <color name="colorError">#FF6E40</color>
+    <color name="colorOnError">@color/colorText</color>
+
+    <color name="colorBackground">#fff</color>
+    <color name="colorOnBackground">@color/colorText</color>
+
+    <color name="colorButtonPositive">#388E3C</color>
+    <color name="colorButtonNegative">#D32F2F</color>
+
+    <color name="colorText">#222222</color>
 
     <color name="colorFretboardBackground">#FFFFFF</color>
     <color name="colorFretboardStrings">#000000</color>
@@ -15,5 +28,6 @@
     <color name="colorFretboardNotes">#FFFFFF</color>
     <color name="colorFretboardNotesHighlight">#000000</color>
     <color name="colorFretboardLabels">#000000</color>
+    <color name="colorListDivider">#797979</color>
 
 </resources>

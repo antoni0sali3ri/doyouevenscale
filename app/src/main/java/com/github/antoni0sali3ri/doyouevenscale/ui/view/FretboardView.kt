@@ -61,7 +61,7 @@ class FretboardView : View {
         get() = _noteStrokeColor
         set(value) {
             _noteStrokeColor = value
-            pnt.notes.color = value
+            pnt.noteStroke.color = value
             invalidate()
             requestLayout()
         }
@@ -91,7 +91,8 @@ class FretboardView : View {
         get() = _labelColor
         set(value) {
             _labelColor = value
-            pnt.roots.color = value
+            pnt.stringLabels.color = value
+            pnt.fretLabels.color = value
             invalidate()
             requestLayout()
         }
@@ -131,6 +132,7 @@ class FretboardView : View {
                 _noteStrokeColor = getInt(R.styleable.FretboardView_noteStrokeColor, _noteStrokeColor)
                 _noteColor = getInt(R.styleable.FretboardView_noteColor, _noteColor)
                 _highlightColor = getInt(R.styleable.FretboardView_highlightColor, _highlightColor)
+                _labelColor = getInt(R.styleable.FretboardView_labelColor, _labelColor)
             } finally {
                 recycle()
             }
@@ -283,7 +285,7 @@ class FretboardView : View {
         }
     }
 
-    fun drawNote(canvas: Canvas, x: Float, y: Float, radius: Float, paint: android.graphics.Paint) {
+    fun drawNote(canvas: Canvas, x: Float, y: Float, radius: Float, paint: Paint) {
         canvas.drawCircle(x, y, radius, paint)
         canvas.drawCircle(x, y, radius, pnt.noteStroke)
     }
@@ -310,31 +312,31 @@ class FretboardView : View {
         }
 
         val stringLabels = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = _labelColor
+            color = labelColor
             textAlign = Paint.Align.CENTER
             textSize = 50f
         }
 
         val fretLabels = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = _labelColor
+            color = labelColor
             textAlign = Paint.Align.RIGHT
             textSize = 50f
         }
 
         val noteStroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = _noteStrokeColor
+            color = noteStrokeColor
             strokeWidth = 7f
             style = Paint.Style.STROKE
         }
 
         val notes = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = _noteColor
+            color = noteColor
             style = Paint.Style.FILL
 
         }
 
         val roots = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = _highlightColor
+            color = highlightColor
             style = Paint.Style.FILL
         }
     }

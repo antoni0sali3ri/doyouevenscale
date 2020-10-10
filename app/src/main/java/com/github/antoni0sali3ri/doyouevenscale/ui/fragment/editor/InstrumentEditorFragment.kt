@@ -28,7 +28,7 @@ class InstrumentEditorFragment : EntityEditorFragment<Instrument>(Instrument::cl
             npStringCount.maxValue = item.numStrings
         }
         npStringCount.value = item.numStrings
-        npStringCount.setOnValueChangedListener { picker, oldVal, newVal ->
+        npStringCount.setOnValueChangedListener { _, _, newVal ->
             item.numStrings = newVal
         }
     }

@@ -348,6 +348,7 @@ class FretboardView : View {
 
     fun updateFretboard(fretRange: IntRange, fretSpacing: FretSpacing) {
         crs.apply {
+            firstFret = fretRange.first
             fretPos =
                 fretSpacing.getFretPositions(fretRange.last - fretRange.first)
                     .map { it.toFloat() }

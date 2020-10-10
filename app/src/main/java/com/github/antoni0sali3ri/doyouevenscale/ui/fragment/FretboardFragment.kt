@@ -128,6 +128,7 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
             inst.getFretsForScale(scale, instrumentConfig.fretsShown),
             inst.getRoots(scale, instrumentConfig.fretsShown)
         )
+        updateFretboardView()
 
         instrumentConfig.listeners.add(this@FretboardFragment)
     }
@@ -201,6 +202,11 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
     private fun showFretRangeDialog() {
         val dialog = FretRangePickerDialog(instrumentConfig.fretsShown, this)
         dialog.show(childFragmentManager, "RangePickerDialog")
+    }
+
+    private fun updateFretboardView() {
+        fretboardView.scaleToSize()
+        fretboardView.postInvalidate()
     }
 
     companion object {

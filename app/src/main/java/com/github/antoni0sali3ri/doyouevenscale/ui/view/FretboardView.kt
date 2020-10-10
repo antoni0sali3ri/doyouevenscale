@@ -158,6 +158,9 @@ class FretboardView : View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+        if (!crs.readyToDraw())
+            return
+
         val fretLabelSize = pnt.fretLabels.textSize
         val stringLabelSize = pnt.stringLabels.textSize
 
@@ -414,7 +417,9 @@ class FretboardView : View {
         }
 
         fun readyToDraw() =
-            (width > 0 && height > 0) && (stringCount > 0 && fretPos.isNotEmpty() && stringLabels.isNotEmpty())
+            (width > 0 && height > 0)
+                    && (stringCount > 0 && fretPos.isNotEmpty()
+                    && stringLabels.isNotEmpty())
 
         fun reset() {
             fretPos = emptyArray()

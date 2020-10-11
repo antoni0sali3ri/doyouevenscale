@@ -62,7 +62,7 @@ sealed class EntityListFragment<T : ListableEntity>(private val clazz: Class<T>)
     fun createItem() {
         startActivity(Intent(requireContext(), EditorActivity::class.java).apply {
             putExtra(EditorActivity.ARG_CLASS, clazz)
-            putExtra(EntityEditorFragment.ARG_ITEM_ID, 0)
+            putExtra(EntityEditorFragment.ARG_ITEM_ID, 0L)
         })
     }
 

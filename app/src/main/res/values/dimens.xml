@@ -25,7 +25,7 @@
     <dimen name="margin_note_selector">16dp</dimen>
     <dimen name="margin_fret_selector">8dp</dimen>
     <dimen name="padding_editor_table_layout">16dp</dimen>
-    <dimen name="text_size_spinner_title">22sp</dimen>
+    <dimen name="text_size_spinner_title">20sp</dimen>
     <dimen name="margin_spinner_title">16dp</dimen>
     <dimen name="controls_row_height">48dp</dimen>
     <dimen name="list_item_interval_row_height">48dp</dimen>

@@ -155,14 +155,13 @@ class TuningEditorFragment :
         NotePickerDialog(this, displayMode).show(childFragmentManager, "NotePickerDialog")
     }
 
-    override fun onNoteSelected(note: String, displayMode: Note.Display) {
+    override fun onNoteSelected(note: Note, displayMode: Note.Display) {
         if (editingIndex < 0) return
 
-        val n = Note.valueOf(note)
         if (editingIndex >= stringPitches.size)
-            stringPitches.add(0, n)
+            stringPitches.add(0, note)
         else
-            stringPitches[editingIndex] = n
+            stringPitches[editingIndex] = note
 
         item.setPitchesLastToFirst(stringPitches.toList())
         recyclerViewNotes.adapter?.notifyDataSetChanged()

@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.github.antoni0sali3ri.doyouevenscale.MyApp
+import com.github.antoni0sali3ri.doyouevenscale.core.db.TuningDao
 import com.github.antoni0sali3ri.doyouevenscale.core.db.ViewModelDao
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
@@ -12,7 +13,7 @@ import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 import kotlinx.coroutines.launch
 
 sealed class EntityViewModel<T : ListableEntity>(application: Application, clazz: Class<T>) : AndroidViewModel(application) {
-    private val dao: ViewModelDao<T> = MyApp.getDatabase(application).getDaoForClass(clazz)
+    protected val dao: ViewModelDao<T> = MyApp.getDatabase(application).getDaoForClass(clazz)
 
     val items: LiveData<out List<T>> = dao.getAll()
 
@@ -36,7 +37,12 @@ sealed class EntityViewModel<T : ListableEntity>(application: Application, clazz
 }
 
 class TuningViewModel(application: Application) :
-    EntityViewModel<Instrument.Tuning>(application, Instrument.Tuning::class.java)
+    EntityViewModel<Instrument.Tuning>(application, Instrument.Tuning::class.java) {
+
+    fun forInstrument(instrumentId: Long): LiveData<List<Instrument.Tuning>> {
+        return (dao as TuningDao).getTuningsForInstrument(instrumentId)
+    }
+}
 
 class InstrumentViewModel(application: Application) : EntityViewModel<Instrument>(application, Instrument::class.java)
 

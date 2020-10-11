@@ -12,7 +12,7 @@ import com.github.antoni0sali3ri.doyouevenscale.ui.view.NotePickerView
 class NotePickerDialog(val listener: ResultListener, val displayMode: Note.Display) : DialogFragment() {
 
     interface ResultListener {
-        fun onNoteSelected(note: String, displayMode: Note.Display)
+        fun onNoteSelected(note: Note, displayMode: Note.Display)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -20,7 +20,8 @@ class NotePickerDialog(val listener: ResultListener, val displayMode: Note.Displ
 
             val view = NotePickerView(it, displayMode)
             view.createChildren(it.layoutInflater) {
-                listener.onNoteSelected((it as TextView).tag.toString(), view.displayMode)
+                val note = Note.valueOf((it as TextView).tag.toString())
+                listener.onNoteSelected(note, view.displayMode)
                 this.dismiss()
             }
 

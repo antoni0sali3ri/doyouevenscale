@@ -306,8 +306,8 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
         instrumentConfig.fretsShown = range
     }
 
-    override fun onNoteSelected(note: String, displayMode: Note.Display) {
-        instrumentConfig.rootNote = Note.valueOf(note)
+    override fun onNoteSelected(note: Note, displayMode: Note.Display) {
+        instrumentConfig.rootNote = note
         instrumentConfig.noteDisplay = displayMode
     }
 }

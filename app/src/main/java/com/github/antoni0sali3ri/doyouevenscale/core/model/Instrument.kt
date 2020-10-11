@@ -51,7 +51,7 @@ data class TunedInstrument(
     val tuning: Instrument.Tuning
 ) {
     init {
-        require(instrument.numStrings == tuning.numStrings)
+        require(instrument.id == tuning.instrumentId)
     }
 
     fun getNoteAt(stringNo: Int, fretNo: Int): Note {
@@ -122,9 +122,18 @@ data class Instrument(
         require(numStrings >= 0 && numStrings <= MaxStrings)
     }
 
-    @Entity(tableName = "instrument_tunings")
+    @Entity(
+        tableName = "instrument_tunings",
+        foreignKeys = [ForeignKey(
+            onDelete = CASCADE,
+            entity = Instrument::class,
+            parentColumns = arrayOf("id"),
+            childColumns = arrayOf("instrumentId")
+        )]
+    )
     @TypeConverters(NoteConverters::class)
     data class Tuning(
+        var instrumentId: Long,
         var stringPitches: List<Note>,
         override var name: String
     ) : ListableEntity, Parcelable {
@@ -132,19 +141,16 @@ data class Instrument(
         @PrimaryKey(autoGenerate = true)
         override var id: Long = 0
 
-        var numStrings: Int = stringPitches.size
-
         fun setPitches(pitches: List<Note>) {
             stringPitches = pitches
-            numStrings = pitches.size
         }
 
         constructor(parcel: Parcel) : this(
+            parcel.readLong(),
             emptyList<Note>(),
             parcel.readString()!!
         ) {
             id = parcel.readLong()
-            numStrings = parcel.readInt()
             val pitches = mutableListOf<Note>()
             parcel.readTypedList(pitches, Note.CREATOR)
             stringPitches = pitches.toList()
@@ -155,9 +161,9 @@ data class Instrument(
         }
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
+            parcel.writeLong(instrumentId)
             parcel.writeString(name)
             parcel.writeLong(id)
-            parcel.writeInt(numStrings)
             parcel.writeTypedList(stringPitches)
         }
 

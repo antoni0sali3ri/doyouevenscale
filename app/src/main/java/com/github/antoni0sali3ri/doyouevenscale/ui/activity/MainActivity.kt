@@ -7,10 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import com.github.antoni0sali3ri.doyouevenscale.MyApp
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.ui.main.InstrumentConfigPagerAdapter
+import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         MyApp.initialize(this)
 
         viewPager = findViewById(R.id.view_pager)
-        tabs= findViewById(R.id.tabs)
+        tabs = findViewById(R.id.tabs)
         loadInstruments()
     }
 
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when(item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_favorite -> {
             startActivity(Intent(this, DataManagerActivity::class.java))
             true
@@ -44,14 +44,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadInstruments() {
-        val configs = MyApp.getDatabase(this).instrumentConfigDao().getInstrumentPresetTabs()
+        val configs = MyApp.getDatabase(this).instrumentPresetDao().getInstrumentPresetTabs()
         configs.observe(this, {
-            val instruments = MyApp.getDatabase(this).instrumentDao().getInstrumentsByIds(it.map { it.instrumentId })
-            instruments.observe(this, {
-                val sectionsPagerAdapter = InstrumentConfigPagerAdapter(it, supportFragmentManager)
-                viewPager.adapter = sectionsPagerAdapter
-                tabs.setupWithViewPager(viewPager)
-            })
+            val sectionsPagerAdapter = InstrumentConfigPagerAdapter(it, supportFragmentManager)
+            viewPager.adapter = sectionsPagerAdapter
+            tabs.setupWithViewPager(viewPager)
         })
     }
 

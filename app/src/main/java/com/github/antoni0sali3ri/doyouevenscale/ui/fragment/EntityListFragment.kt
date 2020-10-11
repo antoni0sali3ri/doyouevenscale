@@ -95,6 +95,22 @@ class InstrumentListFragment : EntityListFragment<Instrument>(Instrument::class.
 
 class TuningListFragment : EntityListFragment<Instrument.Tuning>(Instrument.Tuning::class.java) {
     override val viewModel: TuningViewModel by activityViewModels()
+    private val instrumentViewModel: InstrumentViewModel by activityViewModels()
+
+    override fun getAdapter(items: List<Instrument.Tuning>): ListableEntityRecyclerViewAdapter<Instrument.Tuning> {
+        return Adapter(items)
+    }
+
+    inner class Adapter(items: List<Instrument.Tuning>) :
+            ListableEntityRecyclerViewAdapter<Instrument.Tuning>(items, onEditItem, onDeleteItem) {
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            super.onBindViewHolder(holder, position)
+            val tuning = items[position]
+            val instrument = instrumentViewModel.items.value!!.first { tuning.instrumentId == it.id }
+            holder.contentView.text = "${instrument.name} - ${tuning.name}"
+        }
+    }
 }
 
 class ScaleListFragment : EntityListFragment<Scale.Type>(Scale.Type::class.java) {

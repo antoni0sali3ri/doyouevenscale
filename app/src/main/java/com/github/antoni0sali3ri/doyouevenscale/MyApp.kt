@@ -76,10 +76,10 @@ object MyApp : Application() {
         val predef = Predef(context)
         context.ctxCoroutine.launch(Dispatchers.IO) {
             with (database) {
+                instrumentDao().insertInstruments(predef.instruments)
                 tuningDao().insertTunings(predef.tunings)
                 scaleDao().insertScaleTypes(predef.scaleTypes)
-                instrumentDao().insertInstruments(predef.instruments)
-                instrumentConfigDao().insertInstrumentPresets(predef.configs)
+                instrumentPresetDao().insertInstrumentPresets(predef.configs)
             }
         }
     }

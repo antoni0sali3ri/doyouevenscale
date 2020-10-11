@@ -33,6 +33,14 @@ abstract class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : F
 
     private lateinit var commitListener: OnCommitListener
 
+    protected open fun validateItem() : Boolean {
+        if (item.name.isBlank()) {
+            // TODO: show toast explaining the error
+            return false
+        }
+        return true
+    }
+
     protected fun commitChanges() {
         if (item.id == 0L)
             viewModel.insert(item)
@@ -77,8 +85,10 @@ abstract class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : F
         val root = inflater.inflate(layoutResource, container, false)
         btnSubmit = root.findViewById(R.id.btnSubmit)
         btnSubmit.setOnClickListener {
-            commitChanges()
-            commitListener.onItemSaved()
+            if (validateItem()) {
+                commitChanges()
+                commitListener.onItemSaved()
+            }
         }
 
         btnCancel = root.findViewById(R.id.btnCancel)

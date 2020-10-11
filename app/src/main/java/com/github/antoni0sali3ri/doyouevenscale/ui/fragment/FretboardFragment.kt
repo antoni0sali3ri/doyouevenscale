@@ -65,10 +65,10 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
                 with(MyApp.getDatabase(requireContext())) {
 
                     val configId = requireArguments().getLong(ARG_INSTRUMENT_CONFIG_ID)
-                    val cfg = instrumentConfigDao().getSingle(configId)
+                    val cfg = instrumentPresetDao().getSingle(configId)
+                    Log.d(TAG, "presetId = $configId, preset = $cfg")
                     val instrument = instrumentDao().getSingle(cfg.instrumentId)
                     val tuning = tuningDao().getSingle(cfg.tuningId)
-                    Log.d(TAG, "Tuning = $tuning")
                     val scaleType = scaleDao().getSingle(cfg.scaleTypeId)
 
                     instrumentConfig = ObservableInstrumentConfiguration(
@@ -95,13 +95,15 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
         spinnerMaxFret.text = instrumentConfig.fretsShown.last.toString()
 
         tuningViewModel.items.observe(viewLifecycleOwner) {
-            val tunings = it.filter { it.numStrings == instrumentConfig.instrument.numStrings }
-            spinnerTuning.adapter = ArrayAdapter(
-                requireContext(),
-                spinnerItemLayout,
-                tunings.map { it.name }
-            ).apply {
-                notifyDataSetChanged()
+            val tunings = it.filter { it.instrumentId == instrumentConfig.instrument.id }
+            spinnerTuning.apply {
+                adapter = ArrayAdapter(
+                    requireContext(),
+                    spinnerItemLayout,
+                    tunings.map { it.name }
+                ).apply {
+                    notifyDataSetChanged()
+                }
             }
             val position = tunings.indexOf(instrumentConfig.tuning)
             spinnerTuning.setSelection(position)
@@ -242,7 +244,7 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
             }
             spinnerTuning -> {
                 val newTuning = tuningViewModel.items.value!!.filter {
-                    it.numStrings == instrumentConfig.instrument.numStrings
+                    it.instrumentId == instrumentConfig.instrument.id
                 }.get(position)
                 instrumentConfig.tuning = newTuning
             }

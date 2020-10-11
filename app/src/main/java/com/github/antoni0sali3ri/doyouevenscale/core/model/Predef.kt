@@ -10,23 +10,23 @@ class Predef(private val context: Context) {
     fun getString(@StringRes res: Int): String = context.resources.getString(res)
 
     val configs = listOf(
-        InstrumentPreset(1, 1, 1, Note.C, 0, 12). apply {
+        InstrumentPreset(1, 1, 1, Note.C, 0, 12).apply {
             showAsTab = 0
             name = getString(R.string.instrument_guitar_name)
         },
-        InstrumentPreset(2, 2, 1, Note.C, 0, 12).apply {
+        InstrumentPreset(2, 9, 1, Note.C, 0, 12).apply {
             showAsTab = 1
-            name = getString(R.string.instrument_bass_name)
+            name = getString(R.string.instrument_bass_4str_name)
         },
-        InstrumentPreset(3, 3, 1, Note.C, 0, 12).apply {
+        InstrumentPreset(5, 16, 1, Note.C, 0, 12).apply {
             showAsTab = 2
             name = getString(R.string.instrument_mandolin_name)
         },
-        InstrumentPreset(4, 4, 1, Note.C, 0, 12).apply {
+        InstrumentPreset(7, 19, 1, Note.C, 0, 12).apply {
             showAsTab = 3
             name = getString(R.string.instrument_banjo_5str_name)
         },
-        InstrumentPreset(5, 10, 1, Note.C, 0, 12).apply {
+        InstrumentPreset(8, 24, 1, Note.C, 0, 12).apply {
             showAsTab = 4
             name = getString(R.string.instrument_ukulele_name)
         }
@@ -34,53 +34,150 @@ class Predef(private val context: Context) {
 
     val instruments = listOf(
         Instrument(6, getString(R.string.instrument_guitar_name)).apply { id = 1 },
-        Instrument(4, getString(R.string.instrument_bass_name)).apply { id = 2 },
-        Instrument(4, getString(R.string.instrument_mandolin_name)).apply { id = 3 },
-        Instrument(5, getString(R.string.instrument_banjo_5str_name)).apply { id = 4 },
-        Instrument(4, getString(R.string.instrument_ukulele_name)).apply { id = 5 }
+        Instrument(4, getString(R.string.instrument_bass_4str_name)).apply { id = 2 },
+        Instrument(5, getString(R.string.instrument_bass_5str_name)).apply { id = 3 },
+        Instrument(6, getString(R.string.instrument_bass_6str_name)).apply { id = 4 },
+        Instrument(4, getString(R.string.instrument_mandolin_name)).apply { id = 5 },
+        Instrument(4, getString(R.string.instrument_banjo_4str_name)).apply { id = 6 },
+        Instrument(5, getString(R.string.instrument_banjo_5str_name)).apply { id = 7 },
+        Instrument(4, getString(R.string.instrument_ukulele_name)).apply { id = 8 }
     )
 
     val tunings = listOf(
+        // Guitar tunings
         Instrument.Tuning(
+            1,
             listOf(Note.E, Note.A, Note.D, Note.G, Note.B, Note.E),
-            getString(R.string.tuning_guitar_standard_name)
+            getString(R.string.tuning_standard_name)
         ).apply { id = 1 },
         Instrument.Tuning(
-            listOf(Note.E, Note.A, Note.D, Note.G),
-            getString(R.string.tuning_bass_name)
+            1,
+            listOf(Note.D, Note.A, Note.D, Note.G, Note.B, Note.E),
+            getString(R.string.tuning_dropd_name)
         ).apply { id = 2 },
         Instrument.Tuning(
-            listOf(Note.G, Note.D, Note.A, Note.E),
-            getString(R.string.tuning_violin_name)
+            1,
+            listOf(Note.Dis, Note.Gis, Note.Cis, Note.Fis, Note.Ais, Note.Dis),
+            getString(R.string.tuning_halfdown_name)
         ).apply { id = 3 },
         Instrument.Tuning(
-            listOf(Note.G, Note.D, Note.G, Note.B, Note.D),
-            getString(R.string.tuning_banjo_openg_name)
+            1,
+            listOf(Note.D, Note.G, Note.C, Note.F, Note.A, Note.D),
+            getString(R.string.tuning_fulldown_name)
         ).apply { id = 4 },
         Instrument.Tuning(
-            listOf(Note.B, Note.E, Note.A, Note.D, Note.G),
-            getString(R.string.tuning_bass_5str_name)
+            1,
+            listOf(Note.C, Note.G, Note.C, Note.F, Note.A, Note.D),
+            getString(R.string.tuning_dropc_name)
         ).apply { id = 5 },
         Instrument.Tuning(
-            listOf(Note.B, Note.E, Note.A, Note.D, Note.G, Note.C),
-            getString(R.string.tuning_bass_6str_name)
+            1,
+            listOf(Note.D, Note.A, Note.D, Note.Fis, Note.A, Note.D),
+            getString(R.string.tuning_opend_name)
         ).apply { id = 6 },
         Instrument.Tuning(
-            listOf(Note.C, Note.G, Note.D, Note.A),
-            getString(R.string.tuning_viola_name)
+            1,
+            listOf(Note.D, Note.G, Note.D, Note.G, Note.B, Note.D),
+            getString(R.string.tuning_openg_name)
         ).apply { id = 7 },
         Instrument.Tuning(
-            listOf(Note.Dis, Note.Gis, Note.Cis, Note.Fis, Note.Ais, Note.Dis),
-            getString(R.string.tuning_guitar_halfdown_name)
+            1,
+            listOf(Note.C, Note.G, Note.C, Note.G, Note.C, Note.E),
+            getString(R.string.tuning_openc_name)
         ).apply { id = 8 },
+
+        // Bass tunings
         Instrument.Tuning(
-            listOf(Note.D, Note.G, Note.C, Note.F, Note.A, Note.D),
-            getString(R.string.tuning_guitar_fulldown_name)
+            2,
+            listOf(Note.E, Note.A, Note.D, Note.G),
+            getString(R.string.tuning_standard_name)
         ).apply { id = 9 },
         Instrument.Tuning(
+            2,
+            listOf(Note.D, Note.A, Note.D, Note.G),
+            getString(R.string.tuning_dropd_name)
+        ).apply { id = 10 },
+        Instrument.Tuning(
+            2,
+            listOf(Note.Dis, Note.Gis, Note.Cis, Note.Fis),
+            getString(R.string.tuning_halfdown_name)
+        ).apply { id = 11 },
+        Instrument.Tuning(
+            2,
+            listOf(Note.D, Note.G, Note.C, Note.F),
+            getString(R.string.tuning_fulldown_name)
+        ).apply { id = 12 },
+        Instrument.Tuning(
+            2,
+            listOf(Note.C, Note.G, Note.C, Note.F),
+            getString(R.string.tuning_dropc_name)
+        ).apply { id = 13 },
+        Instrument.Tuning(
+            3,
+            listOf(Note.B, Note.E, Note.A, Note.D, Note.G),
+            getString(R.string.tuning_standard_name)
+        ).apply { id = 14 },
+        Instrument.Tuning(
+            4,
+            listOf(Note.B, Note.E, Note.A, Note.D, Note.G, Note.C),
+            getString(R.string.tuning_standard_name)
+        ).apply { id = 15 },
+
+        // Mandolin tunings
+        Instrument.Tuning(
+            5,
+            listOf(Note.G, Note.D, Note.A, Note.E),
+            getString(R.string.tuning_standard_name)
+        ).apply { id = 16 },
+        Instrument.Tuning(
+            5,
+            listOf(Note.C, Note.G, Note.D, Note.A),
+            getString(R.string.tuning_viola_name)
+        ).apply { id = 17 },
+
+        // Banjo tunings
+        Instrument.Tuning(
+            6,
+            listOf(Note.C, Note.G, Note.D, Note.A),
+            getString(R.string.tuning_standard_name)
+        ).apply { id = 18 },
+        Instrument.Tuning(
+            7,
+            listOf(Note.G, Note.D, Note.G, Note.B, Note.D),
+            getString(R.string.tuning_openg_name)
+        ).apply { id = 19 },
+        Instrument.Tuning(
+            7,
+            listOf(Note.G, Note.D, Note.G, Note.Ais, Note.D),
+            getString(R.string.tuning_banjo_opengm_name)
+        ).apply { id = 20 },
+        Instrument.Tuning(
+            7,
+            listOf(Note.G, Note.D, Note.G, Note.C, Note.D),
+            getString(R.string.tuning_banjo_sawmill_name)
+        ).apply { id = 21 },
+        Instrument.Tuning(
+            7,
+            listOf(Note.G, Note.C, Note.G, Note.C, Note.D),
+            getString(R.string.tuning_banjo_doublec_name)
+        ).apply { id = 22 },
+        Instrument.Tuning(
+            7,
+            listOf(Note.G, Note.C, Note.G, Note.C, Note.E),
+            getString(R.string.tuning_openc_name)
+        ).apply { id = 23 },
+
+        // Ukulele tunings
+        Instrument.Tuning(
+            8,
             listOf(Note.G, Note.C, Note.E, Note.A),
-            getString(R.string.tuning_ukulele_standard_name)
-        ).apply { id = 10 }
+            getString(R.string.tuning_ukulele_soprano_name)
+        ).apply { id = 24 },
+        Instrument.Tuning(
+            8,
+            listOf(Note.D, Note.G, Note.B, Note.E),
+            getString(R.string.tuning_ukulele_baritone_name)
+        ).apply { id = 25 }
     )
 
     val scaleTypes = listOf(
@@ -131,7 +228,11 @@ class Predef(private val context: Context) {
         Scale.Type(
             getString(R.string.scale_pentatonic_blues_name),
             3, 5, 6, 7, 10
-        ).apply { id = 12 }
+        ).apply { id = 12 },
+        Scale.Type(
+            getString(R.string.scale_whole_note_name),
+            2, 4, 6, 8, 10
+        ).apply { id = 13 }
     )
 }
 

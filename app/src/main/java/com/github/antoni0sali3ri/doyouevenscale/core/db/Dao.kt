@@ -55,14 +55,19 @@ interface InstrumentPresetDao : ViewModelDao<InstrumentPreset> {
 
 @Dao
 interface TuningDao : ViewModelDao<Instrument.Tuning> {
-    @Query("SELECT * FROM instrument_tunings ORDER BY numStrings,name ASC")
+    @Query("""SELECT instrument_tunings.id,instrumentId,stringPitches,instrument_tunings.name 
+                     FROM instrument_tunings 
+                     INNER JOIN instruments 
+                     ON instrument_tunings.instrumentId = instruments.id 
+                     ORDER BY instruments.name,instrument_tunings.name ASC
+                     """)
     override fun getAll(): LiveData<List<Instrument.Tuning>>
 
     @Query("SELECT * FROM instrument_tunings WHERE id = :id")
     override fun getSingle(id: Long): Instrument.Tuning
 
-    @Query("SELECT * FROM instrument_tunings WHERE numStrings = :numStrings ORDER BY name ASC")
-    fun getTuningsByStringCount(numStrings: Int): LiveData<List<Instrument.Tuning>>
+    @Query("SELECT * FROM instrument_tunings WHERE instrumentId = :instrumentId ORDER BY name ASC")
+    fun getTuningsForInstrument(instrumentId: Long): LiveData<List<Instrument.Tuning>>
 
     @Insert
     override suspend fun insertSingle(item: Instrument.Tuning): Long

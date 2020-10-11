@@ -18,7 +18,7 @@ import com.github.antoni0sali3ri.doyouevenscale.core.model.Scale
 )
 abstract class ApplicationDatabase : RoomDatabase() {
 
-    abstract fun instrumentConfigDao(): InstrumentPresetDao
+    abstract fun instrumentPresetDao(): InstrumentPresetDao
 
     abstract fun tuningDao(): TuningDao
 
@@ -28,7 +28,7 @@ abstract class ApplicationDatabase : RoomDatabase() {
 
     fun <T : ListableEntity> getDaoForClass(clazz: Class<T>): ViewModelDao<T> = when(clazz) {
         Instrument::class.java -> instrumentDao()
-        InstrumentPreset::class.java -> instrumentConfigDao()
+        InstrumentPreset::class.java -> instrumentPresetDao()
         Instrument.Tuning::class.java -> tuningDao()
         Scale.Type::class.java -> scaleDao()
         else -> throw IllegalArgumentException()

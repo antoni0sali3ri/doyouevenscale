@@ -30,34 +30,37 @@
     <string name="scale_pentatonic_major_name">Major Pentatonic</string>
     <string name="scale_pentatonic_minor_name">Minor pentatonic</string>
     <string name="scale_pentatonic_blues_name">Blues Pentatonic</string>
+    <string name="scale_whole_note_name">Whole note</string>
 
     <!-- TUNINGS -->
-    <string name="tuning_guitar_standard_name">Guitar (Standard)</string>
-    <string name="tuning_guitar_halfdown_name">Guitar (½ step down)</string>
-    <string name="tuning_guitar_fulldown_name">Guitar (1 step down)</string>
-    <string name="tuning_guitar_dropd_name">Guitar (Drop D)</string>
-    <string name="tuning_guitar_dropc_name">Guitar (Drop C)</string>
     <string name="tuning_guitar_dadgad_name">Guitar (DADGAD)</string>
-    <string name="tuning_guitar_opend_name">Guitar (Open D)</string>
     <string name="tuning_violin_name">Violin/Mandolin</string>
     <string name="tuning_viola_name">Viola/Mandola</string>
-    <string name="tuning_bass_name">Bass (Standard)</string>
-    <string name="tuning_bass_5str_name">Bass (5-string)</string>
-    <string name="tuning_bass_6str_name">Bass (6-string)</string>
     <string name="tuning_banjo_openg_name">Banjo (Open G)</string>
     <string name="tuning_banjo_opengm_name">Banjo (Open Gm)</string>
     <string name="tuning_banjo_doublec_name">Banjo (Double C)</string>
     <string name="tuning_banjo_openc_name">Banjo (Open C)</string>
     <string name="tuning_banjo_opend_name">Banjo (Open D)</string>
     <string name="tuning_banjo_sawmill_name">Banjo (Sawmill)</string>
-    <string name="tuning_ukulele_standard_name">Ukulele (Standard)</string>
+    <string name="tuning_standard_name">Standard Tuning</string>
+    <string name="tuning_ukulele_baritone_name">Baritone</string>
+    <string name="tuning_ukulele_soprano_name">Soprano</string>
+    <string name="tuning_openc_name">Open C</string>
+    <string name="tuning_openg_name">Open G</string>
+    <string name="tuning_dropc_name">Drop C</string>
+    <string name="tuning_fulldown_name">Standard (1 step down)</string>
+    <string name="tuning_halfdown_name">Standard (½ step down)</string>
+    <string name="tuning_dropd_name">Drop D</string>
+    <string name="tuning_opend_name">Open D</string>
 
     <!-- INSTRUMENTS -->
     <string name="instrument_guitar_name">Guitar</string>
-    <string name="instrument_banjo_5str_name">Banjo (Bluegrass)</string>
+    <string name="instrument_bass_4str_name">Bass</string>
+    <string name="instrument_bass_5str_name">Bass (5-string)</string>
+    <string name="instrument_bass_6str_name">Bass (6-string)</string>
     <string name="instrument_banjo_4str_name">Banjo (Tenor)</string>
+    <string name="instrument_banjo_5str_name">Banjo (Bluegrass)</string>
     <string name="instrument_mandolin_name">Mandolin</string>
-    <string name="instrument_bass_name">Bass</string>
     <string name="instrument_ukulele_name">Ukulele</string>
 
     <!-- UI ELEMENTS -->
@@ -87,4 +90,5 @@
     <string name="entity_preset">preset</string>
     <string name="entity_tuning">tuning</string>
     <string name="entity_scale">scale</string>
+    <string name="lbl_tuning_instrument">For instrument</string>
 </resources>

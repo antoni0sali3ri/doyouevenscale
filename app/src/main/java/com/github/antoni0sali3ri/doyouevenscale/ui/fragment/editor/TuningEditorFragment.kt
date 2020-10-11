@@ -4,41 +4,69 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Instrument
+import com.github.antoni0sali3ri.doyouevenscale.core.model.InstrumentViewModel
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Note
 import com.github.antoni0sali3ri.doyouevenscale.core.model.TuningViewModel
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.NotePickerDialog
 
 class TuningEditorFragment :
     EntityEditorFragment<Instrument.Tuning>(Instrument.Tuning::class.java),
-    NotePickerDialog.ResultListener {
+    NotePickerDialog.ResultListener,
+    AdapterView.OnItemSelectedListener {
 
     private lateinit var recyclerViewNotes: RecyclerView
     private lateinit var btnAddString: ImageButton
+    private lateinit var spinnerTuningInstrument: Spinner
+
     private var isNew: Boolean = false
     private var displayMode: Note.Display = Note.Display.Sharp
     private var editingIndex = -1
+    private lateinit var instruments: List<Instrument>
+    private lateinit var selectedInstrument: Instrument
 
     private val stringPitches: MutableList<Note> = mutableListOf()
 
     override val layoutResource: Int = R.layout.fragment_tuning_editor
 
-    override val templateItem: Instrument.Tuning = Instrument.Tuning(listOf(Note.C), "Tuning")
+    override val templateItem: Instrument.Tuning = Instrument.Tuning(0, listOf(Note.C), "Tuning")
 
     override val viewModel: TuningViewModel by activityViewModels()
+    private val instrumentViewModel: InstrumentViewModel by activityViewModels()
+
+    override fun validateItem() : Boolean {
+        if (selectedInstrument.numStrings != item.stringPitches.size) {
+            // TODO: show Toast explaining the error
+            return false
+        }
+        return super.validateItem()
+    }
 
     override fun initializeViews(item: Instrument.Tuning) {
         super.initializeViews(item)
 
         isNew = item.id == 0L
         stringPitches.addAll(item.stringPitches)
+
+        spinnerTuningInstrument.isEnabled = isNew
+
+        instrumentViewModel.items.observe(viewLifecycleOwner) { items ->
+            instruments = items
+            spinnerTuningInstrument.adapter = ArrayAdapter(
+                requireContext(),
+                R.layout.layout_spinner_item,
+                items.map { it.name }
+            )
+            val position =
+                if (item.instrumentId == 0L) 0 else items.indexOfFirst { it.id == item.instrumentId }
+            spinnerTuningInstrument.setSelection(position)
+        }
 
         recyclerViewNotes.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -57,6 +85,7 @@ class TuningEditorFragment :
         super.onViewCreated(view, savedInstanceState)
 
         recyclerViewNotes = view.findViewById(R.id.recyclerViewNotes)
+        spinnerTuningInstrument = view.findViewById(R.id.spinnerTuningInstrument)
         btnAddString = view.findViewById(R.id.btnAddString)
     }
 
@@ -130,5 +159,17 @@ class TuningEditorFragment :
         editingIndex = -1
         this.displayMode = displayMode
         updateAddButton()
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        when (parent) {
+            spinnerTuningInstrument -> {
+                item.instrumentId = instruments[position].id
+            }
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("Not yet implemented")
     }
 }

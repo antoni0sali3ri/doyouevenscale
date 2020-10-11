@@ -33,25 +33,23 @@
     <string name="scale_whole_note_name">Whole note</string>
 
     <!-- TUNINGS -->
-    <string name="tuning_guitar_dadgad_name">Guitar (DADGAD)</string>
     <string name="tuning_violin_name">Violin/Mandolin</string>
     <string name="tuning_viola_name">Viola/Mandola</string>
-    <string name="tuning_banjo_openg_name">Banjo (Open G)</string>
-    <string name="tuning_banjo_opengm_name">Banjo (Open Gm)</string>
-    <string name="tuning_banjo_doublec_name">Banjo (Double C)</string>
-    <string name="tuning_banjo_openc_name">Banjo (Open C)</string>
-    <string name="tuning_banjo_opend_name">Banjo (Open D)</string>
-    <string name="tuning_banjo_sawmill_name">Banjo (Sawmill)</string>
+    <string name="tuning_banjo_sawmill_name">Sawmill</string>
     <string name="tuning_standard_name">Standard Tuning</string>
     <string name="tuning_ukulele_baritone_name">Baritone</string>
     <string name="tuning_ukulele_soprano_name">Soprano</string>
-    <string name="tuning_openc_name">Open C</string>
-    <string name="tuning_openg_name">Open G</string>
+    <string name="tuning_dropd_name">Drop D</string>
     <string name="tuning_dropc_name">Drop C</string>
+    <string name="tuning_doublec_name">Double C</string>
+    <string name="tuning_openc_name">Open C</string>
+    <string name="tuning_opend_name">Open D</string>
+    <string name="tuning_opendm_name">Open Dm</string>
+    <string name="tuning_guitar_dadgad_name">Open Dsus4 (DADGAD)</string>
+    <string name="tuning_openg_name">Open G</string>
+    <string name="tuning_opengm_name">Open Gm</string>
     <string name="tuning_fulldown_name">Standard (1 step down)</string>
     <string name="tuning_halfdown_name">Standard (½ step down)</string>
-    <string name="tuning_dropd_name">Drop D</string>
-    <string name="tuning_opend_name">Open D</string>
 
     <!-- INSTRUMENTS -->
     <string name="instrument_guitar_name">Guitar</string>
@@ -91,4 +89,6 @@
     <string name="entity_tuning">tuning</string>
     <string name="entity_scale">scale</string>
     <string name="lbl_tuning_instrument">For instrument</string>
+    <string name="msg_entity_name_is_blank">The name must not be empty</string>
+    <string name="msg_tuning_string_count_mismatch">Tuning for instrument \'%1$s\' needs to have %2$d string pitches</string>
 </resources>

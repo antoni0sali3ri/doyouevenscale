@@ -13,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import com.github.antoni0sali3ri.doyouevenscale.MyApp
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.core.model.*
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.FretRangePickerDialog
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.NotePickerDialog
 import com.github.antoni0sali3ri.doyouevenscale.ui.view.FretboardView
@@ -23,7 +25,7 @@ import kotlinx.coroutines.launch
  * A placeholder fragment containing a simple view.
  */
 class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
-    ObservableInstrumentConfiguration.OnChangeListener,
+    ObservableInstrumentPreset.OnChangeListener,
     FretRangePickerDialog.ResultListener,
     NotePickerDialog.ResultListener {
 
@@ -33,7 +35,7 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
     private val tuningViewModel: TuningViewModel by activityViewModels()
     private val scaleViewModel: ScaleViewModel by activityViewModels()
 
-    private lateinit var instrumentConfig: ObservableInstrumentConfiguration
+    private lateinit var instrumentConfig: ObservableInstrumentPreset
 
     private lateinit var layControlsAdvanced: List<TableRow>
     private lateinit var layFretRange: ViewGroup
@@ -71,7 +73,7 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
                     val tuning = tuningDao().getSingle(cfg.tuningId)
                     val scaleType = scaleDao().getSingle(cfg.scaleTypeId)
 
-                    instrumentConfig = ObservableInstrumentConfiguration(
+                    instrumentConfig = ObservableInstrumentPreset(
                         instrument,
                         tuning,
                         cfg.rootNote,
@@ -121,7 +123,7 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
             spinnerScale.setSelection(position)
         }
 
-        fretboardView.setStringCount(instrumentConfig.instrument.numStrings)
+        fretboardView.setStringCount(instrumentConfig.instrument.stringCount)
         fretboardView.updateFretboard(instrumentConfig.fretsShown, EqualTemperamentFretSpacing)
         fretboardView.updateStringLabels(instrumentConfig.tuning, instrumentConfig.noteDisplay)
         val inst = TunedInstrument(instrumentConfig.instrument, instrumentConfig.tuning)
@@ -180,11 +182,7 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
 
         fretboardView = root.findViewById(R.id.fretboardView)
 
-        if (instrumentConfig != null) {
-            initializeViews()
-        } else {
-            Log.d(TAG, "instrumentConfig == null")
-        }
+        initializeViews()
         return root
     }
 

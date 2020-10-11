@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.antoni0sali3ri.doyouevenscale.R
-import com.github.antoni0sali3ri.doyouevenscale.core.model.Instrument
 import com.github.antoni0sali3ri.doyouevenscale.core.model.InstrumentViewModel
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Note
 import com.github.antoni0sali3ri.doyouevenscale.core.model.TuningViewModel
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.NotePickerDialog
 
 class TuningEditorFragment :
@@ -41,8 +41,13 @@ class TuningEditorFragment :
     private val instrumentViewModel: InstrumentViewModel by activityViewModels()
 
     override fun validateItem() : Boolean {
-        if (selectedInstrument.numStrings != item.stringPitches.size) {
-            // TODO: show Toast explaining the error
+        if (selectedInstrument.stringCount != item.stringPitches.size) {
+            val msg = String.format(
+                requireContext().resources.getString(R.string.msg_tuning_string_count_mismatch),
+                selectedInstrument.name,
+                selectedInstrument.stringCount
+            )
+            showValidationMessage(msg)
             return false
         }
         return super.validateItem()
@@ -66,6 +71,7 @@ class TuningEditorFragment :
             val position =
                 if (item.instrumentId == 0L) 0 else items.indexOfFirst { it.id == item.instrumentId }
             spinnerTuningInstrument.setSelection(position)
+            selectedInstrument = instruments[position]
         }
 
         recyclerViewNotes.apply {
@@ -86,6 +92,7 @@ class TuningEditorFragment :
 
         recyclerViewNotes = view.findViewById(R.id.recyclerViewNotes)
         spinnerTuningInstrument = view.findViewById(R.id.spinnerTuningInstrument)
+        spinnerTuningInstrument.onItemSelectedListener = this
         btnAddString = view.findViewById(R.id.btnAddString)
     }
 
@@ -119,15 +126,18 @@ class TuningEditorFragment :
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            // Since the pitches are saved in reversed order (last string to first string)
+            // we need to reverse the index as well
+            val stringIndex = stringPitches.size - position - 1
             holder.txtStringNumber.text = (position + 1).toString()
-            holder.txtStringPitch.text = stringPitches[position].getName(parent.displayMode)
+            holder.txtStringPitch.text = stringPitches[stringIndex].getName(parent.displayMode)
             holder.txtStringPitch.setOnClickListener {
-                parent.showDialog(position)
+                parent.showDialog(stringIndex)
             }
             if (parent.isNew) {
                 holder.btnDelete.setOnClickListener {
                     if (stringPitches.size > 1) {
-                        stringPitches.removeAt(position)
+                        stringPitches.removeAt(stringIndex)
                         parent.updateAddButton()
                         notifyDataSetChanged()
                     }
@@ -150,11 +160,11 @@ class TuningEditorFragment :
 
         val n = Note.valueOf(note)
         if (editingIndex >= stringPitches.size)
-            stringPitches.add(n)
+            stringPitches.add(0, n)
         else
             stringPitches[editingIndex] = n
 
-        item.setPitches(stringPitches.toList())
+        item.setPitchesLastToFirst(stringPitches.toList())
         recyclerViewNotes.adapter?.notifyDataSetChanged()
         editingIndex = -1
         this.displayMode = displayMode
@@ -164,7 +174,8 @@ class TuningEditorFragment :
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         when (parent) {
             spinnerTuningInstrument -> {
-                item.instrumentId = instruments[position].id
+                selectedInstrument = instruments[position]
+                item.instrumentId = selectedInstrument.id
             }
         }
     }

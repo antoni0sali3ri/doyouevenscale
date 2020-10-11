@@ -2,8 +2,18 @@ package com.github.antoni0sali3ri.doyouevenscale.core.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 
-class ObservableInstrumentConfiguration(
+/**
+ * An observable variant of InstrumentPreset.
+ *
+ * Notifies its observers of every change made
+ *
+ * @see InstrumentPreset
+ */
+class ObservableInstrumentPreset(
     _instrument: Instrument,
     _tuning: Instrument.Tuning,
     _root: Note,
@@ -71,12 +81,24 @@ class ObservableInstrumentConfiguration(
     }
 
     interface OnChangeListener {
+        /**
+         * Called when the tuning has changed.
+         */
         fun onTuningChanged(newTuning: Instrument.Tuning, oldTuning: Instrument.Tuning)
 
+        /**
+         * Called when the scale has changed.
+         */
         fun onScaleChanged(newScale: Scale, oldScale: Scale)
 
+        /**
+         * Called when the fret range to display has changed.
+         */
         fun onFretRangeChanged(newRange: IntRange, oldRange: IntRange)
 
+        /**
+         * Called when the note display mode (sharp/flat) has changed.
+         */
         fun onNoteDisplayChanged(newDisplay: Note.Display, oldDisplay: Note.Display)
     }
 
@@ -96,12 +118,12 @@ class ObservableInstrumentConfiguration(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<ObservableInstrumentConfiguration> {
-        override fun createFromParcel(parcel: Parcel): ObservableInstrumentConfiguration {
-            return ObservableInstrumentConfiguration(parcel)
+    companion object CREATOR : Parcelable.Creator<ObservableInstrumentPreset> {
+        override fun createFromParcel(parcel: Parcel): ObservableInstrumentPreset {
+            return ObservableInstrumentPreset(parcel)
         }
 
-        override fun newArray(size: Int): Array<ObservableInstrumentConfiguration?> {
+        override fun newArray(size: Int): Array<ObservableInstrumentPreset?> {
             return arrayOfNulls(size)
         }
     }

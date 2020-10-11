@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Interval
-import com.github.antoni0sali3ri.doyouevenscale.core.model.Scale
 import com.github.antoni0sali3ri.doyouevenscale.core.model.ScaleViewModel
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.IntervalPickerDialog
 
 class ScaleEditorFragment : EntityEditorFragment<Scale.Type>(Scale.Type::class.java),

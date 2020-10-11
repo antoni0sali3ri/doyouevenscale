@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.View
 import android.widget.NumberPicker
 import com.github.antoni0sali3ri.doyouevenscale.R
-import com.github.antoni0sali3ri.doyouevenscale.core.model.Instrument
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 
 class FretRangePicker(private val context: Context, root: View, values: IntRange) : NumberPicker.OnValueChangeListener{
 

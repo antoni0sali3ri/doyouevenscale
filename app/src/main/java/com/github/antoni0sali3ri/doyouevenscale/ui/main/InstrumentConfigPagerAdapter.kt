@@ -3,7 +3,7 @@ package com.github.antoni0sali3ri.doyouevenscale.ui.main
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.github.antoni0sali3ri.doyouevenscale.core.model.InstrumentPreset
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.FretboardFragment
 
 /**

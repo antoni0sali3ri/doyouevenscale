@@ -28,11 +28,8 @@
     <string name="tuning_guitar_dadgad_name">Gitarre (DADGAD)</string>
     <string name="tuning_violin_name">Violine/Mandoline</string>
     <string name="tuning_viola_name">Bratsche/Mandola</string>
-    <string name="tuning_banjo_openg_name">Banjo (Open G)</string>
-    <string name="tuning_banjo_opengm_name">Banjo (Open Gm)</string>
-    <string name="tuning_banjo_doublec_name">Banjo (Double C)</string>
-    <string name="tuning_banjo_openc_name">Banjo (Open C)</string>
-    <string name="tuning_banjo_opend_name">Banjo (Open D)</string>
+    <string name="tuning_opengm_name">Banjo (Open Gm)</string>
+    <string name="tuning_doublec_name">Banjo (Double C)</string>
     <string name="tuning_banjo_sawmill_name">Banjo (Sawmill)</string>
     <string name="instrument_guitar_name">Gitarre</string>
     <string name="instrument_banjo_5str_name">Banjo (Bluegrass)</string>
@@ -82,4 +79,7 @@
     <string name="instrument_bass_5str_name">Bass (5-saitig)</string>
     <string name="instrument_bass_6str_name">Bass (6-saitig)</string>
     <string name="lbl_tuning_instrument">Für Instrument</string>
+    <string name="msg_entity_name_is_blank">Name darf nicht leer sein.</string>
+    <string name="msg_tuning_string_count_mismatch">Stimmung für Instrument \'%1$s\' muss Tonhöhen für %2$d Saiten festlegen.</string>
+    <string name="tuning_opendm_name">Open Dm</string>
 </resources>

@@ -18,7 +18,8 @@ class IntervalPickerDialog(val listener: ResultListener, val excludeIntervals: L
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {ctx ->
             val titles = intervals.map {
-                ctx.resources.getString(Interval.NAME_RES[it.halfSteps]) + " (${it.halfSteps})" }
+                ctx.resources.getString(Interval.NAME_RES[it.semitones]) + " (${it.semitones})"
+            }
             AlertDialog.Builder(ctx)
                 .setTitle(R.string.dialog_title_intervals)
                 .setItems(titles.toTypedArray()) { _, i ->

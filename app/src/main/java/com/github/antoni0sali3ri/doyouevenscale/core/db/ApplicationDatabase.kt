@@ -2,10 +2,10 @@ package com.github.antoni0sali3ri.doyouevenscale.core.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.github.antoni0sali3ri.doyouevenscale.core.model.Instrument
-import com.github.antoni0sali3ri.doyouevenscale.core.model.InstrumentPreset
 import com.github.antoni0sali3ri.doyouevenscale.core.model.ListableEntity
-import com.github.antoni0sali3ri.doyouevenscale.core.model.Scale
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 
 @Database(
     version = 1,
@@ -26,6 +26,7 @@ abstract class ApplicationDatabase : RoomDatabase() {
 
     abstract fun scaleDao(): ScaleTypeDao
 
+    @SuppressWarnings("unchecked")
     fun <T : ListableEntity> getDaoForClass(clazz: Class<T>): ViewModelDao<T> = when(clazz) {
         Instrument::class.java -> instrumentDao()
         InstrumentPreset::class.java -> instrumentPresetDao()
@@ -33,6 +34,5 @@ abstract class ApplicationDatabase : RoomDatabase() {
         Scale.Type::class.java -> scaleDao()
         else -> throw IllegalArgumentException()
     } as ViewModelDao<T>
-
 }
 

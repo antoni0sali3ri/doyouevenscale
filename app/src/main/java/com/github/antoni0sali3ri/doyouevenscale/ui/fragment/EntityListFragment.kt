@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.core.model.*
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 import com.github.antoni0sali3ri.doyouevenscale.ui.activity.EditorActivity
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.editor.EntityEditorFragment
 import com.github.antoni0sali3ri.doyouevenscale.ui.main.ListableEntityRecyclerViewAdapter

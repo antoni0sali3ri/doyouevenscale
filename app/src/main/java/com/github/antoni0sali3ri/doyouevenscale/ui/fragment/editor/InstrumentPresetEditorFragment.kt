@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.github.antoni0sali3ri.doyouevenscale.R
-import com.github.antoni0sali3ri.doyouevenscale.core.model.InstrumentPreset
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Note
 import com.github.antoni0sali3ri.doyouevenscale.core.model.PresetViewModel
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
 
 class InstrumentPresetEditorFragment :
     EntityEditorFragment<InstrumentPreset>(InstrumentPreset::class.java) {

@@ -2,10 +2,10 @@ package com.github.antoni0sali3ri.doyouevenscale.core.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.github.antoni0sali3ri.doyouevenscale.core.model.Instrument
-import com.github.antoni0sali3ri.doyouevenscale.core.model.InstrumentPreset
 import com.github.antoni0sali3ri.doyouevenscale.core.model.ListableEntity
-import com.github.antoni0sali3ri.doyouevenscale.core.model.Scale
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 
 interface ViewModelDao<T : ListableEntity> {
 
@@ -96,11 +96,11 @@ interface InstrumentDao : ViewModelDao<Instrument> {
     @Query("SELECT * FROM instruments WHERE id IN(:ids)")
     fun getInstrumentsByIds(ids: List<Long>): LiveData<List<Instrument>>
 
-    @Query("SELECT * FROM instruments ORDER BY numStrings,name ASC")
+    @Query("SELECT * FROM instruments ORDER BY stringCount,name ASC")
     override fun getAll(): LiveData<List<Instrument>>
 
-    @Query("SELECT * FROM instruments WHERE numStrings = :numStrings")
-    fun getInstrumentsWithStringCount(numStrings: Int): LiveData<List<Instrument>>
+    @Query("SELECT * FROM instruments WHERE stringCount = :stringCount")
+    fun getInstrumentsWithStringCount(stringCount: Int): LiveData<List<Instrument>>
 
     @Insert
     override suspend fun insertSingle(item: Instrument): Long

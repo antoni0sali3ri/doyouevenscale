@@ -100,7 +100,4 @@
         <item name="android:background">#00000000</item>
     </style>
 
-    <dimen name="text_size_list_item">18sp</dimen>
-    <dimen name="spinner_item_padding">8dp</dimen>
-    <color name="colorTabText">#FFFFFF</color>
 </resources>

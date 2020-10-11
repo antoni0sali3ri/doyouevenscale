@@ -1,12 +1,17 @@
 package com.github.antoni0sali3ri.doyouevenscale.core.model
 
+/**
+ * Interface to specify shared attributes between database entities/model classes.
+ */
 interface ListableEntity {
 
-    var id : Long
+    /**
+     * Row id for Room database.
+     */
+    var id: Long
 
-    var name : String
-}
-
-interface Copyable<T> {
-    fun copy(): T
+    /**
+     * The name (for display) of the entity.
+     */
+    var name: String
 }

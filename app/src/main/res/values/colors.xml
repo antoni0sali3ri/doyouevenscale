@@ -19,6 +19,7 @@
     <color name="colorButtonNegative">#D32F2F</color>
 
     <color name="colorText">#222222</color>
+    <color name="colorTabText">#FFFFFF</color>
 
     <color name="colorFretboardBackground">#FFFFFF</color>
     <color name="colorFretboardStrings">#000000</color>

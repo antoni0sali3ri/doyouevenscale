@@ -5,8 +5,8 @@ import android.view.View
 import android.widget.NumberPicker
 import androidx.fragment.app.activityViewModels
 import com.github.antoni0sali3ri.doyouevenscale.R
-import com.github.antoni0sali3ri.doyouevenscale.core.model.Instrument
 import com.github.antoni0sali3ri.doyouevenscale.core.model.InstrumentViewModel
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 
 class InstrumentEditorFragment : EntityEditorFragment<Instrument>(Instrument::class.java) {
     override val layoutResource: Int = R.layout.fragment_instrument_editor
@@ -24,12 +24,12 @@ class InstrumentEditorFragment : EntityEditorFragment<Instrument>(Instrument::cl
             npStringCount.minValue = 1
             npStringCount.maxValue = Instrument.MaxStrings
         } else {
-            npStringCount.minValue = item.numStrings
-            npStringCount.maxValue = item.numStrings
+            npStringCount.minValue = item.stringCount
+            npStringCount.maxValue = item.stringCount
         }
-        npStringCount.value = item.numStrings
+        npStringCount.value = item.stringCount
         npStringCount.setOnValueChangedListener { _, _, newVal ->
-            item.numStrings = newVal
+            item.stringCount = newVal
         }
     }
 

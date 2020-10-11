@@ -25,7 +25,7 @@ class IntervalConverters {
     @TypeConverter
     fun intervalListToString(intervals: List<Interval>) =
         intervals
-            .map { it.halfSteps }
+            .map { it.semitones }
             .joinToString(LIST_SEP)
 
     @TypeConverter

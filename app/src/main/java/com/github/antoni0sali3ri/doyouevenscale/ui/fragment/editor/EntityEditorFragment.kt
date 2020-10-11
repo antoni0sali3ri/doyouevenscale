@@ -10,11 +10,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import ca.allanwang.kau.utils.launchMain
 import com.github.antoni0sali3ri.doyouevenscale.R
-import com.github.antoni0sali3ri.doyouevenscale.core.model.*
+import com.github.antoni0sali3ri.doyouevenscale.core.model.EntityViewModel
+import com.github.antoni0sali3ri.doyouevenscale.core.model.ListableEntity
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -33,15 +38,23 @@ abstract class EntityEditorFragment<T : ListableEntity>(val clazz: Class<T>) : F
 
     private lateinit var commitListener: OnCommitListener
 
-    protected open fun validateItem() : Boolean {
+    protected fun showValidationMessage(messageRes: Int) {
+        Toast.makeText(requireContext(), messageRes, Toast.LENGTH_LONG).show()
+    }
+
+    protected fun showValidationMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
+
+    protected open fun validateItem(): Boolean {
         if (item.name.isBlank()) {
-            // TODO: show toast explaining the error
+            showValidationMessage(R.string.msg_entity_name_is_blank)
             return false
         }
         return true
     }
 
-    protected fun commitChanges() {
+    private fun commitChanges() {
         if (item.id == 0L)
             viewModel.insert(item)
         else

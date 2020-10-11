@@ -5,19 +5,27 @@ import android.os.Parcelable
 import com.github.antoni0sali3ri.doyouevenscale.R
 
 data class Interval(
-    val halfSteps: Int
+    val semitones: Int
 ) : Parcelable, Comparable<Interval> {
+
     init {
-        require(halfSteps >= 0)
+        require(semitones >= 0)
     }
-    val nameRes = nameResFor(halfSteps)
+
+    /**
+     * String resource for the name of this interval.
+     */
+    val nameRes = nameResFor(semitones)
 
     constructor(parcel: Parcel) : this(parcel.readInt())
 
-    fun shift(note: Note, shiftUp: Boolean = true) : Note = note.shift(if (shiftUp) halfSteps else -halfSteps)
+    fun transpose(note: Note, transposeUp: Boolean = true): Note =
+        note.transpose(if (transposeUp) semitones else -semitones)
+
+    override fun compareTo(other: Interval): Int = semitones.compareTo(other.semitones)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(halfSteps)
+        parcel.writeInt(semitones)
     }
 
     override fun describeContents(): Int {
@@ -25,15 +33,6 @@ data class Interval(
     }
 
     companion object CREATOR : Parcelable.Creator<Interval> {
-        override fun createFromParcel(parcel: Parcel): Interval {
-            return Interval(parcel)
-        }
-
-        override fun newArray(size: Int): Array<Interval?> {
-            return arrayOfNulls(size)
-        }
-
-
         val NAME_RES = arrayOf(
             R.string.interval_prime,
             R.string.interval_minor_second,
@@ -52,9 +51,15 @@ data class Interval(
         val INTERVALS = (0..11).map { Interval(it) }.toTypedArray()
 
         fun nameResFor(halfSteps: Int) = NAME_RES[halfSteps % 12]
-    }
 
-    override fun compareTo(other: Interval): Int = halfSteps.compareTo(other.halfSteps)
+        override fun createFromParcel(parcel: Parcel): Interval {
+            return Interval(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Interval?> {
+            return arrayOfNulls(size)
+        }
+    }
 }
 
 fun Int.toInterval() : Interval {

@@ -1,10 +1,18 @@
-package com.github.antoni0sali3ri.doyouevenscale.core.model
+package com.github.antoni0sali3ri.doyouevenscale.core.db
 
 import android.content.Context
 import androidx.annotation.StringRes
 import com.github.antoni0sali3ri.doyouevenscale.R
+import com.github.antoni0sali3ri.doyouevenscale.core.model.Note
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 
-//TODO: Move these to resources
+/**
+ * Predefined presets, instruments, tunings and scales.
+ *
+ * These values will be written to the database on the first run of the app.
+ */
 class Predef(private val context: Context) {
 
     fun getString(@StringRes res: Int): String = context.resources.getString(res)
@@ -149,7 +157,7 @@ class Predef(private val context: Context) {
         Instrument.Tuning(
             7,
             listOf(Note.G, Note.D, Note.G, Note.Ais, Note.D),
-            getString(R.string.tuning_banjo_opengm_name)
+            getString(R.string.tuning_opengm_name)
         ).apply { id = 20 },
         Instrument.Tuning(
             7,
@@ -159,7 +167,7 @@ class Predef(private val context: Context) {
         Instrument.Tuning(
             7,
             listOf(Note.G, Note.C, Note.G, Note.C, Note.D),
-            getString(R.string.tuning_banjo_doublec_name)
+            getString(R.string.tuning_doublec_name)
         ).apply { id = 22 },
         Instrument.Tuning(
             7,

@@ -5,10 +5,10 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.github.antoni0sali3ri.doyouevenscale.R
-import com.github.antoni0sali3ri.doyouevenscale.core.model.Instrument
-import com.github.antoni0sali3ri.doyouevenscale.core.model.InstrumentPreset
 import com.github.antoni0sali3ri.doyouevenscale.core.model.ListableEntity
-import com.github.antoni0sali3ri.doyouevenscale.core.model.Scale
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.editor.EntityEditorFragment
 
 class EditorActivity : AppCompatActivity(), EntityEditorFragment.OnCommitListener {
@@ -19,6 +19,7 @@ class EditorActivity : AppCompatActivity(), EntityEditorFragment.OnCommitListene
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         intent.extras?.apply {
+            @SuppressWarnings("unchecked")
             val clazz = getSerializable(ARG_CLASS) as Class<out ListableEntity>
             val itemId = getLong(EntityEditorFragment.ARG_ITEM_ID)
             val fragment = EntityEditorFragment.newInstance(clazz, itemId)

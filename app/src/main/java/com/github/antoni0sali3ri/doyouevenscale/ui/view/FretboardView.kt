@@ -7,8 +7,8 @@ import android.util.Log
 import android.view.View
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.core.model.FretSpacing
-import com.github.antoni0sali3ri.doyouevenscale.core.model.Instrument
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Note
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 import kotlin.math.min
 
 /**

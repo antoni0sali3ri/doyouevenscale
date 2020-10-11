@@ -1,4 +1,4 @@
-package com.github.antoni0sali3ri.doyouevenscale.core.model
+package com.github.antoni0sali3ri.doyouevenscale.core.model.entity
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -6,6 +6,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.github.antoni0sali3ri.doyouevenscale.core.db.IntervalConverters
+import com.github.antoni0sali3ri.doyouevenscale.core.model.Interval
+import com.github.antoni0sali3ri.doyouevenscale.core.model.ListableEntity
+import com.github.antoni0sali3ri.doyouevenscale.core.model.Note
+import com.github.antoni0sali3ri.doyouevenscale.core.model.toInterval
 
 data class Scale(
     val root: Note,
@@ -32,7 +36,7 @@ data class Scale(
         ) {
             id = parcel.readLong()
             val ints = mutableListOf<Interval>()
-            parcel.readTypedList(ints, Interval.CREATOR)
+            parcel.readTypedList(ints, Interval)
             intervals = ints.toList()
         }
 
@@ -42,7 +46,7 @@ data class Scale(
         ) : this(intervalsNum.toTypedArray().map { it.toInterval() }, name)
 
         fun notesInKey(root: Note): List<Note> {
-            return listOf(root) + intervals.map { it.shift(root) }
+            return listOf(root) + intervals.map { it.transpose(root) }
         }
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {

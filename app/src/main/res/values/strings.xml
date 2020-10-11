@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Do you even scale</string>
     <string name="title_activity_data_manager">Manage data</string>
+    <string name="title_activity_editor">Edit %1$s</string>
 
     <!-- INTERVALS -->
     <string name="interval_prime">Prime</string>
@@ -82,4 +83,8 @@
     <string name="lbl_instrument_preset_scale">Scale</string>
     <string name="lbl_instrument_preset_fretrange">Show frets</string>
     <string name="lbl_string_pitches">String pitches</string>
+    <string name="entity_instrument">instrument</string>
+    <string name="entity_preset">preset</string>
+    <string name="entity_tuning">tuning</string>
+    <string name="entity_scale">scale</string>
 </resources>

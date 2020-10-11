@@ -1,7 +1,6 @@
 package com.github.antoni0sali3ri.doyouevenscale.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -16,11 +15,9 @@ import kotlinx.coroutines.launch
 
 class DataManagerActivity : AppCompatActivity() {
 
-    val TAG = this::class.java.simpleName
     private lateinit var viewPager: ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.d(TAG, "onCreate(savedInstanceState = $savedInstanceState)")
         super.onCreate(null)
         setContentView(R.layout.activity_data_manager)
         setSupportActionBar(findViewById(R.id.toolbar))

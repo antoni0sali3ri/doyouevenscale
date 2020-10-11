@@ -73,4 +73,9 @@
     <string name="lbl_instrument_preset_scale">Tonleiter</string>
     <string name="lbl_instrument_preset_fretrange">Zeige Bünde</string>
     <string name="lbl_string_pitches">Saitenstimmungen</string>
+    <string name="title_activity_editor">%1$s bearbeiten</string>
+    <string name="entity_instrument">Instrument</string>
+    <string name="entity_preset">Voreinstellung</string>
+    <string name="entity_tuning">Stimmung</string>
+    <string name="entity_scale">Tonleiter</string>
 </resources>

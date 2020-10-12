@@ -12,10 +12,10 @@ import com.github.antoni0sali3ri.doyouevenscale.core.model.ListableEntity
 /**
  */
 open class ListableEntityRecyclerViewAdapter<T : ListableEntity>(
-    var items: List<T>,
+    override var items: List<T>,
     val onEdit: (Long) -> Unit,
     val onDelete: (Long) -> Unit
-) : RecyclerView.Adapter<ListableEntityRecyclerViewAdapter<T>.ViewHolder>() {
+) : RecyclerView.Adapter<ListableEntityRecyclerViewAdapter.ViewHolder>(), HasItems<T> {
 
     protected open val itemLayout = R.layout.list_item_data_manager
 
@@ -35,14 +35,14 @@ open class ListableEntityRecyclerViewAdapter<T : ListableEntity>(
 
     override fun getItemCount(): Int = items.size
 
-    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    open class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val idView: TextView = view.findViewById(R.id.itemId)
         val contentView: TextView = view.findViewById(R.id.itemTitle)
         val btnEdit: ImageButton = view.findViewById(R.id.btnEditItem)
         val btnDelete: ImageButton = view.findViewById(R.id.btnDeleteItem)
-
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
-        }
     }
+}
+
+interface HasItems<T> {
+    var items: List<T>
 }

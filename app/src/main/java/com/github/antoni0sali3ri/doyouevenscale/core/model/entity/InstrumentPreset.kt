@@ -51,4 +51,7 @@ data class InstrumentPreset(
      * the position to display this tab.
      */
     var showAsTab: Int = -1
+
+    override fun toString(): String =
+        "InstrumentPreset(id = $id, name = $name, showAsTab = $showAsTab)"
 }

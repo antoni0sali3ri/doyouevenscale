@@ -237,14 +237,16 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
             null -> {
             }
             spinnerScale -> {
-                val newScaleType = scaleViewModel.items.value!!.get(position)
-                instrumentConfig.scaleType = newScaleType
+                scaleViewModel.items.observe(viewLifecycleOwner) {
+                    val newScaleType = it.get(position)
+                    instrumentConfig.scaleType = newScaleType
+                }
             }
             spinnerTuning -> {
-                val newTuning = tuningViewModel.items.value!!.filter {
-                    it.instrumentId == instrumentConfig.instrument.id
-                }.get(position)
-                instrumentConfig.tuning = newTuning
+                tuningViewModel.forInstrument(instrumentConfig.instrument.id)
+                    .observe(viewLifecycleOwner) {
+                        instrumentConfig.tuning = it.get(position)
+                    }
             }
         }
     }

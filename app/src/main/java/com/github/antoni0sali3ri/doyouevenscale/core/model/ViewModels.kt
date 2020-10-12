@@ -12,10 +12,12 @@ import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPres
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 import kotlinx.coroutines.launch
 
-sealed class EntityViewModel<T : ListableEntity>(application: Application, clazz: Class<T>) : AndroidViewModel(application) {
+sealed class EntityViewModel<T : ListableEntity>(application: Application, clazz: Class<T>) :
+    AndroidViewModel(application) {
     protected val dao: ViewModelDao<T> = MyApp.getDatabase(application).getDaoForClass(clazz)
 
-    val items: LiveData<out List<T>> = dao.getAll()
+    val items: LiveData<out List<T>>
+        get() = dao.getAll()
 
     fun getSingle(id: Long) = dao.getSingle(id)
 
@@ -25,6 +27,10 @@ sealed class EntityViewModel<T : ListableEntity>(application: Application, clazz
 
     fun update(item: T) = viewModelScope.launch {
         dao.updateSingle(item)
+    }
+
+    fun update(items: List<T>) = viewModelScope.launch {
+        dao.updateMultiple(items)
     }
 
     fun delete(item: T) = viewModelScope.launch {
@@ -44,8 +50,11 @@ class TuningViewModel(application: Application) :
     }
 }
 
-class InstrumentViewModel(application: Application) : EntityViewModel<Instrument>(application, Instrument::class.java)
+class InstrumentViewModel(application: Application) :
+    EntityViewModel<Instrument>(application, Instrument::class.java)
 
-class PresetViewModel(application: Application) : EntityViewModel<InstrumentPreset>(application, InstrumentPreset::class.java)
+class PresetViewModel(application: Application) :
+    EntityViewModel<InstrumentPreset>(application, InstrumentPreset::class.java)
 
-class ScaleViewModel(application: Application) : EntityViewModel<Scale.Type>(application, Scale.Type::class.java)
+class ScaleViewModel(application: Application) :
+    EntityViewModel<Scale.Type>(application, Scale.Type::class.java)

@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager
 import com.github.antoni0sali3ri.doyouevenscale.MyApp
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.ui.main.InstrumentConfigPagerAdapter
+import com.github.antoni0sali3ri.doyouevenscale.ui.main.InstrumentPresetComparator
 import com.google.android.material.tabs.TabLayout
 
 class MainActivity : AppCompatActivity() {
@@ -46,7 +47,11 @@ class MainActivity : AppCompatActivity() {
     private fun loadInstruments() {
         val configs = MyApp.getDatabase(this).instrumentPresetDao().getInstrumentPresetTabs()
         configs.observe(this, {
-            val sectionsPagerAdapter = InstrumentConfigPagerAdapter(it, supportFragmentManager)
+            val sectionsPagerAdapter = InstrumentConfigPagerAdapter(
+                it.sortedWith(
+                    InstrumentPresetComparator
+                ), supportFragmentManager
+            )
             viewPager.adapter = sectionsPagerAdapter
             tabs.setupWithViewPager(viewPager)
         })

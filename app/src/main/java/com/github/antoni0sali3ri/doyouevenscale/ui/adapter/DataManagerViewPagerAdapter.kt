@@ -1,12 +1,12 @@
-package com.github.antoni0sali3ri.doyouevenscale.ui.main
+package com.github.antoni0sali3ri.doyouevenscale.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.InstrumentListFragment
-import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.InstrumentPresetListFragment
-import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.ScaleListFragment
-import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.TuningListFragment
+import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.list.InstrumentListFragment
+import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.list.InstrumentPresetListFragment
+import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.list.ScaleListFragment
+import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.list.TuningListFragment
 
 class DataManagerViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {

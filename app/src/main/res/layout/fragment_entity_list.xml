@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.fragment.EntityListFragment"
+    tools:context=".ui.fragment.list.EntityListFragment"
     tools:listitem="@layout/list_item_data_manager" />

@@ -8,8 +8,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.github.antoni0sali3ri.doyouevenscale.MyApp
 import com.github.antoni0sali3ri.doyouevenscale.R
-import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.EntityListFragment
-import com.github.antoni0sali3ri.doyouevenscale.ui.main.DataManagerViewPagerAdapter
+import com.github.antoni0sali3ri.doyouevenscale.ui.adapter.DataManagerViewPagerAdapter
+import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.list.EntityListFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers

@@ -1,4 +1,4 @@
-package com.github.antoni0sali3ri.doyouevenscale.ui.main
+package com.github.antoni0sali3ri.doyouevenscale.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View

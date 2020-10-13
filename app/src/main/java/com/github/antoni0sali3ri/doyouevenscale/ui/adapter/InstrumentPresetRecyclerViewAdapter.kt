@@ -1,6 +1,6 @@
-package com.github.antoni0sali3ri.doyouevenscale.ui.main
+package com.github.antoni0sali3ri.doyouevenscale.ui.adapter
 
-import android.util.Log
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -8,22 +8,28 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.MotionEventCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
 import java.util.*
 
-class InstrumentPresetListAdapter(
-    override var items: List<InstrumentPreset>,
+class InstrumentPresetRecyclerViewAdapter(
+    _items: List<InstrumentPreset>,
     val dragListener: OnStartDragListener,
     val onItemsUpdated: (List<InstrumentPreset>) -> Unit,
     val onEditItem: (Long) -> Unit,
     val onDeleteItem: (Long) -> Unit
-) : RecyclerView.Adapter<InstrumentPresetListAdapter.ViewHolder>(), HasItems<InstrumentPreset> {
+) : RecyclerView.Adapter<InstrumentPresetRecyclerViewAdapter.ViewHolder>() {
 
-    val itemsMutable: MutableList<InstrumentPreset> = mutableListOf()
+    var items: List<InstrumentPreset> = _items
+        set(value) {
+            itemsMutable.clear()
+            itemsMutable.addAll(value)
+            field = value
+        }
+
+    private val itemsMutable: MutableList<InstrumentPreset> = mutableListOf()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val txtId: TextView = view.findViewById(R.id.itemId)
@@ -40,6 +46,7 @@ class InstrumentPresetListAdapter(
         return ViewHolder(view)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         val id = item.id
@@ -51,6 +58,7 @@ class InstrumentPresetListAdapter(
         } else {
             holder.btnVisible.setImageResource(R.drawable.ic_visibility)
         }
+
         holder.btnVisible.setOnClickListener {
             toggleItemVisibility(id, it as ImageButton)
         }
@@ -62,8 +70,8 @@ class InstrumentPresetListAdapter(
             holder.dragHandle.visibility = View.INVISIBLE
         } else {
             holder.dragHandle.visibility = View.VISIBLE
-            holder.dragHandle.setOnTouchListener { _, ev ->
-                if (MotionEventCompat.getActionMasked(ev) == MotionEvent.ACTION_DOWN) {
+            holder.dragHandle.setOnTouchListener { _, event ->
+                if (event.action == MotionEvent.ACTION_DOWN) {
                     dragListener.onStartDrag(holder)
                 }
                 return@setOnTouchListener false
@@ -77,16 +85,8 @@ class InstrumentPresetListAdapter(
         val fromItem = itemsMutable[fromPosition]
         val targetItem = itemsMutable[toPosition]
         if (targetItem.showAsTab >= 0) {
-            Log.d(
-                "InstrumentPresetAdapter",
-                "onItemMoved(fromItem[$fromPosition] = $fromItem, toItem[$toPosition] = $targetItem"
-            )
             fromItem.showAsTab = toPosition
             targetItem.showAsTab = fromPosition
-            Log.d(
-                "InstrumentPresetAdapter",
-                "onItemMoved(fromItem[$fromPosition] = $fromItem, toItem[$toPosition] = $targetItem"
-            )
             Collections.swap(itemsMutable, fromPosition, toPosition)
             notifyItemMoved(fromPosition, toPosition)
         }
@@ -97,30 +97,27 @@ class InstrumentPresetListAdapter(
         val item = items[itemIndex]
         if (item.showAsTab >= 0) {
             item.showAsTab = -1
-            var i = itemIndex
-            do {
-                i += 1
-                if (i >= items.size)
-                    break
+            var i = itemIndex + 1
+            while (i < items.size) {
                 val curItem = items[i]
                 if (curItem.showAsTab < 0)
                     break
                 else
                     curItem.showAsTab -= 1
-            } while (true)
+                i += 1
+            }
             btn.setImageResource(R.drawable.ic_visibility)
         } else {
-            val numTabs = 1 + items.map { it.showAsTab }.maxOrNull()!!
-            item.showAsTab = numTabs
+            val lastTabIndex = items.map { it.showAsTab }.maxOrNull() ?: -1
+            item.showAsTab = lastTabIndex + 1
             btn.setImageResource(R.drawable.ic_visibility_off)
         }
         updateItems()
     }
 
     fun updateItems() {
-        val itemsSorted = itemsMutable.sortedWith(InstrumentPresetComparator)
-        Log.d("InstrumentPresetAdapter", "updateItems() itemsSorted = $itemsSorted")
-        onItemsUpdated(itemsSorted)
+        //val itemsSorted = itemsMutable.sortedWith(InstrumentPresetComparator)
+        onItemsUpdated(items)
     }
 }
 
@@ -128,7 +125,7 @@ interface OnStartDragListener {
     fun onStartDrag(viewHolder: RecyclerView.ViewHolder)
 }
 
-class PresetListItemTouchHelperCallback(val adapter: InstrumentPresetListAdapter) :
+class PresetListItemTouchHelperCallback(val adapter: InstrumentPresetRecyclerViewAdapter) :
     ItemTouchHelper.Callback() {
     override fun getMovementFlags(
         recyclerView: RecyclerView,
@@ -142,7 +139,7 @@ class PresetListItemTouchHelperCallback(val adapter: InstrumentPresetListAdapter
         viewHolder: RecyclerView.ViewHolder,
         target: RecyclerView.ViewHolder
     ): Boolean {
-        adapter.onItemMoved(viewHolder.adapterPosition, target.adapterPosition)
+        adapter.onItemMoved(viewHolder.bindingAdapterPosition, target.bindingAdapterPosition)
         return true
     }
 
@@ -151,12 +148,11 @@ class PresetListItemTouchHelperCallback(val adapter: InstrumentPresetListAdapter
 
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         super.onSelectedChanged(viewHolder, actionState)
-
         if (viewHolder == null) {
+            // This means the user just dropped a ViewHolder
             adapter.updateItems()
         }
     }
-
 }
 
 val InstrumentPresetComparator = object : Comparator<InstrumentPreset> {

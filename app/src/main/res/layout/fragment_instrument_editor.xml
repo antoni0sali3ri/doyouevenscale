@@ -11,6 +11,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layControls"
         style="@style/AppTableLayout"
         >
 
@@ -37,12 +38,14 @@
         </TableRow>
     </TableLayout>
 
-    <include layout="@layout/layout_editor_buttons"
+    <include
         android:id="@+id/layButtonBar"
+        layout="@layout/layout_editor_buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layControls"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,86 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
 
     <TableLayout
         android:id="@+id/layControls"
+        style="@style/AppTableLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:stretchColumns="1"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        style="@style/AppTableLayout"
+        app:layout_constraintBottom_toTopOf="@id/layControls"
         >
 
-        <include layout="@layout/layout_editor_entity_name"
+        <include
             android:id="@+id/layEntityName"
+            layout="@layout/layout_editor_entity_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lblInstrument"
+                style="@style/AppSpinnerTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_instrument_preset_instrument"
+                android:layout_marginStart="0dp"
                 android:labelFor="@id/spinnerPresetInstrument"
-                style="@style/AppSpinnerTitle"
-                android:layout_marginStart="0dp" />
+                android:text="@string/lbl_instrument_preset_instrument" />
 
-            <Spinner
-                android:id="@+id/spinnerPresetInstrument"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:spinnerMode="dialog"
-                />
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerPresetInstrument"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog" />
+
+                <ImageButton
+                    android:id="@+id/btnAddInstrument"
+                    android:layout_width="@dimen/action_button_size"
+                    android:layout_height="@dimen/action_button_size"
+                    android:src="@drawable/ic_add"
+                    style="@style/AppTheme.ActionButton" />
+            </LinearLayout>
         </TableRow>
 
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lblTuning"
+                style="@style/AppSpinnerTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_instrument_preset_tuning"
+                android:layout_marginStart="0dp"
                 android:labelFor="@id/spinnerPresetTuning"
-                style="@style/AppSpinnerTitle"
-                android:layout_marginStart="0dp" />
+                android:text="@string/lbl_instrument_preset_tuning" />
 
-            <Spinner
-                android:id="@+id/spinnerPresetTuning"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:spinnerMode="dialog"
-                />
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerPresetTuning"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:spinnerMode="dialog" />
+
+                <ImageButton
+                    android:id="@+id/btnAddTuning"
+                    android:layout_width="@dimen/action_button_size"
+                    android:layout_height="@dimen/action_button_size"
+                    android:src="@drawable/ic_add"
+                    style="@style/AppTheme.ActionButton" />
+
+            </LinearLayout>
         </TableRow>
 
         <TableRow>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lblScale"
+                style="@style/AppSpinnerTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_instrument_preset_scale"
-                style="@style/AppSpinnerTitle"
-                android:layout_marginStart="0dp" />
+                android:layout_marginStart="0dp"
+                android:text="@string/lbl_instrument_preset_scale" />
 
             <LinearLayout
                 android:id="@+id/layScaleControls"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/spinnerPresetRootNote"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     style="@style/AppSpinnerItem"
-                    />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <Spinner
                     android:id="@+id/spinnerPresetScaleType"
@@ -88,6 +116,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:spinnerMode="dialog" />
+
+                <ImageButton
+                    android:id="@+id/btnAddScale"
+                    android:layout_width="@dimen/action_button_size"
+                    android:layout_height="@dimen/action_button_size"
+                    android:src="@drawable/ic_add"
+                    style="@style/AppTheme.ActionButton" />
             </LinearLayout>
         </TableRow>
 
@@ -95,12 +130,12 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/lblFretRange"
+                style="@style/AppSpinnerTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lbl_instrument_preset_fretrange"
-                style="@style/AppSpinnerTitle"
                 android:layout_marginStart="0dp"
-                android:labelFor="@id/layFretRange" />
+                android:labelFor="@id/layFretRange"
+                android:text="@string/lbl_instrument_preset_fretrange" />
 
             <LinearLayout
                 android:id="@+id/layFretRange"
@@ -110,35 +145,35 @@
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtFretRangeMin"
+                    style="@style/AppSpinnerItem"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/AppSpinnerItem" />
+                    android:layout_height="wrap_content" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    style="@style/AppSpinnerItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/lbl_fret_range_to"
-                    style="@style/AppSpinnerItem" />
+                    android:text="@string/lbl_fret_range_to" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtFretRangeMax"
+                    style="@style/AppSpinnerItem"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/AppSpinnerItem" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
         </TableRow>
     </TableLayout>
 
-    <include layout="@layout/layout_editor_buttons"
+    <include
         android:id="@+id/layButtonBar"
+        layout="@layout/layout_editor_buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
-
+        app:layout_constraintTop_toBottomOf="@id/layControls"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

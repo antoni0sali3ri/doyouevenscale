@@ -91,4 +91,7 @@
     <string name="lbl_tuning_instrument">For instrument</string>
     <string name="msg_entity_name_is_blank">The name must not be empty</string>
     <string name="msg_tuning_string_count_mismatch">Tuning for instrument \'%1$s\' needs to have %2$d string pitches</string>
+    <string name="msg_no_instrument_selected">Please select an instrument</string>
+    <string name="msg_no_tuning_selected">Please select the default tuning</string>
+    <string name="msg_no_scale_type_selected">Please select the default scale</string>
 </resources>

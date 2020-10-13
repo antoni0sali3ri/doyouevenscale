@@ -163,7 +163,7 @@ class TuningEditorFragment :
         else
             stringPitches[editingIndex] = note
 
-        item.setPitchesLastToFirst(stringPitches.toList())
+        item.stringPitches = stringPitches.toList()
         recyclerViewNotes.adapter?.notifyDataSetChanged()
         editingIndex = -1
         this.displayMode = displayMode

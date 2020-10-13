@@ -1,13 +1,9 @@
 package com.github.antoni0sali3ri.doyouevenscale.ui.fragment.editor
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.activityViewModels
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.core.model.*
@@ -16,6 +12,7 @@ import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPres
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.FretRangePickerDialog
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.NotePickerDialog
+import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.list.EntityListFragment
 
 class InstrumentPresetEditorFragment :
     EntityEditorFragment<InstrumentPreset>(InstrumentPreset::class.java),
@@ -45,6 +42,18 @@ class InstrumentPresetEditorFragment :
     private val scaleTypes: MutableList<Scale.Type> = mutableListOf()
 
     override fun validateItem(): Boolean {
+        if (item.instrumentId < 1L) {
+            showValidationMessage(R.string.msg_no_instrument_selected)
+            return false
+        }
+        if (item.tuningId < 1L) {
+            showValidationMessage(R.string.msg_no_tuning_selected)
+            return false
+        }
+        if (item.scaleTypeId < 1L) {
+            showValidationMessage(R.string.msg_no_scale_type_selected)
+            return false
+        }
         return super.validateItem()
     }
 
@@ -54,6 +63,7 @@ class InstrumentPresetEditorFragment :
         txtFretMin.text = item.fromFret.toString()
         txtFretMax.text = item.toFret.toString()
 
+        // Init spinners
         spinnerRootNote.setOnClickListener {
             NotePickerDialog(this, Note.Display.Sharp).show(
                 childFragmentManager,
@@ -74,13 +84,16 @@ class InstrumentPresetEditorFragment :
                 spinnerItemLayout,
                 instruments.map { it.name }
             )
-            // TODO: This will blow up if there are no instruments defined
-            val index =
-                if (item.instrumentId == 0L) 0 else instruments.indexOfFirst { it.id == item.instrumentId }
-            spinnerInstrument.setSelection(index)
-            item.instrumentId = instruments[index].id
+            if (instruments.isNotEmpty()) {
+                val index = if (item.instrumentId == 0L)
+                    0
+                else
+                    instruments.indexOfFirst { it.id == item.instrumentId }
 
-            populateTuningSpinner(instruments[index])
+                spinnerInstrument.setSelection(index)
+                item.instrumentId = instruments[index].id
+                populateTuningSpinner(instruments[index])
+            }
         }
 
         scaleViewModel.items.observe(viewLifecycleOwner) { scaleTypes ->
@@ -91,11 +104,15 @@ class InstrumentPresetEditorFragment :
                 spinnerItemLayout,
                 scaleTypes.map { it.name }
             )
-            // TODO: This will blow up if there are no tunings defined
-            val index =
-                if (item.scaleTypeId == 0L) 0 else scaleTypes.indexOfFirst { it.id == item.scaleTypeId }
-            spinnerScale.setSelection(index)
-            item.scaleTypeId = scaleTypes[index].id
+            if (scaleTypes.isNotEmpty()) {
+                val index = if (item.scaleTypeId == 0L)
+                    0
+                else
+                    scaleTypes.indexOfFirst { it.id == item.scaleTypeId }
+
+                spinnerScale.setSelection(index)
+                item.scaleTypeId = scaleTypes[index].id
+            }
         }
     }
 
@@ -116,6 +133,19 @@ class InstrumentPresetEditorFragment :
 
         txtFretMin = view.findViewById(R.id.txtFretRangeMin)
         txtFretMax = view.findViewById(R.id.txtFretRangeMax)
+
+        val btnAddInstrument: ImageButton = view.findViewById(R.id.btnAddInstrument)
+        btnAddInstrument.setOnClickListener {
+            EntityListFragment.launchEditor(requireContext(), Instrument::class.java)
+        }
+        val btnAddTuning: ImageButton = view.findViewById(R.id.btnAddTuning)
+        btnAddTuning.setOnClickListener {
+            EntityListFragment.launchEditor(requireContext(), Instrument.Tuning::class.java)
+        }
+        val btnAddScale: ImageButton = view.findViewById(R.id.btnAddScale)
+        btnAddScale.setOnClickListener {
+            EntityListFragment.launchEditor(requireContext(), Scale.Type::class.java)
+        }
     }
 
     override fun onNoteSelected(note: Note, displayMode: Note.Display) {
@@ -143,10 +173,8 @@ class InstrumentPresetEditorFragment :
     }
 
     private fun populateTuningSpinner(instrument: Instrument) {
-        Log.d(TAG, "populateTuningSpinner(instrument = $instrument)")
         val tuningsLiveData = tuningViewModel.forInstrument(instrument.id)
         tuningsLiveData.observe(viewLifecycleOwner) { tunings ->
-            Log.d(TAG, "LiveData.Observer(tuningId = ${item.tuningId}, tunings = $tunings)")
             this.tunings.clear()
             this.tunings.addAll(tunings)
             spinnerTunings.adapter = ArrayAdapter(
@@ -156,15 +184,18 @@ class InstrumentPresetEditorFragment :
             ).apply {
                 notifyDataSetChanged()
             }
-            spinnerTunings.invalidate()
-            // TODO: This is gonna blow up if there are no tunings defined for this instrument yet
-            var index = 0
-            val tuningIndex = tunings.indexOfFirst { it.id == item.tuningId }
-            if (tuningIndex >= 0) {
-                index = tuningIndex
+
+            if (tunings.isNotEmpty()) {
+                var index = 0
+                val tuningIndex = tunings.indexOfFirst { it.id == item.tuningId }
+                if (tuningIndex >= 0) {
+                    index = tuningIndex
+                }
+                spinnerTunings.setSelection(index)
+                item.tuningId = tunings[index].id
+            } else {
+                item.tuningId = 0L
             }
-            spinnerTunings.setSelection(index)
-            item.tuningId = tunings[index].id
         }
 
     }

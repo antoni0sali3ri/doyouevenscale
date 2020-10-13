@@ -82,4 +82,7 @@
     <string name="msg_entity_name_is_blank">Name darf nicht leer sein.</string>
     <string name="msg_tuning_string_count_mismatch">Stimmung für Instrument \'%1$s\' muss Tonhöhen für %2$d Saiten festlegen.</string>
     <string name="tuning_opendm_name">Open Dm</string>
+    <string name="msg_no_instrument_selected">Bitte wählen Sie ein Instrument</string>
+    <string name="msg_no_tuning_selected">Bitte wählen Sie die Stimmung</string>
+    <string name="msg_no_scale_type_selected">Bitte wählen Sie eine Tonleiter</string>
 </resources>

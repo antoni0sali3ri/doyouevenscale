@@ -100,6 +100,8 @@ class InstrumentPresetListAdapter(
             var i = itemIndex
             do {
                 i += 1
+                if (i >= items.size)
+                    break
                 val curItem = items[i]
                 if (curItem.showAsTab < 0)
                     break

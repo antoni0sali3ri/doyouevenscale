@@ -19,7 +19,7 @@ data class Instrument(
     override var name: String,
 ) : ListableEntity, Parcelable {
     @PrimaryKey(autoGenerate = true)
-    override var id: Long = 0
+    override var id: Long = 0L
 
     /**
      * Parcelable implementation.
@@ -32,7 +32,7 @@ data class Instrument(
     }
 
     init {
-        require(stringCount >= 0 && stringCount <= MaxStrings)
+        require(stringCount in 0..MaxStrings)
     }
 
 

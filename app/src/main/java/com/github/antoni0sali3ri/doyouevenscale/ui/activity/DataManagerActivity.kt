@@ -5,17 +5,20 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.github.antoni0sali3ri.doyouevenscale.MyApp
 import com.github.antoni0sali3ri.doyouevenscale.R
-import com.github.antoni0sali3ri.doyouevenscale.ui.main.DataManagerPagerAdapter
+import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.EntityListFragment
+import com.github.antoni0sali3ri.doyouevenscale.ui.main.DataManagerViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+
 class DataManagerActivity : AppCompatActivity() {
 
-    private lateinit var viewPager: ViewPager
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(null)
@@ -23,11 +26,13 @@ class DataManagerActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val sectionsPagerAdapter = DataManagerPagerAdapter(this, supportFragmentManager)
+        val sectionsPagerAdapter = DataManagerViewPagerAdapter(this)
         viewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
-        tabs.setupWithViewPager(viewPager)
+        TabLayoutMediator(tabs, viewPager) { tab, pos ->
+            tab.text = resources.getString(TAB_TITLES[pos])
+        }.attach()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -42,7 +47,11 @@ class DataManagerActivity : AppCompatActivity() {
         }
         R.id.action_create_entity -> {
             val position = viewPager.currentItem
-            (viewPager.adapter as DataManagerPagerAdapter).getFragmentAt(position)?.createItem()
+            // Special thank you to the Android SDK for this goddamn code smell
+            val fragmentTag = "f$position"
+            val fragment =
+                supportFragmentManager.findFragmentByTag(fragmentTag) as EntityListFragment<*>?
+            fragment?.createItem()
             true
         }
         R.id.action_restore_defaults -> {
@@ -54,4 +63,13 @@ class DataManagerActivity : AppCompatActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
+    companion object {
+        val TAB_TITLES = listOf(
+            R.string.tab_title_dm_presets,
+            R.string.tab_title_dm_instruments,
+            R.string.tab_title_dm_tunings,
+            R.string.tab_title_dm_scales
+        )
+
+    }
 }

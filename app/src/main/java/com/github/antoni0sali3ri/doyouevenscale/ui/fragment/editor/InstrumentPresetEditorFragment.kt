@@ -10,9 +10,9 @@ import com.github.antoni0sali3ri.doyouevenscale.core.model.*
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
+import com.github.antoni0sali3ri.doyouevenscale.ui.activity.EditorActivity
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.FretRangePickerDialog
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.NotePickerDialog
-import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.list.EntityListFragment
 
 class InstrumentPresetEditorFragment :
     EntityEditorFragment<InstrumentPreset>(InstrumentPreset::class.java),
@@ -136,15 +136,15 @@ class InstrumentPresetEditorFragment :
 
         val btnAddInstrument: ImageButton = view.findViewById(R.id.btnAddInstrument)
         btnAddInstrument.setOnClickListener {
-            EntityListFragment.launchEditor(requireContext(), Instrument::class.java)
+            EditorActivity.launch(requireActivity(), Instrument::class.java)
         }
         val btnAddTuning: ImageButton = view.findViewById(R.id.btnAddTuning)
         btnAddTuning.setOnClickListener {
-            EntityListFragment.launchEditor(requireContext(), Instrument.Tuning::class.java)
+            EditorActivity.launch(requireActivity(), Instrument.Tuning::class.java)
         }
         val btnAddScale: ImageButton = view.findViewById(R.id.btnAddScale)
         btnAddScale.setOnClickListener {
-            EntityListFragment.launchEditor(requireContext(), Scale.Type::class.java)
+            EditorActivity.launch(requireActivity(), Scale.Type::class.java)
         }
     }
 

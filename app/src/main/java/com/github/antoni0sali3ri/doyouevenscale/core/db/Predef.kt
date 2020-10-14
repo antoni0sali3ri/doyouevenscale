@@ -27,7 +27,6 @@ class Predef(private val context: Context) {
             name = getString(R.string.instrument_bass_4str_name)
         },
         InstrumentPreset(5, 16, 1, Note.C, 0, 12).apply {
-            showAsTab = 2
             name = getString(R.string.instrument_mandolin_name)
         },
         InstrumentPreset(7, 19, 1, Note.C, 0, 12).apply {

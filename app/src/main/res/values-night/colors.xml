@@ -5,11 +5,11 @@
     <color name="colorOnBackground">#FFFFFF</color>
 
     <color name="colorFretboardBackground">#000000</color>
-    <color name="colorFretboardStrings">#FFFFFF</color>
-    <color name="colorFretboardFrets">#FFFFFF</color>
-    <color name="colorFretboardInlays">#BBBBBB</color>
+    <color name="colorFretboardStrings">#DDDDDD</color>
+    <color name="colorFretboardFrets">#DDDDDD</color>
+    <color name="colorFretboardInlays">#AAAAAA</color>
     <color name="colorFretboardNoteStroke">#FFFFFF</color>
-    <color name="colorFretboardNotes">#000000</color>
+    <color name="colorFretboardNotes">#222222</color>
     <color name="colorFretboardNotesHighlight">#FFFFFF</color>
     <color name="colorFretboardLabels">#FFFFFF</color>
 

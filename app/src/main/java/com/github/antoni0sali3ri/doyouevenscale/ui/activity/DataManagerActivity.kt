@@ -1,15 +1,21 @@
 package com.github.antoni0sali3ri.doyouevenscale.ui.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
-import com.github.antoni0sali3ri.doyouevenscale.MyApp
 import com.github.antoni0sali3ri.doyouevenscale.R
+import com.github.antoni0sali3ri.doyouevenscale.ScaleViewerApplication
+import com.github.antoni0sali3ri.doyouevenscale.core.model.ListableEntity
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
+import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 import com.github.antoni0sali3ri.doyouevenscale.ui.adapter.DataManagerViewPagerAdapter
-import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.list.EntityListFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
@@ -47,16 +53,12 @@ class DataManagerActivity : AppCompatActivity() {
         }
         R.id.action_create_entity -> {
             val position = viewPager.currentItem
-            // Special thank you to the Android SDK for this goddamn code smell
-            val fragmentTag = "f$position"
-            val fragment =
-                supportFragmentManager.findFragmentByTag(fragmentTag) as EntityListFragment<*>?
-            fragment?.createItem()
+            EditorActivity.launch(this, TAB_CLASSES[position])
             true
         }
         R.id.action_restore_defaults -> {
             lifecycleScope.launch(Dispatchers.IO) {
-                MyApp.resetDatabase(this@DataManagerActivity)
+                ScaleViewerApplication.resetDatabase(this@DataManagerActivity)
             }
             true
         }
@@ -71,5 +73,19 @@ class DataManagerActivity : AppCompatActivity() {
             R.string.tab_title_dm_scales
         )
 
+        val TAB_CLASSES: List<Class<out ListableEntity>> = listOf(
+            InstrumentPreset::class.java,
+            Instrument::class.java,
+            Instrument.Tuning::class.java,
+            Scale.Type::class.java
+        )
+
+        fun launch(fromActivity: Activity) {
+            ContextCompat.startActivity(
+                fromActivity,
+                Intent(fromActivity, DataManagerActivity::class.java),
+                null
+            )
+        }
     }
 }

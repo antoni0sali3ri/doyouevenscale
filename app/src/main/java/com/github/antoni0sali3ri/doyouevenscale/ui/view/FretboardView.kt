@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import com.github.antoni0sali3ri.doyouevenscale.R
+import com.github.antoni0sali3ri.doyouevenscale.core.model.Fingering
 import com.github.antoni0sali3ri.doyouevenscale.core.model.FretSpacing
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Note
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
@@ -368,10 +369,10 @@ class FretboardView : View {
         }
     }
 
-    fun updateScale(fingerings: List<Point>, roots: List<Point>) {
+    fun updateScale(fingerings: List<Fingering>, roots: List<Fingering>) {
         crs.apply {
-            notesInScale = fingerings
-            rootNotes = roots
+            notesInScale = fingerings.map { it.toPoint() }
+            rootNotes = roots.map { it.toPoint() }
         }
     }
 

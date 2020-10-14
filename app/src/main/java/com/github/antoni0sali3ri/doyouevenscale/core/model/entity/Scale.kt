@@ -9,7 +9,7 @@ import com.github.antoni0sali3ri.doyouevenscale.core.db.IntervalConverters
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Interval
 import com.github.antoni0sali3ri.doyouevenscale.core.model.ListableEntity
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Note
-import com.github.antoni0sali3ri.doyouevenscale.core.model.toInterval
+import com.github.antoni0sali3ri.doyouevenscale.core.model.semitones
 
 data class Scale(
     val root: Note,
@@ -43,7 +43,7 @@ data class Scale(
         constructor(
             name: String,
             vararg intervalsNum: Int,
-        ) : this(intervalsNum.toTypedArray().map { it.toInterval() }, name)
+        ) : this(intervalsNum.toTypedArray().map { it.semitones() }, name)
 
         fun notesInKey(root: Note): List<Note> {
             return listOf(root) + intervals.map { it.transpose(root) }

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,10 +22,11 @@ abstract class EntityListFragment<T : ListableEntity>(private val clazz: Class<T
 
     protected abstract val viewModel: EntityViewModel<T>
     protected lateinit var recyclerView: RecyclerView
+    protected lateinit var rvAdapter: RecyclerView.Adapter<*>
     private lateinit var adapter: ListableEntityRecyclerViewAdapter<T>
 
-    protected open fun getAdapter(items: List<T>): RecyclerView.Adapter<*> {
-        val adapter = ListableEntityRecyclerViewAdapter(items, onEditItem, onDeleteItem)
+    protected open fun getAdapter(): RecyclerView.Adapter<*> {
+        val adapter = ListableEntityRecyclerViewAdapter<T>(emptyList(), onEditItem, onDeleteItem)
         this.adapter = adapter
         return adapter
     }
@@ -36,8 +36,20 @@ abstract class EntityListFragment<T : ListableEntity>(private val clazz: Class<T
         adapter.notifyDataSetChanged()
     }
 
-    protected open fun setUpRecyclerView(recyclerView: RecyclerView, items: List<T>) {
-        recyclerView.adapter = getAdapter(items)
+    protected open fun setUpRecyclerView(recyclerView: RecyclerView) {
+        recyclerView.adapter = getAdapter()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        rvAdapter = getAdapter()
+    }
+
+    protected open fun populateRecyclerView() {
+        viewModel.items.observe(viewLifecycleOwner) { items ->
+            setItems(items)
+        }
     }
 
     override fun onCreateView(
@@ -56,17 +68,13 @@ abstract class EntityListFragment<T : ListableEntity>(private val clazz: Class<T
                 addItemDecoration(deco)
             }
         }
-        setUpRecyclerView(recyclerView, emptyList())
-        viewModel.items.observe(viewLifecycleOwner) { items ->
-            lifecycleScope.launchWhenStarted {
-                setItems(items)
-            }
-        }
+        setUpRecyclerView(recyclerView)
+        populateRecyclerView()
         return view
     }
 
     fun createItem() {
-        launchEditor(requireContext(), clazz)
+        EditorActivity.launch(requireActivity(), clazz)
     }
 
     protected val onEditItem = { id: Long ->

@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.github.antoni0sali3ri.doyouevenscale.MyApp
+import com.github.antoni0sali3ri.doyouevenscale.core.db.ApplicationDatabase
 import com.github.antoni0sali3ri.doyouevenscale.core.db.TuningDao
 import com.github.antoni0sali3ri.doyouevenscale.core.db.ViewModelDao
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
@@ -14,10 +14,10 @@ import kotlinx.coroutines.launch
 
 sealed class EntityViewModel<T : ListableEntity>(application: Application, clazz: Class<T>) :
     AndroidViewModel(application) {
-    protected val dao: ViewModelDao<T> = MyApp.getDatabase(application).getDaoForClass(clazz)
+    protected val dao: ViewModelDao<T> =
+        ApplicationDatabase.getDatabase(application).getDaoForClass(clazz)
 
-    val items: LiveData<out List<T>>
-        get() = dao.getAll()
+    val items: LiveData<out List<T>> = dao.getAll()
 
     fun getSingle(id: Long) = dao.getSingle(id)
 
@@ -45,8 +45,13 @@ sealed class EntityViewModel<T : ListableEntity>(application: Application, clazz
 class TuningViewModel(application: Application) :
     EntityViewModel<Instrument.Tuning>(application, Instrument.Tuning::class.java) {
 
+    private val instruments: MutableMap<Long, LiveData<List<Instrument.Tuning>>> = mutableMapOf()
+
     fun forInstrument(instrumentId: Long): LiveData<List<Instrument.Tuning>> {
-        return (dao as TuningDao).getTuningsForInstrument(instrumentId)
+        if (!instruments.containsKey(instrumentId)) {
+            instruments[instrumentId] = (dao as TuningDao).getTuningsForInstrument(instrumentId)
+        }
+        return instruments[instrumentId]!!
     }
 }
 

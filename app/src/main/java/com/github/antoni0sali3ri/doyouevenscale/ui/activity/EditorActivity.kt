@@ -1,9 +1,12 @@
 package com.github.antoni0sali3ri.doyouevenscale.ui.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.core.model.ListableEntity
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
@@ -49,6 +52,21 @@ class EditorActivity : AppCompatActivity(), EntityEditorFragment.OnCommitListene
     companion object {
         val ARG_CLASS = "editor_class"
         val TAG = EditorActivity::class.java.simpleName
+
+        fun launch(
+            fromActivity: Activity,
+            forClass: Class<out ListableEntity>,
+            itemToEdit: Long = 0L
+        ) {
+            ContextCompat.startActivity(
+                fromActivity,
+                Intent(fromActivity, EditorActivity::class.java).apply {
+                    putExtra(ARG_CLASS, forClass)
+                    putExtra(EntityEditorFragment.ARG_ITEM_ID, itemToEdit)
+                },
+                null
+            )
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {

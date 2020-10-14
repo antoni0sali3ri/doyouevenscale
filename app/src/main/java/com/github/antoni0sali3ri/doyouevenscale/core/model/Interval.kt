@@ -4,9 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.github.antoni0sali3ri.doyouevenscale.R
 
-data class Interval(
-    val semitones: Int
-) : Parcelable, Comparable<Interval> {
+class Interval private constructor(val semitones: Int) : Parcelable, Comparable<Interval> {
 
     init {
         require(semitones >= 0)
@@ -52,6 +50,8 @@ data class Interval(
 
         fun nameResFor(halfSteps: Int) = NAME_RES[halfSteps % 12]
 
+        operator fun invoke(semitones: Int) = INTERVALS[semitones % 12]
+
         override fun createFromParcel(parcel: Parcel): Interval {
             return Interval(parcel)
         }
@@ -62,6 +62,6 @@ data class Interval(
     }
 }
 
-fun Int.toInterval() : Interval {
+fun Int.semitones(): Interval {
     return Interval(this)
 }

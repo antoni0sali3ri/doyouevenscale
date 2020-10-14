@@ -1,6 +1,5 @@
 package com.github.antoni0sali3ri.doyouevenscale.core.model
 
-import android.graphics.Point
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 
@@ -29,12 +28,16 @@ data class TunedInstrument(
         return tuning.pitchOf(stringNo).transpose(fretNo)
     }
 
-    fun getFretsForScale(scale: Scale, fretsShown: IntRange = 0..Instrument.MaxFrets): List<Point> {
-        val positions: MutableList<Point> = mutableListOf()
+    fun getFretsForScale(
+        scale: Scale,
+        fretsShown: IntRange = 0..Instrument.MaxFrets
+    ): List<Fingering> {
+        val positions: MutableList<Fingering> = mutableListOf()
         for (stringNo in 1..instrument.stringCount) {
             positions.addAll(
                 getFretsForScale(stringNo, scale, fretsShown).map {
-                    Point(stringNo, it - fretsShown.first)
+                    Fingering(stringNo, it - fretsShown.first)
+                    //Point(stringNo, it - fretsShown.first)
                 }
             )
         }
@@ -63,18 +66,19 @@ data class TunedInstrument(
     fun getRootsForString(stringNo: Int, scale: Scale, fretsShown: IntRange): List<Int> =
         getRootsForString(stringNo, scale.root, fretsShown)
 
-    fun getRoots(root: Note, fretsShown: IntRange): List<Point> {
-        val positions: MutableList<Point> = mutableListOf()
+    fun getRoots(root: Note, fretsShown: IntRange): List<Fingering> {
+        val positions: MutableList<Fingering> = mutableListOf()
         for (stringNo in 1..instrument.stringCount) {
             positions.addAll(
                 getRootsForString(stringNo, root, fretsShown).map {
-                    Point(stringNo, it - fretsShown.first)
+                    Fingering(stringNo, it - fretsShown.first)
+                    //Point(stringNo, it - fretsShown.first)
                 }
             )
         }
         return positions.toList()
     }
 
-    fun getRoots(scale: Scale, fretsShown: IntRange): List<Point> =
+    fun getRoots(scale: Scale, fretsShown: IntRange): List<Fingering> =
         getRoots(scale.root, fretsShown)
 }

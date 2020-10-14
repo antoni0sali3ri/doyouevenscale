@@ -1,6 +1,6 @@
 package com.github.antoni0sali3ri.doyouevenscale.ui.fragment.list
 
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.github.antoni0sali3ri.doyouevenscale.core.model.PresetViewModel
@@ -13,23 +13,30 @@ import com.github.antoni0sali3ri.doyouevenscale.ui.adapter.PresetListItemTouchHe
 class InstrumentPresetListFragment :
     EntityListFragment<InstrumentPreset>(InstrumentPreset::class.java), OnStartDragListener {
 
-    private lateinit var itemTouchHelper: ItemTouchHelper
-    private lateinit var adapter: InstrumentPresetRecyclerViewAdapter
+    private val itemTouchHelper: ItemTouchHelper
+    private val adapter: InstrumentPresetRecyclerViewAdapter
 
-    override val viewModel: PresetViewModel by activityViewModels()
+    private val onUpdateItems: (List<InstrumentPreset>) -> Unit = { items: List<InstrumentPreset> ->
+        viewModel.update(items)
+    }
 
-    override fun setUpRecyclerView(recyclerView: RecyclerView, items: List<InstrumentPreset>) {
-        val adapter = InstrumentPresetRecyclerViewAdapter(
-            items,
+    init {
+        adapter = InstrumentPresetRecyclerViewAdapter(
+            emptyList(),
             this,
             onUpdateItems,
             onEditItem,
             onDeleteItem
         )
-        this.adapter = adapter
-        recyclerView.adapter = adapter
+        rvAdapter = adapter
         val callback = PresetListItemTouchHelperCallback(adapter)
         itemTouchHelper = ItemTouchHelper(callback)
+    }
+
+    override val viewModel: PresetViewModel by viewModels()
+
+    override fun setUpRecyclerView(recyclerView: RecyclerView) {
+        recyclerView.adapter = adapter
         itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
@@ -42,7 +49,4 @@ class InstrumentPresetListFragment :
         itemTouchHelper.startDrag(viewHolder)
     }
 
-    private val onUpdateItems: (List<InstrumentPreset>) -> Unit = { items: List<InstrumentPreset> ->
-        viewModel.update(items)
-    }
 }

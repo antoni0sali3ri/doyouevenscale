@@ -43,7 +43,7 @@ interface InstrumentPresetDao : ViewModelDao<InstrumentPreset> {
     @Query("SELECT * FROM instrument_configurations WHERE id = :id")
     override fun getSingle(id: Long): InstrumentPreset
 
-    @Query("SELECT * FROM instrument_configurations WHERE showAsTab >= 0")
+    @Query("SELECT * FROM instrument_configurations WHERE showAsTab >= 0 ORDER BY showAsTab ASC")
     fun getInstrumentPresetTabs() : LiveData<List<InstrumentPreset>>
 
     @Query("SELECT * FROM instrument_configurations WHERE id IN(:ids)")

@@ -3,7 +3,7 @@ package com.github.antoni0sali3ri.doyouevenscale.core.db
 import androidx.room.TypeConverter
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Interval
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Note
-import com.github.antoni0sali3ri.doyouevenscale.core.model.toInterval
+import com.github.antoni0sali3ri.doyouevenscale.core.model.semitones
 
 const val LIST_SEP = ";;"
 
@@ -31,6 +31,6 @@ class IntervalConverters {
     @TypeConverter
     fun stringToIntervalList(string: String) = string
         .split(LIST_SEP)
-        .map { it.toInt().toInterval() }
+        .map { it.toInt().semitones() }
 }
 

@@ -22,11 +22,11 @@
     <color name="colorTabText">#FFFFFF</color>
 
     <color name="colorFretboardBackground">#FFFFFF</color>
-    <color name="colorFretboardStrings">#000000</color>
-    <color name="colorFretboardFrets">#000000</color>
-    <color name="colorFretboardInlays">#444444</color>
+    <color name="colorFretboardStrings">#222222</color>
+    <color name="colorFretboardFrets">#222222</color>
+    <color name="colorFretboardInlays">#555555</color>
     <color name="colorFretboardNoteStroke">#000000</color>
-    <color name="colorFretboardNotes">#FFFFFF</color>
+    <color name="colorFretboardNotes">#EEEEEE</color>
     <color name="colorFretboardNotesHighlight">#000000</color>
     <color name="colorFretboardLabels">#000000</color>
     <color name="colorListDivider">#797979</color>

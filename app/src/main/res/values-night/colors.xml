@@ -3,6 +3,7 @@
 
     <color name="colorBackground">#000000</color>
     <color name="colorOnBackground">#FFFFFF</color>
+    <color name="colorAccent">#FFEA00</color>
 
     <color name="colorFretboardBackground">#000000</color>
     <color name="colorFretboardStrings">#DDDDDD</color>

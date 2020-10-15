@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Do you even scale</string>
     <string name="title_activity_data_manager">Manage data</string>
-    <string name="title_activity_editor">Edit %1$s</string>
+    <string name="title_activity_editor_edit">Edit %1$s</string>
 
     <!-- INTERVALS -->
     <string name="interval_prime">Prime</string>
@@ -94,4 +94,17 @@
     <string name="msg_no_instrument_selected">Please select an instrument</string>
     <string name="msg_no_tuning_selected">Please select the default tuning</string>
     <string name="msg_no_scale_type_selected">Please select the default scale</string>
+    <string name="title_activity_editor_create">Create new %1$s</string>
+    <string name="msg_no_intervals">Please select at least one interval</string>
+    <string name="prefs_category_core">General</string>
+    <string name="prefs_title_keep_awake">Keep screen awake</string>
+    <string name="prefs_description_keep_awake">Keep the screen on while viewing scales.</string>
+    <string name="action_settings_title">Settings</string>
+    <string name="action_manage_data_title">Manage data</string>
+    <string name="prefs_category_appearance">Appearance</string>
+    <string name="prefs_title_app_theme">Theme</string>
+    <string name="app_theme_light">Light</string>
+    <string name="app_theme_dark">Dark</string>
+    <string name="app_theme_device">Follow device theme</string>
+    <string name="prefs_description_app_theme">Choose the app\'s theme</string>
 </resources>

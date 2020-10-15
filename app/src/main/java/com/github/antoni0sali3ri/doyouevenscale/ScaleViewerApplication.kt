@@ -28,23 +28,23 @@ object ScaleViewerApplication {
     }
 
     private fun initializePrefs(context: Context) {
-        if (BuildConfig.DEBUG) {
-            prefs = Prefs(KPrefFactoryInMemory)
+        prefs = if (BuildConfig.DEBUG) {
+            Prefs(KPrefFactoryInMemory)
         } else {
-            prefs = Prefs(KPrefFactoryAndroid(context))
+            Prefs(KPrefFactoryAndroid(context.applicationContext))
         }
     }
 
     fun resetDatabase(context: Context) {
-        ApplicationDatabase.getDatabase(context).clearAllTables()
-        populateDatabase(context)
+        ApplicationDatabase.getDatabase(context.applicationContext).clearAllTables()
+        populateDatabase(context.applicationContext)
     }
 
     private fun populateDatabase(context: Context) {
-        val database = ApplicationDatabase.getDatabase(context)
-        val predef = Predef(context)
+        val database = ApplicationDatabase.getDatabase(context.applicationContext)
+        val predef = Predef(context.applicationContext)
         context.ctxCoroutine.launch(Dispatchers.IO) {
-            with (database) {
+            with(database) {
                 instrumentDao().insertMultiple(predef.instruments)
                 tuningDao().insertMultiple(predef.tunings)
                 scaleDao().insertMultiple(predef.scaleTypes)

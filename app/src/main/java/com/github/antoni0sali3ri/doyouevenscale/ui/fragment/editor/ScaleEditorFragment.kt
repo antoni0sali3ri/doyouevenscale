@@ -44,6 +44,14 @@ class ScaleEditorFragment : EntityEditorFragment<Scale.Type>(Scale.Type::class.j
         }
     }
 
+    override fun validateItem(): Boolean {
+        if (intervals.isEmpty()) {
+            showValidationMessage(R.string.msg_no_intervals)
+            return false
+        }
+        return super.validateItem()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,10 +64,6 @@ class ScaleEditorFragment : EntityEditorFragment<Scale.Type>(Scale.Type::class.j
         intervals.sort()
         item.intervals = intervals.toList()
         recyclerViewIntervals.adapter?.notifyDataSetChanged()
-    }
-
-    private fun removeInterval(interval: Interval) {
-        intervals.remove(interval)
     }
 
     class IntervalListAdapter(private val context: Context, val intervals: MutableList<Interval>) :

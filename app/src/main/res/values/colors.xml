@@ -8,7 +8,7 @@
     <color name="colorSecondaryVariant">#66BB6A</color>
     <color name="colorOnSecondary">@color/colorText</color>
 
-    <color name="colorAccent">#FFEA00</color>
+    <color name="colorAccent">#E6BF00</color>
     <color name="colorError">#FF6E40</color>
     <color name="colorOnError">@color/colorText</color>
 

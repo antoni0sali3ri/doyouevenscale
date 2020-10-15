@@ -35,7 +35,7 @@ class TuningEditorFragment :
 
     override val layoutResource: Int = R.layout.fragment_tuning_editor
 
-    override val templateItem: Instrument.Tuning = Instrument.Tuning(0, listOf(Note.C), "Tuning")
+    override val templateItem: Instrument.Tuning = Instrument.Tuning(0, listOf(Note.C), "")
 
     override val viewModel: TuningViewModel by activityViewModels()
     private val instrumentViewModel: InstrumentViewModel by activityViewModels()
@@ -180,6 +180,5 @@ class TuningEditorFragment :
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("Not yet implemented")
     }
 }

@@ -11,7 +11,7 @@ import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 class InstrumentEditorFragment : EntityEditorFragment<Instrument>(Instrument::class.java) {
     override val layoutResource: Int = R.layout.fragment_instrument_editor
 
-    override val templateItem: Instrument = Instrument(4, "Instrument")
+    override val templateItem: Instrument = Instrument(4, "")
 
     override val viewModel: InstrumentViewModel by activityViewModels()
 

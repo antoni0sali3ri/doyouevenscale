@@ -3,7 +3,6 @@ package com.github.antoni0sali3ri.doyouevenscale.ui.view
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.core.model.Fingering
@@ -141,7 +140,6 @@ class FretboardView : View {
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        Log.d(TAG, "onSizeChanged($w, $h, $oldw, $oldh")
         val width = w - paddingLeft - paddingRight
         val height = h - paddingTop - paddingBottom
         val xofs = paddingLeft

@@ -27,7 +27,6 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
     FretRangePickerDialog.ResultListener,
     NotePickerDialog.ResultListener {
 
-    private val TAG: String = "FretboardFragment"
     private val spinnerItemLayout = R.layout.layout_spinner_item
 
     private val tuningViewModel: TuningViewModel by activityViewModels()

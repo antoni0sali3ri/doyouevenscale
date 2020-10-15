@@ -60,7 +60,7 @@
     <string name="lbl_instrument_preset_scale">Tonleiter</string>
     <string name="lbl_instrument_preset_fretrange">Zeige Bünde</string>
     <string name="lbl_string_pitches">Saitenstimmungen</string>
-    <string name="title_activity_editor">%1$s bearbeiten</string>
+    <string name="title_activity_editor_edit">%1$s bearbeiten</string>
     <string name="entity_instrument">Instrument</string>
     <string name="entity_preset">Voreinstellung</string>
     <string name="entity_tuning">Stimmung</string>
@@ -85,4 +85,17 @@
     <string name="msg_no_instrument_selected">Bitte wählen Sie ein Instrument</string>
     <string name="msg_no_tuning_selected">Bitte wählen Sie die Stimmung</string>
     <string name="msg_no_scale_type_selected">Bitte wählen Sie eine Tonleiter</string>
+    <string name="title_activity_editor_create">%1$s erstellen</string>
+    <string name="msg_no_intervals">Bitte wählen Sie mindestens ein Intervall</string>
+    <string name="prefs_category_core">Allgemein</string>
+    <string name="prefs_title_keep_awake">Bildschirm eingeschaltet lassen</string>
+    <string name="prefs_description_keep_awake">Verhindern, dass der Bildschirm ausgeschaltet wird, während Tonleitern betrachtet werden.</string>
+    <string name="action_settings_title">Einstellungen</string>
+    <string name="action_manage_data_title">Daten verwalten</string>
+    <string name="prefs_category_appearance">Darstellung</string>
+    <string name="prefs_title_app_theme">Thema</string>
+    <string name="app_theme_light">Hell</string>
+    <string name="app_theme_dark">Dunkel</string>
+    <string name="app_theme_device">Folge Gerätethema</string>
+    <string name="prefs_description_app_theme">App-Thema auswählen</string>
 </resources>

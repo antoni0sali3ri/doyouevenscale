@@ -98,4 +98,10 @@
     <string name="app_theme_dark">Dunkel</string>
     <string name="app_theme_device">Folge Gerätethema</string>
     <string name="prefs_description_app_theme">App-Thema auswählen</string>
+    <string name="orientation_portrait">Vertikal</string>
+    <string name="orientation_landscape">Horizontal</string>
+    <string name="orientation_device">Geräteeinstellung</string>
+    <string name="prefs_title_screen_orientation">Bildschirmausrichtung</string>
+    <string name="prefs_title_screen_orientation_global">Bildschirmausrichtung für gesamte App</string>
+    <string name="prefs_description_orientation_global">Wenn aktiviert, wird die Bildschirmausrichtung auf alle Aktivitäten der App angewendet und nicht nur die Hauptansicht.</string>
 </resources>

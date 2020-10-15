@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        debug("onResume() keepAwake = ${prefs.core.keepAwake}")
+        applyOrientation()
 
         if (prefs.core.keepAwake)
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)

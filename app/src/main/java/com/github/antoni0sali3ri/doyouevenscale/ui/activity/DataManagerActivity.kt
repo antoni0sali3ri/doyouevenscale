@@ -32,6 +32,8 @@ class DataManagerActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        applyOrientation()
+
         val sectionsPagerAdapter = DataManagerViewPagerAdapter(this)
         viewPager = findViewById(R.id.view_pager)
         viewPager.adapter = sectionsPagerAdapter

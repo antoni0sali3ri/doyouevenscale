@@ -107,4 +107,10 @@
     <string name="app_theme_dark">Dark</string>
     <string name="app_theme_device">Follow device theme</string>
     <string name="prefs_description_app_theme">Choose the app\'s theme</string>
+    <string name="orientation_portrait">Portrait</string>
+    <string name="orientation_landscape">Landscape</string>
+    <string name="orientation_device">Device default</string>
+    <string name="prefs_title_screen_orientation">Screen orientation</string>
+    <string name="prefs_title_screen_orientation_global">Apply orientation to whole app</string>
+    <string name="prefs_description_orientation_global">If checked, the orientation selected above will be applied to all activities instead of just the main fretboard view.</string>
 </resources>

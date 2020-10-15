@@ -21,6 +21,8 @@ class EditorActivity : AppCompatActivity(), EntityEditorFragment.OnCommitListene
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        applyOrientation()
+
         intent.extras?.apply {
             @SuppressWarnings("unchecked")
             val clazz = getSerializable(ARG_CLASS) as Class<out ListableEntity>

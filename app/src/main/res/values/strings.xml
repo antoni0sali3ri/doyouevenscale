@@ -113,4 +113,10 @@
     <string name="prefs_title_screen_orientation">Screen orientation</string>
     <string name="prefs_title_screen_orientation_global">Apply orientation to whole app</string>
     <string name="prefs_description_orientation_global">If checked, the orientation selected above will be applied to all activities instead of just the main fretboard view.</string>
+    <string name="prefs_category_other">Miscellaneous</string>
+    <string name="prefs_title_about">About</string>
+    <string name="prefs_description_about">View information about this app and the libraries it uses.</string>
+    <string name="app_author" translatable="false">Antoni0 Sali3ri</string>
+    <string name="app_github_url" translatable="false">https://github.com/antoni0sali3ri/doyouevenscale</string>
+    <string name="app_description">An app for viewing scales on a fretboard. Intended to be a tool to assist players of fretted instruments practice and learn.</string>
 </resources>

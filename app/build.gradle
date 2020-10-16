@@ -45,8 +45,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.1.0-alpha01'
-    //implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
-    //implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
@@ -55,6 +53,7 @@ dependencies {
 
     implementation "ca.allanwang.kau:core:$kau_version"
     implementation "ca.allanwang.kau:core-ui:$kau_version"
+    implementation "ca.allanwang.kau:about:$kau_version"
     implementation "ca.allanwang.kau:fastadapter:$kau_version"
     implementation "ca.allanwang.kau:kpref-activity:$kau_version"
 

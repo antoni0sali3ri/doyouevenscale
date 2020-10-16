@@ -104,4 +104,8 @@
     <string name="prefs_title_screen_orientation">Bildschirmausrichtung</string>
     <string name="prefs_title_screen_orientation_global">Bildschirmausrichtung für gesamte App</string>
     <string name="prefs_description_orientation_global">Wenn aktiviert, wird die Bildschirmausrichtung auf alle Aktivitäten der App angewendet und nicht nur die Hauptansicht.</string>
+    <string name="prefs_category_other">Sonstiges</string>
+    <string name="prefs_title_about">Über die App</string>
+    <string name="prefs_description_about">Informationen über die App und benutzten Bibliotheken</string>
+    <string name="app_description">Ein Übungs- und Lernwerkzeug für Musiker, die Saiteninstrumente mit Bünden spielen. Zeigt Tonleitern auf dem Griffbrett für Saiteninstrumente in beliebigen Stimmungen an.</string>
 </resources>

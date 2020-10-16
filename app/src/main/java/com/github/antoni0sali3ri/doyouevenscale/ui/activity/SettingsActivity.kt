@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import ca.allanwang.kau.about.kauLaunchAbout
 import ca.allanwang.kau.kpref.activity.CoreAttributeContract
 import ca.allanwang.kau.kpref.activity.KPrefActivity
 import ca.allanwang.kau.kpref.activity.KPrefAdapterBuilder
@@ -95,6 +96,15 @@ class SettingsActivity : KPrefActivity() {
                         }
                     }
                 }
+            }
+        }
+
+        header(R.string.prefs_category_other)
+
+        plainText(R.string.prefs_title_about) {
+            descRes = R.string.prefs_description_about
+            onClick = {
+                kauLaunchAbout<AboutActivity>()
             }
         }
     }

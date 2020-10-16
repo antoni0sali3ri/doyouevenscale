@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activity.SettingsActivity" />
+        <activity android:name=".ui.activity.AboutActivity" />
         <activity
             android:name=".ui.activity.EditorActivity"
             android:windowSoftInputMode="adjustResize" />

@@ -18,14 +18,10 @@ data class TunedInstrument(
 
     /**
      * Get the note at the specified string and fret.
-     *
-     * @param stringNo string number (starts at 1)
-     * @param fretNo fret number (starts at 0, which is the open string)
      */
-    fun getNoteAt(stringNo: Int, fretNo: Int): Note {
-        require(stringNo > 0 && stringNo <= instrument.stringCount)
-        require(fretNo >= 0 && fretNo <= Instrument.MaxFrets)
-        return tuning.pitchOf(stringNo).transpose(fretNo)
+    fun getNoteAt(fingering: Fingering): Note {
+        require(fingering.stringNo <= instrument.stringCount)
+        return tuning.pitchOf(fingering.stringNo).transpose(fingering.fretNo)
     }
 
     fun getFretsForScale(

@@ -2,6 +2,7 @@ package com.github.antoni0sali3ri.doyouevenscale.core.model
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.github.antoni0sali3ri.doyouevenscale.core.trueMod
 
 /**
  * The notes of the (western) 12-note system.
@@ -66,7 +67,7 @@ enum class Note(val nameSharp: String, val nameFlat: String) : Parcelable {
         fun transpose(note: Note, semitones: Int): Note {
             val notes = values()
             val index = notes.indexOf(note)
-            val newIndex = (index + semitones) % 12
+            val newIndex = (index + semitones).trueMod(12)
             return notes[newIndex]
         }
 

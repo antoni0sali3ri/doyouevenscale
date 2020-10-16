@@ -20,6 +20,8 @@ class Interval private constructor(val semitones: Int) : Parcelable, Comparable<
     fun transpose(note: Note, transposeUp: Boolean = true): Note =
         note.transpose(if (transposeUp) semitones else -semitones)
 
+    override fun toString(): String = "Interval($semitones)"
+
     override fun compareTo(other: Interval): Int = semitones.compareTo(other.semitones)
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

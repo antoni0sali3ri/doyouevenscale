@@ -7,6 +7,14 @@ class Fingering private constructor(val stringNo: Int, val fretNo: Int) {
 
     fun toPoint(): Point = Point(stringNo, fretNo)
 
+    override fun equals(other: Any?): Boolean {
+        return other is Fingering
+                && stringNo == other.stringNo
+                && fretNo == other.fretNo
+    }
+
+    override fun hashCode(): Int = 31 * stringNo + fretNo
+
     companion object {
         val Fingerings: Array<Array<Fingering>> by lazy {
             val result = Array(Instrument.MaxStrings) { s ->

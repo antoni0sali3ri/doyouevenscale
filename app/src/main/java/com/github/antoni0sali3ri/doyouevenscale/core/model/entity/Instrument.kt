@@ -32,7 +32,7 @@ data class Instrument(
     }
 
     init {
-        require(stringCount in 0..MaxStrings)
+        require(stringCount in 1..MaxStrings)
     }
 
 

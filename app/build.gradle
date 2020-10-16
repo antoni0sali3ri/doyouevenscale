@@ -56,13 +56,14 @@ dependencies {
     implementation "ca.allanwang.kau:about:$kau_version"
     implementation "ca.allanwang.kau:fastadapter:$kau_version"
     implementation "ca.allanwang.kau:kpref-activity:$kau_version"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.0'
 
     kapt "androidx.room:room-compiler:$room_version"
 
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
-    testImplementation 'junit:junit:4.12'
+    //testImplementation 'junit:junit:4.12'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

@@ -148,27 +148,27 @@ class Predef(private val context: Context) {
         ).apply { id = 18 },
         Instrument.Tuning(
             7,
-            listOf(Note.G, Note.D, Note.G, Note.B, Note.D),
+            listOf(Note.D, Note.D, Note.G, Note.B, Note.D),
             getString(R.string.tuning_openg_name)
         ).apply { id = 19 },
         Instrument.Tuning(
             7,
-            listOf(Note.G, Note.D, Note.G, Note.Ais, Note.D),
+            listOf(Note.D, Note.D, Note.G, Note.Ais, Note.D),
             getString(R.string.tuning_opengm_name)
         ).apply { id = 20 },
         Instrument.Tuning(
             7,
-            listOf(Note.G, Note.D, Note.G, Note.C, Note.D),
+            listOf(Note.D, Note.D, Note.G, Note.C, Note.D),
             getString(R.string.tuning_banjo_sawmill_name)
         ).apply { id = 21 },
         Instrument.Tuning(
             7,
-            listOf(Note.G, Note.C, Note.G, Note.C, Note.D),
+            listOf(Note.D, Note.C, Note.G, Note.C, Note.D),
             getString(R.string.tuning_doublec_name)
         ).apply { id = 22 },
         Instrument.Tuning(
             7,
-            listOf(Note.G, Note.C, Note.G, Note.C, Note.E),
+            listOf(Note.D, Note.C, Note.G, Note.C, Note.E),
             getString(R.string.tuning_openc_name)
         ).apply { id = 23 },
 

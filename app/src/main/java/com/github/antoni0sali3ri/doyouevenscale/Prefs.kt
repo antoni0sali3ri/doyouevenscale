@@ -15,7 +15,7 @@ class Prefs(factory: KPrefFactory) {
 class CorePrefs(factory: KPrefFactory) : KPref("$appId.core.prefs", factory) {
     val firstRun: Boolean by kprefSingle("FIRST_RUN")
 
-    var keepAwake: Boolean by kpref("KEEP_AWAKE", true)
+    var keepAwake: Boolean by kpref("KEEP_AWAKE", false)
     var orientation: Int by kpref("SCREEN_ORIENTATION", Orientation.Device.ordinal)
     var orientationIsGlobal: Boolean by kpref("SCREEN_ORIENTATION_GLOBAL", false)
 }

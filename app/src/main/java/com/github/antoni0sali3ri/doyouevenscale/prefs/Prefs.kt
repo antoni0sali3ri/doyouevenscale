@@ -19,6 +19,7 @@ class CorePrefs(factory: KPrefFactory) : KPref("$appId.core.prefs", factory) {
     var keepAwake: Boolean by kpref("KEEP_AWAKE", false)
     var orientation: Int by kpref("SCREEN_ORIENTATION", OrientationPreference.Device.ordinal)
     var orientationIsGlobal: Boolean by kpref("SCREEN_ORIENTATION_GLOBAL", false)
+    var startInFullScreen: Boolean by kpref("START_IN_FULL_SCREEN_MODE", false)
 }
 
 class AppearancePrefs(factory: KPrefFactory) : KPref("$appId.appearance.prefs", factory) {

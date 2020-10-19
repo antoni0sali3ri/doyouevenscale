@@ -2,6 +2,7 @@
 <resources>
     <version title="1.1" />
     <item text="Added fret spacing preference" />
+    <item text="Added full screen mode (double tap on fretboard)" />
 
     <version title="1.0" />
     <item text="Initial release" />

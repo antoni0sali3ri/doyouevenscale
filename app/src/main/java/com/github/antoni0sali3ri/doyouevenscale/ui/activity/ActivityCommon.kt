@@ -18,6 +18,12 @@ fun AppCompatActivity.debug(message: String) {
     }
 }
 
+fun Fragment.debug(message: String) {
+    if (BuildConfig.DEBUG) {
+        Log.d(this::class.java.simpleName, message)
+    }
+}
+
 fun AppCompatActivity.applyOrientation() {
     if (prefs.core.orientationIsGlobal || this is MainActivity) {
         requestedOrientation = OrientationPreference(prefs.core.orientation).mode

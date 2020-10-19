@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.github.antoni0sali3ri.doyouevenscale.BuildConfig
+import com.github.antoni0sali3ri.doyouevenscale.ScaleViewerApplication
 import com.github.antoni0sali3ri.doyouevenscale.core.model.ListableEntity
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.InstrumentPreset
@@ -50,7 +51,7 @@ abstract class ApplicationDatabase : RoomDatabase() {
         }
 
         private fun initializeDatabase(context: Context) {
-            instance = if (BuildConfig.DEBUG) {
+            instance = if (ScaleViewerApplication.isDebug) {
                 Room.inMemoryDatabaseBuilder(context, ApplicationDatabase::class.java)
                     //.allowMainThreadQueries()
                     .build()

@@ -117,4 +117,6 @@
     <string name="prefs_description_fret_spacing">Legt fest, wie die Bünde dargestellt werden.\n\'Konstant\' -> gleicher Abstand zwischen den Bünden\n\'Gleichtemperiert\' -> Ordnet die Bünde nach den Abständen der gleichtemperierten Stimmung an</string>
     <string name="prefs_title_changelog">Änderungshistorie</string>
     <string name="prefs_description_changelog">Neuheiten dieser Version anzeigen</string>
+    <string name="prefs_title_full_screen">Starte in Vollbildansicht</string>
+    <string name="prefs_description_full_screen">Tipp: Doppelklick auf das Griffbrett um Vollbildansicht an-/abzuschalten.</string>
 </resources>

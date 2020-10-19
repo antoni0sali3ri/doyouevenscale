@@ -57,4 +57,11 @@ fun SettingsActivity.getCoreSettings(): KPrefAdapterBuilder.() -> Unit = {
         descRes = R.string.prefs_description_orientation_global
     }
 
+    checkbox(
+        title = R.string.prefs_title_full_screen,
+        getter = prefs.core::startInFullScreen,
+        setter = { prefs.core.startInFullScreen = it }
+    ) {
+        descRes = R.string.prefs_description_full_screen
+    }
 }

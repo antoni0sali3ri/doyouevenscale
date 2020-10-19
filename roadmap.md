@@ -12,12 +12,12 @@ Version 1.1
 - [x] WANT: Split SettingsActivity into sections
 - [x] WANT: Add changelog to settings
 - [x] WANT: Add user-selection for fret spacing (constant vs. equal temperament)
+- [x] WANT: Add controls to hide Tabbar and ActionBar in MainActivity
 
 
 Backlog
 =======
 - [ ] NEED: Refactor validation in entity editors
 - [ ] NEED: User-definable fretboard themes
-- [ ] WANT: Add controls to hide Tabbar and ActionBar in MainActivity
 - [ ] WANT: Define the starting fret per string (primarily for bluegrass banjo, possibly more instruments)
 - [ ] WANT: Display/highlight chords or certain notes on the fretboard

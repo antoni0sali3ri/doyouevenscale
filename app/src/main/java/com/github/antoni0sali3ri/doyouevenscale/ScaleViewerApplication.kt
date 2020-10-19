@@ -12,6 +12,8 @@ import kotlinx.coroutines.launch
 
 object ScaleViewerApplication {
 
+    val isDebug = BuildConfig.DEBUG
+
     private var prefs: Prefs? = null
 
     fun getPrefs(context: Context): Prefs {
@@ -29,7 +31,7 @@ object ScaleViewerApplication {
     }
 
     private fun initializePrefs(context: Context) {
-        prefs = if (BuildConfig.DEBUG) {
+        prefs = if (isDebug) {
             Prefs(KPrefFactoryInMemory)
         } else {
             Prefs(KPrefFactoryAndroid(context.applicationContext))

@@ -128,4 +128,6 @@
     <string name="prefs_description_fret_spacing">Define how the frets are laid out.\n\'Constant\' -> spaces the frets evenly across the available space.\n\'Equal temperament\' -> spaces the frets according to equal temperament (i.e. higher frets have less space between them)</string>
     <string name="prefs_title_changelog">Changelog</string>
     <string name="prefs_description_changelog">See what\'s new in this version</string>
+    <string name="prefs_title_full_screen">Start in full screen mode</string>
+    <string name="prefs_description_full_screen">Hint: Double tap the fretboard to toggle full screen mode.</string>
 </resources>

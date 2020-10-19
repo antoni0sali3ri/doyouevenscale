@@ -1,5 +1,6 @@
 package com.github.antoni0sali3ri.doyouevenscale.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,13 +8,14 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.core.db.ApplicationDatabase
 import com.github.antoni0sali3ri.doyouevenscale.core.model.*
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
 import com.github.antoni0sali3ri.doyouevenscale.prefs.enums.FretSpacingPreference
+import com.github.antoni0sali3ri.doyouevenscale.ui.activity.MainActivity
 import com.github.antoni0sali3ri.doyouevenscale.ui.activity.prefs
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.FretRangePickerDialog
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.NotePickerDialog
@@ -24,10 +26,12 @@ import kotlinx.coroutines.launch
 /**
  * A placeholder fragment containing a simple view.
  */
-class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
-    ObservableInstrumentPreset.OnChangeListener,
-    FretRangePickerDialog.ResultListener,
-    NotePickerDialog.ResultListener {
+class FretboardFragment : Fragment(),
+                          LifecycleObserver,
+                          AdapterView.OnItemSelectedListener,
+                          ObservableInstrumentPreset.OnChangeListener,
+                          FretRangePickerDialog.ResultListener,
+                          NotePickerDialog.ResultListener {
 
     private val spinnerItemLayout = R.layout.layout_spinner_item
 
@@ -47,6 +51,30 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
     private lateinit var spinnerMinFret: TextView
     private lateinit var spinnerMaxFret: TextView
     private lateinit var fretboardView: FretboardView
+    private var fullScreenTouchListener: View.OnTouchListener? = null
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    fun onActivityStarted() {
+        view?.setOnTouchListener(fullScreenTouchListener)
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun onActivityStopped() {
+        view?.setOnTouchListener(null)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is MainActivity) {
+            fullScreenTouchListener = context.FullscreenTouchListener()
+            lifecycle.addObserver(this)
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        lifecycle.removeObserver(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

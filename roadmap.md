@@ -9,13 +9,14 @@ Version 1.1
 -----------
 - [ ] NEED: When selecting "Restore defaults" while managing data, give the user the option to keep their own definitions
 - [ ] NEED: Add fastlane metadata to repository (for f-droid)
-- [ ] WANT: Split SettingsActivity into sections
-- [ ] WANT: Add changelog to settings
-- [ ] WANT: Add user-selection for fret spacing (constant vs. equal temperament)
+- [x] WANT: Split SettingsActivity into sections
+- [x] WANT: Add changelog to settings
+- [x] WANT: Add user-selection for fret spacing (constant vs. equal temperament)
 
 
 Backlog
 =======
+- [ ] NEED: Refactor validation in entity editors
 - [ ] NEED: User-definable fretboard themes
 - [ ] WANT: Add controls to hide Tabbar and ActionBar in MainActivity
 - [ ] WANT: Define the starting fret per string (primarily for bluegrass banjo, possibly more instruments)

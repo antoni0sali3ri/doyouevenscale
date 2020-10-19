@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <version title="1.1" />
+    <item text="Added fret spacing preference" />
+
+    <version title="1.0" />
+    <item text="Initial release" />
+    <item text="View scales on a fretboard" />
+    <item text="Add your own presets, instruments, etc." />
+    <item text="" />
+</resources>

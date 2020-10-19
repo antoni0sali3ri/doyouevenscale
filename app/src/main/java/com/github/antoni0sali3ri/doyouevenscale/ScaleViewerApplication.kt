@@ -6,6 +6,7 @@ import ca.allanwang.kau.kpref.KPrefFactoryInMemory
 import ca.allanwang.kau.utils.ctxCoroutine
 import com.github.antoni0sali3ri.doyouevenscale.core.db.ApplicationDatabase
 import com.github.antoni0sali3ri.doyouevenscale.core.db.Predef
+import com.github.antoni0sali3ri.doyouevenscale.prefs.Prefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

@@ -7,10 +7,10 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.viewpager2.widget.ViewPager2
-import com.github.antoni0sali3ri.doyouevenscale.AppTheme
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.ScaleViewerApplication
 import com.github.antoni0sali3ri.doyouevenscale.core.db.ApplicationDatabase
+import com.github.antoni0sali3ri.doyouevenscale.prefs.AppThemePreference
 import com.github.antoni0sali3ri.doyouevenscale.ui.adapter.InstrumentPresetViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
 
         ScaleViewerApplication.initialize(this)
-        AppCompatDelegate.setDefaultNightMode(AppTheme(prefs.appearance.appTheme).mode)
+        AppCompatDelegate.setDefaultNightMode(AppThemePreference(prefs.appearance.appTheme).mode)
 
         viewPager = findViewById(R.id.view_pager)
         tabs = findViewById(R.id.tabs)

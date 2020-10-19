@@ -108,4 +108,13 @@
     <string name="prefs_title_about">Über die App</string>
     <string name="prefs_description_about">Informationen über die App und benutzten Bibliotheken</string>
     <string name="app_description">Ein Übungs- und Lernwerkzeug für Musiker, die Saiteninstrumente mit Bünden spielen. Zeigt Tonleitern auf dem Griffbrett für Saiteninstrumente in beliebigen Stimmungen an.</string>
+    <string name="fret_spacing_constant">Konstant</string>
+    <string name="fret_spacing_equal_temperament">Gleichtemperiert</string>
+    <string name="prefs_category_description_core">Allgemeine Einstellungen und Verhalten der App anpassen</string>
+    <string name="prefs_category_description_appearance">App-Thema und Griffbrettdarstellung anpassen</string>
+    <string name="prefs_category_appearance_fretboard">Griffbrettdarstellung</string>
+    <string name="prefs_title_fret_spacing">Bundabstände</string>
+    <string name="prefs_description_fret_spacing">Legt fest, wie die Bünde dargestellt werden.\n\'Konstant\' -> gleicher Abstand zwischen den Bünden\n\'Gleichtemperiert\' -> Ordnet die Bünde nach den Abständen der gleichtemperierten Stimmung an</string>
+    <string name="prefs_title_changelog">Änderungshistorie</string>
+    <string name="prefs_description_changelog">Neuheiten dieser Version anzeigen</string>
 </resources>

@@ -13,6 +13,8 @@ import com.github.antoni0sali3ri.doyouevenscale.core.db.ApplicationDatabase
 import com.github.antoni0sali3ri.doyouevenscale.core.model.*
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
+import com.github.antoni0sali3ri.doyouevenscale.prefs.FretSpacingPreference
+import com.github.antoni0sali3ri.doyouevenscale.ui.activity.prefs
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.FretRangePickerDialog
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.NotePickerDialog
 import com.github.antoni0sali3ri.doyouevenscale.ui.view.FretboardView
@@ -110,8 +112,10 @@ class FretboardFragment : Fragment(), AdapterView.OnItemSelectedListener,
             spinnerScale.setSelection(position)
         }
 
+        val fretSpacing = FretSpacingPreference(prefs.appearance.fretSpacing).mode
+
         fretboardView.setStringCount(instrumentPreset.instrument.stringCount)
-        fretboardView.updateFretboard(instrumentPreset.fretsShown, EqualTemperamentFretSpacing)
+        fretboardView.updateFretboard(instrumentPreset.fretsShown, fretSpacing)
         fretboardView.updateStringLabels(instrumentPreset.tuning, instrumentPreset.noteDisplay)
         val inst = TunedInstrument(instrumentPreset.instrument, instrumentPreset.tuning)
         val scale = Scale(instrumentPreset.rootNote, instrumentPreset.scaleType)

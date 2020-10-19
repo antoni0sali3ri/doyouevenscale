@@ -119,4 +119,13 @@
     <string name="app_author" translatable="false">Antoni0 Sali3ri</string>
     <string name="app_github_url" translatable="false">https://github.com/antoni0sali3ri/doyouevenscale</string>
     <string name="app_description">An app for viewing scales on a fretboard. Intended to be a tool to assist players of fretted instruments practice and learn.</string>
+    <string name="fret_spacing_constant">Constant</string>
+    <string name="fret_spacing_equal_temperament">Equal temperament</string>
+    <string name="prefs_category_description_core">Manage the app\'s behaviour and general preferences.</string>
+    <string name="prefs_category_description_appearance">Change the app theme and adust how the fretboard is displayed.</string>
+    <string name="prefs_category_appearance_fretboard">Fretboard display</string>
+    <string name="prefs_title_fret_spacing">Fret spacing</string>
+    <string name="prefs_description_fret_spacing">Define how the frets are laid out.\n\'Constant\' -> spaces the frets evenly across the available space.\n\'Equal temperament\' -> spaces the frets according to equal temperament (i.e. higher frets have less space between them)</string>
+    <string name="prefs_title_changelog">Changelog</string>
+    <string name="prefs_description_changelog">See what\'s new in this version</string>
 </resources>

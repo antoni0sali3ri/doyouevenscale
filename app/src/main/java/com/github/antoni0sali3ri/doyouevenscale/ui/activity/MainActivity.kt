@@ -10,7 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.github.antoni0sali3ri.doyouevenscale.R
 import com.github.antoni0sali3ri.doyouevenscale.ScaleViewerApplication
 import com.github.antoni0sali3ri.doyouevenscale.core.db.ApplicationDatabase
-import com.github.antoni0sali3ri.doyouevenscale.prefs.AppThemePreference
+import com.github.antoni0sali3ri.doyouevenscale.prefs.enums.AppThemePreference
 import com.github.antoni0sali3ri.doyouevenscale.ui.adapter.InstrumentPresetViewPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator

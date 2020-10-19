@@ -5,7 +5,7 @@ import ca.allanwang.kau.utils.materialDialog
 import ca.allanwang.kau.utils.string
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.github.antoni0sali3ri.doyouevenscale.R
-import com.github.antoni0sali3ri.doyouevenscale.prefs.OrientationPreference
+import com.github.antoni0sali3ri.doyouevenscale.prefs.enums.OrientationPreference
 import com.github.antoni0sali3ri.doyouevenscale.ui.activity.SettingsActivity
 import com.github.antoni0sali3ri.doyouevenscale.ui.activity.applyOrientation
 import com.github.antoni0sali3ri.doyouevenscale.ui.activity.prefs
@@ -35,7 +35,7 @@ fun SettingsActivity.getCoreSettings(): KPrefAdapterBuilder.() -> Unit = {
             materialDialog {
                 title(R.string.prefs_title_screen_orientation)
                 listItemsSingleChoice(
-                    items = OrientationPreference.values.map { string(it.nameRes) },
+                    items = OrientationPreference.values().map { string(it.nameRes) },
                     initialSelection = item.pref
                 ) { _, index, _ ->
                     if (index != item.pref) {

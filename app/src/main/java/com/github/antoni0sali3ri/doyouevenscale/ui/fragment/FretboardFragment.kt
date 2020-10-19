@@ -13,7 +13,7 @@ import com.github.antoni0sali3ri.doyouevenscale.core.db.ApplicationDatabase
 import com.github.antoni0sali3ri.doyouevenscale.core.model.*
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Instrument
 import com.github.antoni0sali3ri.doyouevenscale.core.model.entity.Scale
-import com.github.antoni0sali3ri.doyouevenscale.prefs.FretSpacingPreference
+import com.github.antoni0sali3ri.doyouevenscale.prefs.enums.FretSpacingPreference
 import com.github.antoni0sali3ri.doyouevenscale.ui.activity.prefs
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.FretRangePickerDialog
 import com.github.antoni0sali3ri.doyouevenscale.ui.fragment.dialog.NotePickerDialog

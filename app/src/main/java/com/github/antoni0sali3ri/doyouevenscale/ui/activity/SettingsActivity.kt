@@ -24,6 +24,7 @@ class SettingsActivity : KPrefActivity() {
     }
 
     override fun kPrefCoreAttributes(): CoreAttributeContract.() -> Unit = {
+        accentColor = { resources.getColor(R.color.colorAccent) }
     }
 
     override fun onCreateKPrefs(savedInstanceState: Bundle?): KPrefAdapterBuilder.() -> Unit = {

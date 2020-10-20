@@ -19,5 +19,7 @@ Backlog
 =======
 - [ ] NEED: Refactor validation in entity editors
 - [ ] NEED: User-definable fretboard themes
+- [ ] NEED: Prevent user from hiding all the presets from the tab bar (1 should remain -> how to deal with cascading deletions from DB?)
 - [ ] WANT: Define the starting fret per string (primarily for bluegrass banjo, possibly more instruments)
 - [ ] WANT: Display/highlight chords or certain notes on the fretboard
+- [ ] WANT: Add more predefined instruments, tunings and scales

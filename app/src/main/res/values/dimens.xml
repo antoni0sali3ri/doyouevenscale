@@ -31,4 +31,5 @@
     <dimen name="list_item_interval_row_height">48dp</dimen>
     <dimen name="text_size_list_item">16sp</dimen>
     <dimen name="spinner_item_padding">8dp</dimen>
+    <dimen name="margin_full_screen_fab">8dp</dimen>
 </resources>

@@ -130,4 +130,5 @@
     <string name="prefs_description_changelog">See what\'s new in this version</string>
     <string name="prefs_title_full_screen">Start in full screen mode</string>
     <string name="prefs_description_full_screen">Hint: Double tap the fretboard to toggle full screen mode.</string>
+    <string name="action_full_screen_title">Full screen</string>
 </resources>

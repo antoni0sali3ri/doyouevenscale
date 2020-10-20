@@ -11,6 +11,7 @@ import com.github.antoni0sali3ri.doyouevenscale.core.db.ApplicationDatabase
 import com.github.antoni0sali3ri.doyouevenscale.prefs.enums.AppThemePreference
 import com.github.antoni0sali3ri.doyouevenscale.ui.adapter.InstrumentPresetViewPagerAdapter
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -19,6 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appbarLayout: AppBarLayout
     private lateinit var tabs: TabLayout
     private lateinit var viewPager: ViewPager2
+    private lateinit var fullScreenFab: FloatingActionButton
 
     private var fullScreen: Boolean = false //prefs.core.startInFullScreen
 
@@ -33,8 +35,14 @@ class MainActivity : AppCompatActivity() {
         fullScreen = prefs.core.startInFullScreen
 
         appbarLayout = findViewById(R.id.appbarLayout)
+        fullScreenFab = findViewById(R.id.fullScreenFab)
         viewPager = findViewById(R.id.view_pager)
         tabs = findViewById(R.id.tabs)
+
+        fullScreenFab.setOnClickListener {
+            fullScreen = false
+            applyFullScreen()
+        }
 
         loadInstruments()
     }
@@ -75,6 +83,11 @@ class MainActivity : AppCompatActivity() {
             DataManagerActivity.launch(this)
             true
         }
+        R.id.actionFullScreen -> {
+            fullScreen = true
+            applyFullScreen()
+            true
+        }
         R.id.actionSettings -> {
             SettingsActivity.launch(this)
             true
@@ -88,6 +101,7 @@ class MainActivity : AppCompatActivity() {
 
     fun applyFullScreen() {
         appbarLayout.visibility = if (fullScreen) View.GONE else View.VISIBLE
+        fullScreenFab.visibility = if (fullScreen) View.VISIBLE else View.GONE
     }
 
     private fun loadInstruments() {

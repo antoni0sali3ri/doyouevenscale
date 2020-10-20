@@ -119,4 +119,5 @@
     <string name="prefs_description_changelog">Neuheiten dieser Version anzeigen</string>
     <string name="prefs_title_full_screen">Starte in Vollbildansicht</string>
     <string name="prefs_description_full_screen">Tipp: Doppelklick auf das Griffbrett um Vollbildansicht an-/abzuschalten.</string>
+    <string name="action_full_screen_title">Vollbildmodus</string>
 </resources>
